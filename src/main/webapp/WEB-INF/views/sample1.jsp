@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h1>안녕하세요~~~~~</h1>
+        <h1>안녕하세요~~~~~!!!</h1>
     </div>
 </div>
 
