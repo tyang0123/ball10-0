@@ -24,7 +24,7 @@ public class GroupMapperTests {
         System.out.println(mapper);
     }
 
-    //@Test
+    @Test
     public void testInsertGroup(){
         GroupVO vo = new GroupVO();
         vo.setUser_id_group_header("testmapper");
@@ -36,8 +36,10 @@ public class GroupMapperTests {
 
         mapper.insertGroup(vo);
     }
+    @Test
     public void testread(){
-        GroupVO vo = mapper.read("그룹이름2");
+        GroupVO vo = mapper.read("그룹이름1");
+        System.out.println("===================");
         System.out.println(vo);
 
     }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupVO {
+//    private String user_id;
     private Long group_id;
     private String user_id_group_header;
     private String group_name;
