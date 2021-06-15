@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="ball10-0-master:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/ball10_0_master_war_exploded</output-path>
+  <artifact type="exploded-war" name="ball10-0:war exploded master">
+    <output-path>$PROJECT_DIR$/out/artifacts/ball10_0_war_exploded_master</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="ball10-0-master" />
+          <element id="module-output" name="ball10-0" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.0.7.RELEASE" />
@@ -15,6 +15,8 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.0.7.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.6" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.6.6" />
@@ -27,10 +29,9 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.5" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.0.7.RELEASE" />
-          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="ball10-0-master/web/Web" />
+      <element id="javaee-facet-resources" facet="ball10-0/web/Web" />
     </root>
   </artifact>
 </component>

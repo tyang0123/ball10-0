@@ -4,14 +4,10 @@
 
 <html>
 <head>
-    <title>회원가입 페이지</title>
+    <title>로그인 페이지</title>
 </head>
 <body>
-    <h1>회원가입 페이지</h1>
-    <form action="/create" role="form" method="post">
-        <input type="text"/>
-        <button type="submit">전송</button>
-    </form>
+    <h1>로그인 페이지 입니다.</h1>
 </body>
 </html>
 
