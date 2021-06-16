@@ -10,11 +10,11 @@
 <div class="row">
     <div class="col-sm-12">
 
-        </head>
-        <body>
-        <button class="btn_show" style="padding:3px">show</button>
-        <button class="btn_hide" style="padding:3px">hide</button>
-        <div class="btn_word">Hello world!!!</div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Launch static backdrop modal
+        </button>
+
     </div>
 </div>
 
