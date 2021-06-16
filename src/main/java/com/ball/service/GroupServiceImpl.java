@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GroupServiceImpl implements GroupService{
     @Setter(onMethod_=@Autowired)
@@ -19,6 +21,11 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public GroupVO get(Long group_id) {
         return mapper.read(group_id);
+    }
+
+    @Override
+    public List<GroupVO> allRead(GroupVO group) {
+        return null;
     }
 
     @Override

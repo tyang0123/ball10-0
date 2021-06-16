@@ -14,6 +14,7 @@
         <div class="col-sm-12">
             <h2>그룹메세지</h2>
             <c:forEach var="group" items="${group}">
+
             </c:forEach>
             <c:forEach var="list" items="${list}">
                 <div>

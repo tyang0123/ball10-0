@@ -29,9 +29,10 @@ public class GroupController {
     private GroupMessageService messageService;
 
     @GetMapping("/list")
-    public String group(Model model) {
+    public String group(GroupVO group, Model model) {
         System.out.println("그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
+        model.addAttribute("group",groupService.allRead(group));
         return "group/groupList";
     }
 

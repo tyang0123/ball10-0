@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="group_category">그룹 카테고리</label><br>
 <%--                        <input class="form-control" name="group_category" id="group_category"  value="${group.group_category}"/>--%>
-                        <select id="group_category">
+                        <select id="group_category" name="group_category">
                             <option value="취업">취업</option>
                             <option value="토익">토익</option>
                             <option value="이직">이직</option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label for="group_is_secret">비밀방
-                            <input type="checkbox"  name="group_is_secret" id="group_is_secret"  value="${group.group_is_secret}"/>
+                            <input type="checkbox"  name="group_is_secret" id="group_is_secret" onclick="checkClick()" />
                             </label>
 
                     </div>
@@ -43,11 +43,14 @@
                     </div>
                     <div class="form-group">
                         <label for="group_person_count">그룹 인원</label>
-                        <select id="group_person_count">
+                        <select id="group_person_count" name="group_person_count">
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
                         </select>
 <%--                        <input class="form-control" name="group_person_count" id="group_person_count"  value="${group.group_person_count}"/>--%>
                     </div>
@@ -93,4 +96,18 @@
         });
     });
 </script>--%>
+<script>
+    function checkClick(){
+        var valueClick =0;
+        if($("#group_is_secret").is(':checked')){
+            valueClick=1;
+            $("#group_is_secret").val(valueClick)
+            console.log("여기가 들어오나",valueClick)
+        }else{
+            valueClick=0;
+            $("#group_is_secret").val(valueClick)
+            console.log("여기가 들어오나",valueClick)
+        }
+    }
+</script>
 <%@ include file="../includes/footer.jsp" %>
