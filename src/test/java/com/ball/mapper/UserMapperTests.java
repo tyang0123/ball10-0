@@ -17,13 +17,11 @@ public class UserMapperTests {
     private UserMapper mapper;
 
     @Test
-    public void testInsert(){
-        UserVO vo = new UserVO();
-        vo.setUser_id("yoojung1234");
-        mapper.insertUser(vo);
+    public void testCreateUser(){
     }
+
     @Test
-    public void print(){
-        System.out.println("출력");
+    public void testGetList(){
+        mapper.getUserList().forEach(user -> log.info(user));
     }
 }
