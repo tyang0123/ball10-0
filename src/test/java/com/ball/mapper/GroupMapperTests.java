@@ -29,7 +29,8 @@ public class GroupMapperTests {
     @Test
     public void testInsertGroup(){
         GroupVO vo = new GroupVO();
-        vo.setUser_id_group_header("testmapper");
+
+        vo.setUser_id_group_header("user10");
         vo.setGroup_name("테스트 그룹 이름");
         vo.setGroup_category("입시");
         vo.setGroup_is_secret(0);
@@ -81,8 +82,8 @@ public class GroupMapperTests {
         vo.setGroup_id(2L);
         vo.setGroup_name("테스트 그룹 이름");
         vo.setGroup_category("공부카테고리");
-        vo.setGroup_is_secret(1);
-        vo.setGroup_password("1234");
+        vo.setGroup_is_secret(0);
+//        vo.setGroup_password("1234");
         vo.setGroup_person_count(7);
         vo.setGroup_content("수정이 되나");
 

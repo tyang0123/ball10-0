@@ -13,13 +13,14 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>그룹메세지</h2>
+            <c:forEach var="group" items="${group}">
+            </c:forEach>
             <c:forEach var="list" items="${list}">
                 <div>
                     <row>
                             ${list.user_nickname}
                             ${list.group_message_reg_date}
                     </row>
-<%-- 본인일경우       <row> ${list.group_message_reg_date}  ${list.user_nickname}</row>--%>
                 </div>
             </c:forEach>
         </div>

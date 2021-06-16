@@ -5,22 +5,12 @@
 <%@ include file="../includes/header.jsp" %>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">게시글 수정 페이지 </h1>
-    </div>
-    <!-- /.col-lg-12 -->
-</div> <!-- /.row -->
-<div class="row">
-    <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading"> 그룹 수정 페이지 </div> <!-- /.panel-heading -->
             <div class="panel-body">
-                <form action="/group/groupModify" role="form" method="post">
+                <form action="/group/modify" role="form" method="post">
 
-                    <!--   추가  -->
-                    <input type="hidden" name="pageNum" value="${cri.pageNum}"/>
-                    <input type="hidden" name="amount" value="${cri.amount}"/>
-                    <input type='hidden' name='type' value= '<c:out value ="${cri.type}"/>'>
-                    <input type='hidden' name='keyword' value='<c:out value ="${cri.keyword}"/>'>
+
                     <div class="form-group">
                         <label for="group_id">번호</label>
                         <input class="form-control" name="group_id" id="group_id" value="${group.group_id}" readonly="readonly">
@@ -67,15 +57,15 @@
                                   id="group_content" placeholder="그룹 소개">${group.group_content}</textarea>
                     </div>
 
+
 <%--                    <div class="form-group">--%>
 <%--                        <label for="group_mod_date">수정일</label>--%>
 <%--                        <input type="text" class="form-control" name="updateDate"--%>
 <%--                               value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate}"/>'--%>
 <%--                               readonly="readonly">--%>
 <%--                    </div>--%>
-                    <button data-oper='modify' class="btn btn-default" type="submit"> 수정</button>
-                    <button data-oper='remove' class="btn btn-danger" type="submit">삭제</button>
-                    <button data-oper='list' class="btn btn-info" type="submit">목록</button>
+                    <button data-oper='modify' class="btn btn-default" type="submit"> 수정하기 </button>
+                    <button data-oper='list' class="btn btn-info" type="submit">취소</button>
                 </form>
             </div> <!-- end panel-body -->
         </div> <!-- end panel -->
