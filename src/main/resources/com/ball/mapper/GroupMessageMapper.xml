@@ -9,4 +9,8 @@
         values(#{group_id},#{user_id},#{group_message_content}, now(), now())
     </insert>
 
+    <select id="readGroupMessage" resultType="com.ball.vo.GroupMessageVO">
+        select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = 1;
+    </select>
+
 </mapper>

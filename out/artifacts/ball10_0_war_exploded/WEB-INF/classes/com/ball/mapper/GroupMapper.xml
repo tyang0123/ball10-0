@@ -10,7 +10,6 @@
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
-
     <select id="read" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_name = #{group_name}
     </select>

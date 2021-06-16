@@ -5,6 +5,8 @@ import com.ball.service.GroupService;
 import com.ball.vo.Criteria;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import com.ball.service.GroupMessageService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,5 +33,13 @@ public class GroupController {
     public void get(@RequestParam("group_id") Long group_id, Model model, @ModelAttribute("cri")Criteria cri){
         System.out.println("게시글 컨트롤러에서 데이터 하나 조회 / "+ group_id);
         model.addAttribute("group_table", groupService.get(group_id));
+    }
+}
+    private GroupMessageService messageService;
+
+    @GetMapping("/list")
+    public String group(Model model) {
+        model.addAttribute("list",messageService.groupMessageRead(1L));
+        return "group/groupList";
     }
 }
