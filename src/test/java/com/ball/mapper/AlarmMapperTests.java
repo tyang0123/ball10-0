@@ -41,6 +41,7 @@ public class AlarmMapperTests {
         AlarmVO vo = mapper.read(100L);
         vo.setAlarm_message_is_new((byte)0);
         mapper.update(vo);
+
     }
 
 }
