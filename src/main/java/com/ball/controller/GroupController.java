@@ -29,10 +29,12 @@ public class GroupController {
     private GroupMessageService messageService;
 
     @GetMapping("/list")
-    public String group(GroupVO group, Model model) {
+    public String group(Criteria cri, Model model) {
         System.out.println("그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
-        model.addAttribute("group",groupService.allRead(group));
+        model.addAttribute("group", groupService.allRead(cri));
+        System.out.println("cri가 들어오나 " +cri);
+
         return "group/groupList";
     }
 
@@ -58,7 +60,7 @@ public class GroupController {
         return "group/groupModify";
 
     }
-    @PostMapping("/modify")
+    @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);
         groupService.modify(group);
