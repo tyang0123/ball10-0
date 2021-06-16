@@ -23,20 +23,16 @@ public class GroupAjaxController {
     @Setter(onMethod_ = @Autowired)
     private GroupMessageService messageService;
 
-    @PostMapping(value = "/new",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = {MediaType.TEXT_PLAIN_VALUE} )
-    public ResponseEntity<String> insert(@RequestBody GroupMessageVO vo){
+    @PostMapping("/new")
+    public ResponseEntity<String> insert(GroupMessageVO vo){
         System.out.println("들어오는지 확인");
         log.info("ReplyVO: "+vo);
 
-//        int insertCount = messageService.groupMessageInsert(vo);
-//
-//        return insertCount == 1
-//                ? new ResponseEntity<>("success", HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        int insertCount = messageService.groupMessageInsert(vo);
 
-        return null;
+        return insertCount == 1
+                ? new ResponseEntity<>("success", HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
