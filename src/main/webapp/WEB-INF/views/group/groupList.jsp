@@ -23,7 +23,12 @@
                 </div>
             </c:forEach>
         </div>
+        <div>
+            <h5>입력</h5>
+<%--            <form action=""--%>
+        </div>
     </div>
+
 </body>
 </html>
 
