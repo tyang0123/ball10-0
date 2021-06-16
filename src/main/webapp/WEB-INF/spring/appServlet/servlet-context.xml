@@ -24,6 +24,9 @@
     <context:component-scan base-package="com.ball.controller" />
     <context:component-scan base-package="com.ball.service" />
 
+    <interceptors>
+        <beans:bean class="com.ball.interceptor.SessionInterceptor" />
+    </interceptors>
 
 
 </beans:beans>

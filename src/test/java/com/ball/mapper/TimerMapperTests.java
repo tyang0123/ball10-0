@@ -1,0 +1,50 @@
+package com.ball.mapper;
+
+
+import com.ball.vo.TimerVO;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.time.format.DateTimeFormatter;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@Log4j
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+public class TimerMapperTests {
+    @Setter(onMethod_= @Autowired)
+    private TimerMapper mapper;
+
+
+    @Test
+    public void testAutowired(){
+        System.out.println("---------------------------------");
+        System.out.println(mapper);
+    }
+
+    @Test
+    public void testInsertTimer(){
+        TimerVO vo = new TimerVO();
+        vo.setUser_id("user10");
+
+
+        System.out.println(mapper.insertTodayTimer(vo));
+        System.out.println(vo);
+    }
+
+    @Test
+    public void testSelectTodayTimer(){
+        TimerVO vo = new TimerVO();
+        vo.setUser_id("user10");
+        vo = mapper.selectTodayTimer(vo);
+        System.out.println(vo);
+        System.out.println(vo.getTimer_accumulated_day().toString());
+
+        vo.setUser_id("user20");
+        System.out.println(mapper.selectTodayTimer(vo));
+    }
+}

@@ -28,7 +28,7 @@ public class GroupMapperTests {
     @Test
     public void testInsertGroup(){
         GroupVO vo = new GroupVO();
-        vo.setUser_id_group_header("testmapper");
+        vo.setUser_id_group_header("testmapper4");
         vo.setGroup_name("테스트 그룹 이름");
         vo.setGroup_category("입시");
         vo.setGroup_is_secret(0);
