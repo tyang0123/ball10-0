@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapeer 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ball.mapper.AlarmMapper">
+    <insert id="insert" parameterType="com.ball.vo.AlarmVO">
+        insert into alarm_message(user_id,alarm_message_content,alarm_message_is_new,alarm_message_reg_date,alarm_message_mod_date) values(#{user_id},#{alarm_message_content},#{alarm_message_is_new},now(),now())
+    </insert>
+    <select id ="read" resultType="com.ball.vo.AlarmVO" parameterType="Long">
+        select * from alarm_message where alarm_message_id = #{alarm_message_id}
+    </select>
+    <select id ="getList" resultType="com.ball.vo.AlarmVO" parameterType="String">
+        select * from alarm_message where user_id = #{user_id}
+    </select>
+    <update id="update" parameterType="com.ball.vo.AlarmVO">
+        update alarm_message set alarm_message_is_new = #{alarm_message_is_new}, alarm_message_mod_date=now() where alarm_message_id = #{alarm_message_id}
+    </update>
+</mapper>
