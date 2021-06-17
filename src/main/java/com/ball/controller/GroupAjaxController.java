@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/group/ajax/*")
 @Slf4j
 public class GroupAjaxController {
@@ -24,7 +24,7 @@ public class GroupAjaxController {
     private GroupMessageService messageService;
 
     @PostMapping("/new")
-    public ResponseEntity<String> insert(GroupMessageVO vo){
+    public ResponseEntity<String> insert(@RequestBody GroupMessageVO vo){
         System.out.println("들어오는지 확인");
         log.info("ReplyVO: "+vo);
 
