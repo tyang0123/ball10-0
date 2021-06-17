@@ -10,21 +10,37 @@
 <div class="row">
     <div class="col-sm-12">
 
-        </head>
-        <body>
-        <button class="btn_show" style="padding:3px">show</button>
-        <button class="btn_hide" style="padding:3px">hide</button>
-        <div class="btn_word">Hello world!!!</div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="Alarm">
+            Launch static backdrop modal
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function (){
-        $('.btn_show').click(function(){
-            $('.btn_word').show();
-        });
-        $('.btn_hide').click(function(){
-            $('.btn_word').hide();
+        var modal = $(".modal");
+        $("#Alarm").click(function (){
+            modal.modal("show")
         });
 
     });
