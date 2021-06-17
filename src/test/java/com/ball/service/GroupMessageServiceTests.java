@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -30,5 +32,13 @@ public class GroupMessageServiceTests {
         vo.setGroup_message_content("서비스에서 테스트");
         service.groupMessageInsert(vo);
         System.out.println(vo);
+    }
+
+    @Test
+    public void testGroupMessageDelete(){
+        HashMap<String,Object> groupHash = new HashMap<>();
+        groupHash.put("user_id","user1");
+        groupHash.put("group_message_id",13L);
+        service.groupMessageDelete(groupHash);
     }
 }

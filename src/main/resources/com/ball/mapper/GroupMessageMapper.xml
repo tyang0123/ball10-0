@@ -14,4 +14,8 @@
         select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = 1;
     </select>
 
+    <delete id="deleteGroupMessage" parameterType="HashMap">
+        delete from group_message where group_message_id = #{group_message_id} and user_id = #{user_id}
+    </delete>
+
 </mapper>
