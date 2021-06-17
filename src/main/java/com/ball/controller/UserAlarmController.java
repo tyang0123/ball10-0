@@ -5,22 +5,21 @@ import com.ball.vo.UserVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("/ajax/user")
 public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService service;
 
-    @GetMapping("/user")
-    public void alarm(Model model){//userVo vo
-        model.addAttribute("user","user1");
-    }
+//    @GetMapping("/user")
+//    public void alarm(Model model){//userVo vo
+//        model.addAttribute("user","user1");
+//    }
 
     @ResponseBody
     @PostMapping(value = "/alarm") //userVo vo

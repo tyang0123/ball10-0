@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService{
             return true;
         return false;
     }
+
+    @Override
+    public String getUserNickname(String userID) {
+        return userMapper.selectUserNickNameByID(userID);
+    }
 }

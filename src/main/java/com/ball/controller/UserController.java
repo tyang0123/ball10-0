@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -72,7 +73,7 @@ public class UserController {
         //add user info to session
         session.setAttribute("userID", userVO.getUser_id());
         if(user_checked) { //로그인 상태 유지하면 userid를 쿠키에 저장함
-            //보안을 위해 추후에 db에 세션ID와 userid를 쿠키가 아닌 db에 저장해야하지만 우선 쿠키로 처리
+            //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
             //add user cookie
 
             userCookie = new Cookie("userCookie", userVO.getUser_id());
@@ -80,6 +81,7 @@ public class UserController {
             userCookie.setSecure(true);
             res.addCookie(userCookie);
 
+            //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
             JSESSIONID.setMaxAge(0);
             JSESSIONID = new Cookie("JSESSIONID",session.getId());
             JSESSIONID.setPath("/");
@@ -101,12 +103,8 @@ public class UserController {
 
     @GetMapping("/user")
     public String userGet(HttpServletResponse response, HttpServletRequest request
-            , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie){
-        System.out.println(request.getSession().getAttribute("userID"));
-        for (Cookie c : request.getCookies())
-            System.out.println(c.getName()+" + "+c.getValue()+" + "+c.getComment());
-
-        System.out.println("++++++++++++++++++++++"+timerCookie);
+            , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie
+            , Model model){
 
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
         //add timer cookie
@@ -126,6 +124,8 @@ public class UserController {
 
         for (Cookie c : request.getCookies())
             System.out.println(c.getName()+" + "+c.getValue()+" + "+c.getComment());
+
+        model.addAttribute("user_nickname",userService.getUserNickname(userID));
 
         return "user/user";
     }

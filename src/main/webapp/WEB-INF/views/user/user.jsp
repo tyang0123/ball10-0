@@ -15,7 +15,7 @@
             Launch static backdrop modal
         </button>
 
-        ${user} 안녕하세요
+        ${user_nickname} 안녕하세요
 
     </div>
 </div>
@@ -52,12 +52,16 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
+        var userID = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('userCookie'))
+                        .split('=')[1];
         $("#Alarm").click(function (){
             $.ajax({
                 type:"post",
-                url:"/user/alarm",
+                url:"/ajax/user/alarm",
                 data:{
-                    user:"${user}"
+                    user: userID
                 },
                 dataType:"json",
                 success : function (res){
@@ -77,9 +81,6 @@
                 },
                 error : (log)=>{alert("실패"+log)}
             })
-
-
-
 
         });
     });
