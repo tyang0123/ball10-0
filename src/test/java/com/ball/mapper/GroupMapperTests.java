@@ -3,6 +3,7 @@ package com.ball.mapper;
 
 import com.ball.vo.Criteria;
 import com.ball.vo.GroupVO;
+import com.ball.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
@@ -28,7 +29,8 @@ public class GroupMapperTests {
     @Test
     public void testInsertGroup(){
         GroupVO vo = new GroupVO();
-        vo.setUser_id_group_header("testmapper");
+
+        vo.setUser_id_group_header("user10");
         vo.setGroup_name("테스트 그룹 이름");
         vo.setGroup_category("입시");
         vo.setGroup_is_secret(0);
@@ -39,7 +41,7 @@ public class GroupMapperTests {
     }
     @Test
     public void testread(){
-        GroupVO vo = mapper.read("그룹이름1");
+        GroupVO vo = mapper.read(3L);
         System.out.println("===================");
         System.out.println(vo);
 
@@ -72,5 +74,19 @@ public class GroupMapperTests {
         for (GroupVO groupVO : mapper.selectGroupList(cri)) {
             System.out.println(groupVO);
         }
+    }
+
+    @Test
+    public void testUpdateUser(){
+        GroupVO vo = new GroupVO();
+        vo.setGroup_id(2L);
+        vo.setGroup_name("테스트 그룹 이름");
+        vo.setGroup_category("공부카테고리");
+        vo.setGroup_is_secret(0);
+//        vo.setGroup_password("1234");
+        vo.setGroup_person_count(7);
+        vo.setGroup_content("수정이 되나");
+
+        mapper.update(vo);
     }
 }
