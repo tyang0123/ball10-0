@@ -32,7 +32,7 @@
                 </thead>
                 <c:forEach items="${group}" var="group" end="${group.size()}">
                     <tr>
-                        <td>${group.group_id}</td>
+                        <td><a class="move" href="list/read/${group.group_id}">${group.group_id}</a></td>
                         <td><a class='move' href='${group.group_name}'>${group.group_name}
                         </a></td>
                         <td>${group.user_id_group_header}</td>

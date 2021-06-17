@@ -11,7 +11,11 @@
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
 
-    <select id="read" resultType="com.ball.vo.GroupVO">
+    <select id="allRead" resultType="com.ball.vo.GroupVO">
+        select * from group_table where group_id = #{group_id}
+    </select>
+
+    <select id="get" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_id = #{group_id}
     </select>
 

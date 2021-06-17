@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @AllArgsConstructor
 public class GroupController {
 
-//    private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
 
@@ -31,7 +30,7 @@ public class GroupController {
     @GetMapping("/list")
     public String group(Criteria cri, Model model) {
         System.out.println("그룹 전체 목록 조회");
-        model.addAttribute("list",messageService.groupMessageRead(1L));
+//        model.addAttribute("list",messageService.groupMessageRead(1L));
         model.addAttribute("group", groupService.allRead(cri));
         System.out.println("cri가 들어오나 " +cri);
 
@@ -67,5 +66,14 @@ public class GroupController {
 //        rttr.addAttribute("amount", cri.getAmount());
 //        rttr.addAttribute("criterionNumber", cri.getCriterionNumber());
         return "redirect:/group/list";
+    }
+
+
+    @GetMapping("list/read/{group_id}")
+    public String readGroup(@PathVariable("group_id") Long group_id,Model model){
+        System.out.println(group_id);
+        groupService.get(group_id);
+//        System.out.println(groupService.allRead(cri));
+        return "group/groupRead";
     }
 }

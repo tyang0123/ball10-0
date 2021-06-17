@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-// /group/read/{group_id}/ajax
-@RequestMapping("/read/ajax/")
+// /group/list/read/{group_id}/ajax
+@RequestMapping("group/list/read/{group_id}/ajax")
 @Slf4j
 public class GroupMessageAjaxController {
 
@@ -26,10 +26,9 @@ public class GroupMessageAjaxController {
 
     //메세지(댓글) 목록 확인
     @GetMapping("/list")
-    public ResponseEntity<List<GroupMessageVO>> readMessage(@RequestBody Long group_id){
+    public ResponseEntity<List<GroupMessageVO>> readMessage(@PathVariable("group_id") Long group_id){
         System.out.println("메세지 목록 확인");
-
-        return new ResponseEntity<>(messageService.groupMessageRead(1L), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.groupMessageRead(group_id), HttpStatus.OK);
     }
 
     @PostMapping("/new")

@@ -23,7 +23,7 @@ var messageService = (function (){
 
     function getList(param,callback,error){
         var group_id = param.group_id;
-        $.getJSON("/read/ajax/list"+group_id,
+        $.getJSON("group/list/read"+group_id+"/list",
             function (data){
             if(callback){
                 callback(data);

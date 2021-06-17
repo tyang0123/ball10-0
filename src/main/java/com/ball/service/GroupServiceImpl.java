@@ -2,6 +2,7 @@ package com.ball.service;
 
 import com.ball.mapper.GroupMapper;
 import com.ball.vo.Criteria;
+import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,5 @@ public class GroupServiceImpl implements GroupService{
     public Long remove(Long group_id) {
         return null;
     }
+
 }
