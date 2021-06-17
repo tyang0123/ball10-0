@@ -1,5 +1,6 @@
 package com.ball.service;
 
+import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -19,5 +20,15 @@ public class GroupMessageServiceTests {
     @Test
     public void testGroupMessageRead(){
         System.out.println(service.groupMessageRead(1L));
+    }
+
+    @Test
+    public void testGroupMessageInsert(){
+        GroupMessageVO vo = new GroupMessageVO();
+        vo.setGroup_id(1L);
+        vo.setUser_id("user1");
+        vo.setGroup_message_content("서비스에서 테스트");
+        service.groupMessageInsert(vo);
+        System.out.println(vo);
     }
 }

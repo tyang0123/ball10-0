@@ -25,7 +25,6 @@
             if (!$(event.target).closest('#navbarNavDropdown').length) {
                 $('.navbar-collapse').collapse('hide');
             }
-
         });
     </script>
 

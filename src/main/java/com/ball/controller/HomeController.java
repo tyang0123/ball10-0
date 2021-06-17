@@ -1,21 +1,25 @@
 package com.ball.controller;
 
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
+import com.ball.service.AlarmService;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
+
 public class HomeController {
+
 
     @RequestMapping("/")
     public String home(){
-        return "sample1";
+        return "sample";
     }
 
 
+
 }
+

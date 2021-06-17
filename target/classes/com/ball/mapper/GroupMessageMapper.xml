@@ -4,9 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ball.mapper.GroupMessageMapper">
+<!--    now() 함수로도 가능-->
     <insert id="insertGroupMessage" parameterType="com.ball.vo.GroupMessageVO">
         insert into group_message (group_id, user_id, group_message_content, group_message_reg_date, group_message_mod_date)
-        values(#{group_id},#{user_id},#{group_message_content}, now(), now())
+        values(#{group_id},#{user_id},#{group_message_content}, sysdate(), sysdate())
     </insert>
 
     <select id="readGroupMessage" resultType="com.ball.vo.GroupMessageVO">
