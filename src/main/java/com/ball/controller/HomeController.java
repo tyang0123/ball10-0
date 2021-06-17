@@ -12,19 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 
 public class HomeController {
-    @Setter(onMethod_=@Autowired)
-    private AlarmService service;
+
 
     @RequestMapping("/")
     public String home(){
         return "sample";
-    }
-
-    @GetMapping("/alarm")
-    public String alarm(Model model){
-        System.out.println("알람들어오나"+service.getTotal("user1"));
-        model.addAttribute("list",service.getTotal("user1"));
-        return "sample1";
     }
 
 
