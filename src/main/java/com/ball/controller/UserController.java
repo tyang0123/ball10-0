@@ -78,14 +78,14 @@ public class UserController {
             userCookie = new Cookie("userCookie", userVO.getUser_id());
             userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
             userCookie.setSecure(true);
-            userCookie.setHttpOnly(true);
-
             res.addCookie(userCookie);
 
             JSESSIONID.setMaxAge(0);
             JSESSIONID = new Cookie("JSESSIONID",session.getId());
             JSESSIONID.setPath("/");
             JSESSIONID.setMaxAge(60*60*24*180);
+            JSESSIONID.setHttpOnly(true);
+            JSESSIONID.setSecure(true);
             res.addCookie(JSESSIONID);
 
             session.setMaxInactiveInterval(60*60*24*180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)

@@ -16,7 +16,7 @@
 <script>
     $(document).ready(function(){
 
-        console.log(document.cookie)
+        console.log(document.cookie.split(";"))
 
     })//end document.ready
 </script>
