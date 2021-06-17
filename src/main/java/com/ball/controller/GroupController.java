@@ -4,8 +4,10 @@ package com.ball.controller;
 import com.ball.service.GroupService;
 import com.ball.vo.Criteria;
 import com.ball.vo.GroupVO;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import com.ball.service.GroupMessageService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,19 +18,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/group/*")
 @Slf4j
+@AllArgsConstructor
 public class GroupController {
 
-    @Setter(onMethod_ = @Autowired)
-    private GroupMessageService messageService;
+//    private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
 
+    @Setter(onMethod_=@Autowired)
+    private GroupMessageService messageService;
+
     @GetMapping("/list")
-    public String group(GroupVO group, Model model) {
+    public String group(Criteria cri, Model model) {
         System.out.println("그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
-        //model.addAttribute("group",groupService.allRead(group));
-        return "groupAjaxList";
+        model.addAttribute("group", groupService.allRead(cri));
+        System.out.println("cri가 들어오나 " +cri);
+
+        return "group/groupList";
     }
 
     @GetMapping("/create")
@@ -44,7 +51,7 @@ public class GroupController {
         return "redirect:/group/list";
 
     }
-    @GetMapping("/modify")
+    @GetMapping({"/modify"})
     //@RequestParam("group_id") Long group_id
     public String get( Model model, @ModelAttribute("cri")Criteria cri){
         System.out.println("게시글 컨트롤러에서 데이터 하나 조회 / ");
@@ -53,7 +60,7 @@ public class GroupController {
         return "group/groupModify";
 
     }
-    @PostMapping("/modify")
+    @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);
         groupService.modify(group);

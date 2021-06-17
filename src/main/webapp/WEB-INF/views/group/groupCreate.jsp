@@ -9,7 +9,7 @@
             <div class="panel-heading"> 그룹 생성 </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <form role="form" action="/group/create" method="post">
+                <form id="formBtn" role="form" action="/group/create" method="post">
                     <div class="form-group">
                         <label for="group_name">
                             <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
@@ -77,5 +77,8 @@
             console.log("여기가 들어오나",valueClick)
         }
     }
+    $(".btn-danger").click(function (){
+        $("#formBtn").attr("action", "/group/list").submit();
+    })
 </script>
 
