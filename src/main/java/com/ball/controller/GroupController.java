@@ -3,20 +3,20 @@ package com.ball.controller;
 
 import com.ball.service.GroupService;
 import com.ball.vo.Criteria;
+import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 import com.ball.service.GroupMessageService;
-import com.ball.vo.GroupMessageVO;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/group/*")
@@ -27,9 +27,6 @@ public class GroupController {
     private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
-
-    @Setter(onMethod_=@Autowired)
-    private GroupMessageService messageService;
 
     @GetMapping("/list")
     public String group(GroupVO group, Model model) {
@@ -52,7 +49,7 @@ public class GroupController {
         return "redirect:/group/list";
 
     }
-    @GetMapping({"/modify"})
+    @GetMapping("/modify")
     //@RequestParam("group_id") Long group_id
     public String get( Model model, @ModelAttribute("cri")Criteria cri){
         System.out.println("게시글 컨트롤러에서 데이터 하나 조회 / ");

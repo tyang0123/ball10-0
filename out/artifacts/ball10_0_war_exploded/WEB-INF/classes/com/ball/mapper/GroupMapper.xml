@@ -6,12 +6,13 @@
 <mapper namespace="com.ball.mapper.GroupMapper">
     <insert id="insertGroup" parameterType="com.ball.vo.GroupVO">
         insert into group_table (user_id_group_header, group_name, group_category, group_is_secret,
-                                group_person_count, group_content, group_reg_date, group_mod_date)
+                                 group_password, group_person_count, group_content, group_reg_date, group_mod_date)
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
+
     <select id="read" resultType="com.ball.vo.GroupVO">
-        select * from group_table where group_name = #{group_name}
+        select * from group_table where group_id = #{group_id}
     </select>
 
     <select id="selectGroupList" resultType="com.ball.vo.GroupVO">
