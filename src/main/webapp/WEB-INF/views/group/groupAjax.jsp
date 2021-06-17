@@ -21,17 +21,9 @@
                     <h3 class="modal-title">그룹 메세지</h3>
                     <button id="modal_close" class="btn-close"></button>
                 </div>
+
                 <div class="modal-body">
-                    <c:forEach var="list" items="${list}">
-                        <p>
-                                ${list.user_nickname}
-                        <div class="p-2 bg-light border">
-                                ${list.group_message_content}
-                                ${list.group_message_reg_date}
-                        <button id = "remove_message" class="btn btn-outline-danger btn-sm">삭제</button>
-                        </div>
-                        </p>
-                    </c:forEach>
+                    <button class = "remove_message btn btn-outline-danger btn-sm">삭제</button>
                     <form id = "operForm" action="/group/ajax/new" method="post">
                         <div class = "md-3">
                             <label for = "message-text" class="col-form-label"> 입력창 </label>
@@ -60,21 +52,17 @@
             $('.modal').modal("hide")
         })
         $("#message_submit").click(function (){
-            operForm.attributes("action","/group/ajax/new").submit();
+            //operForm.attributes("action","/group/ajax/new").submit();
+            messageService.add(
+                {group_id:1,user_id:"user1",group_message_content:"ajax test"},
+                function (result){
+                    alert("RESULT: "+result);
+                }
+            );
         });
-
-        console.log("=============")
-        console.log("JS TEST")
-
-        // messageService.add(
-        //     {group_id:1,user_id:"user1",group_message_content:"ajax test"},
-        //     function (result){
-        //         alert("RESULT: "+result);
-        //     }
-        // );
-
-        $("#remove_message").click(function (){
-            messageService.remove(23,function (result){
+        $('.remove_message').click(function (){
+            console.log("클릭은 되는지")
+            messageService.remove(26,function (result){
                 console.log(result);
                 if(result=="success"){
                     alert("REMOVED");
@@ -83,6 +71,8 @@
                 alert('ERROR...');
             });
         })
+        console.log("=============")
+        console.log("JS TEST")
     })
 </script>
 

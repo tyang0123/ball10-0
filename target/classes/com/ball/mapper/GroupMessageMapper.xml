@@ -11,11 +11,12 @@
     </insert>
 
     <select id="readGroupMessage" resultType="com.ball.vo.GroupMessageVO">
-        select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = 1;
+        select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = #{group_message.group_id}
     </select>
 
+<!--    추후에 group_id-->
     <delete id="deleteGroupMessage" parameterType="HashMap">
-        delete from group_message where user_id = #{user_id} and group_message_id = #{group_message_id}
+        delete from group_message where group_message_id = #{group_message_id}
     </delete>
 
 </mapper>

@@ -3,20 +3,15 @@ package com.ball.controller;
 
 import com.ball.service.GroupService;
 import com.ball.vo.Criteria;
-import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
 import lombok.Setter;
 import com.ball.service.GroupMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/group/*")
@@ -33,7 +28,7 @@ public class GroupController {
         System.out.println("그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
         //model.addAttribute("group",groupService.allRead(group));
-        return "group/groupList";
+        return "groupAjaxList";
     }
 
     @GetMapping("/create")
