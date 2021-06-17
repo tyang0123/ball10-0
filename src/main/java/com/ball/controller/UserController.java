@@ -8,17 +8,16 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -54,33 +53,44 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginPost(HttpSession session, UserVO userVO, RedirectAttributes rAttr
-                    , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie
-                    , HttpServletResponse res){
-        log.info("register post...............................");
+    public String loginPost(UserVO userVO, boolean user_checked
+            , RedirectAttributes rAttr, HttpSession session
+            ,@CookieValue(name = "userCookie", required = false) Cookie userCookie
+            ,@CookieValue(name = "JSESSIONID", required = false) Cookie JSESSIONID
+            , HttpServletResponse res){
+        log.info("login post..............................."+user_checked);
         //login-password DB check
         boolean checkLoginResult = userService.userLoginCheck(userVO.getUser_id(), userVO.getUser_password());
-        if(checkLoginResult){ // login-password corresponded DB
-            //add user info session
-            session.setAttribute("userID", userVO.getUser_id());
 
-            //add cookie
-            if(timerCookie == null) {
-                timerCookie = new Cookie("timerCookie", "0");
-                timerCookie.setMaxAge(remainSecondsFrom3AM());
-                timerCookie.setSecure(false);
-                res.addCookie(timerCookie);
-                TimerVO timerVO = timerService.addNewTimerToDataBaseIfNotExist(userVO.getUser_id());
-                if(timerVO.getTimer_accumulated_day() != null){
-                    timerCookie.setValue(timerVO.getTimer_accumulated_day().toString());
-                }
-            }
-
-            System.out.println("=============="+timerCookie);
-            return "redirect:/user/user";
+        if(! checkLoginResult){// id, password 불일치시 다시 login
+            log.info("...........redirect fail");
+            rAttr.addFlashAttribute("errorMessage", "fail");
+            return "redirect:/user/login";
         }
 
-        rAttr.addFlashAttribute("errorMessage", "fail");
+
+        //add user info to session
+        session.setAttribute("userID", userVO.getUser_id());
+        if(user_checked) { //로그인 상태 유지하면 userid를 쿠키에 저장함
+            //보안을 위해 추후에 db에 세션ID와 userid를 쿠키가 아닌 db에 저장해야하지만 우선 쿠키로 처리
+            //add user cookie
+
+            userCookie = new Cookie("userCookie", userVO.getUser_id());
+            userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
+            userCookie.setSecure(true);
+            userCookie.setHttpOnly(true);
+
+            res.addCookie(userCookie);
+
+            JSESSIONID.setMaxAge(0);
+            JSESSIONID = new Cookie("JSESSIONID",session.getId());
+            JSESSIONID.setPath("/");
+            JSESSIONID.setMaxAge(60*60*24*180);
+            res.addCookie(JSESSIONID);
+
+            session.setMaxInactiveInterval(60*60*24*180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
+        }
+        rAttr.addFlashAttribute("successLogin", "success");
         return "redirect:/user/login";
     }
 
@@ -90,7 +100,33 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public void userGet(){
+    public String userGet(HttpServletResponse response, HttpServletRequest request
+            , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie){
+        System.out.println(request.getSession().getAttribute("userID"));
+        for (Cookie c : request.getCookies())
+            System.out.println(c.getName()+" + "+c.getValue()+" + "+c.getComment());
 
+        System.out.println("++++++++++++++++++++++"+timerCookie);
+
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        //add timer cookie
+        if(timerCookie == null) {
+            timerCookie = new Cookie("timerCookie", "00:00:00");
+        }
+        timerCookie.setMaxAge(remainSecondsFrom3AM());
+        timerCookie.setSecure(false);
+        TimerVO timerVO = timerService.addNewTimerToDataBaseIfNotExist(userID);
+        if(timerVO != null && timerVO.getTimer_accumulated_day() != null){
+            System.out.println("get TimerVO from DB: "+timerVO);
+            timerCookie.setValue(timerVO.getTimer_accumulated_day().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        }
+        response.addCookie(timerCookie);
+
+        System.out.println("=============="+timerCookie);
+
+        for (Cookie c : request.getCookies())
+            System.out.println(c.getName()+" + "+c.getValue()+" + "+c.getComment());
+
+        return "user/user";
     }
 }
