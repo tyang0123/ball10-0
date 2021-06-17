@@ -1,8 +1,7 @@
-package com.ball.mapper;
+package com.ball.service;
 
 import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,29 +12,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class GroupMessageMapperTests {
-    @Setter(onMethod_= @Autowired)
-    private GroupMessageMapper mapper;
+public class GroupMessageServiceTests {
+
+    @Setter(onMethod_=@Autowired)
+    private GroupMessageService service;
 
     @Test
-    public void testAutowired(){
-        System.out.println(mapper);
+    public void testGroupMessageRead(){
+        System.out.println(service.groupMessageRead(1L));
     }
 
     @Test
-    public void testInsertGroupMessage(){
+    public void testGroupMessageInsert(){
         GroupMessageVO vo = new GroupMessageVO();
-
         vo.setGroup_id(1L);
         vo.setUser_id("user1");
-        vo.setGroup_message_content("테스트로 넣습니다.");
-
-        System.out.println(mapper.insertGroupMessage(vo));
-    }
-
-    @Test
-    public void testReadGroupMessage(){
-        mapper.readGroupMessage(1L);
-        System.out.println(mapper.readGroupMessage(1L));
+        vo.setGroup_message_content("서비스에서 테스트");
+        service.groupMessageInsert(vo);
+        System.out.println(vo);
     }
 }
