@@ -19,7 +19,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">그룹 메세지</h3>
-                    <button id="modal_close" class="btn-close">닫기</button>
+                    <button id="modal_close" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <c:forEach var="list" items="${list}">
@@ -28,6 +28,7 @@
                         <div class="p-2 bg-light border">
                                 ${list.group_message_content}
                                 ${list.group_message_reg_date}
+                        <button class="btn btn-outline-danger">삭제</button>
                         </div>
                         </p>
                     </c:forEach>
@@ -65,10 +66,12 @@
         console.log("=============")
         console.log("JS TEST")
 
-        messageService.add(
-            {}
-        )
-
+        // messageService.add(
+        //     {group_id:1,user_id:"user1",group_message_content:"ajax test"},
+        //     function (result){
+        //         alert("RESULT: "+result);
+        //     }
+        // );
     })
 </script>
 
