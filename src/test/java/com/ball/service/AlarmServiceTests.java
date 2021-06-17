@@ -30,7 +30,8 @@ public class AlarmServiceTests {
         System.out.println(vo);
     }
     @Test
-    public void testTotal(){
+    public void testTotal()
+    {
         service.getTotal("user1").forEach(i -> System.out.println(i));
     }
     @Test
