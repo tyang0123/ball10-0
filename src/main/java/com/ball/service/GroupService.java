@@ -12,5 +12,7 @@ public interface GroupService {
     public void modify (GroupVO group);     //수정
     public Long remove(Long group_id);      //삭제
 
+    public int getTotal(Criteria cri);
+
 
 }

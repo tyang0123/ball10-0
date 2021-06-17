@@ -47,6 +47,7 @@ public class GroupMapperTests {
 
     }
 
+
     @Test
     public void testSelectGroupList(){
         Criteria cri = new Criteria();
@@ -88,5 +89,13 @@ public class GroupMapperTests {
         vo.setGroup_content("수정이 되나");
 
         mapper.update(vo);
+    }
+
+    @Test
+    public void testCount(){
+        Criteria cri = new Criteria();
+        mapper.getTotalCount(cri);
+
+        System.out.println("전체 갯수는 ? :" + mapper.getTotalCount(cri));
     }
 }

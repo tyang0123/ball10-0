@@ -19,8 +19,12 @@ public class Criteria {
     public Criteria(){
         this(0L, 20);
     }
+
     public Criteria(Long criterionNumber, int amount){
         this.criterionNumber = criterionNumber;
         this.amount = amount;
+    }
+    public String[] getTypeArr(){
+        return category == null ? new String[] {} : category.split("");
     }
 }

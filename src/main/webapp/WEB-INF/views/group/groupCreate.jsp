@@ -14,6 +14,10 @@
                         <label for="group_name">
                             <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
                         </label>
+                        <div class="form-group">
+                            <label for="user_id_group_header">방장</label>
+                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="group_category">그룹 카테고리</label><br>

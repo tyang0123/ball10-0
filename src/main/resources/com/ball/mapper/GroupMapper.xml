@@ -10,11 +10,29 @@
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
+    <sql id="criteria">
+        <trim prefix="(" suffix=") AND  " prefixOverrides="OR">
+            <foreach item="category" collection="typeArr">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="category=='N'.toString()">
+                            group_name like '%'||#{keyword} ||'%'
+                        </when>
+                        <when test="category=='C'.toString()">
+                            group_category like '%'||#{keyword} ||'%'
+                        </when>
+                        <when test="category=='H'.toString()">
+                            user_id_group_header like '%'||#{keyword} ||'%'
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
 
     <select id="read" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_id = #{group_id}
     </select>
-
     <select id="selectGroupList" resultType="com.ball.vo.GroupVO">
         select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header,
         g.group_name, g.group_category, g.group_is_secret, count(gr.user_id) as group_join_person_number,
@@ -46,4 +64,7 @@
                                group_mod_date = sysdate()
             where group_id = #{group_id}
     </update>
+    <select id="getTotalCount" resultType="int">
+        select count(*) from group_table where group_id > 0
+    </select>
 </mapper>

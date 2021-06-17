@@ -12,8 +12,14 @@
 
 
                     <div class="form-group">
-                        <label for="group_id">번호</label>
+                        <label for="group_id">번호
                         <input class="form-control" name="group_id" id="group_id" value="${group.group_id}" readonly="readonly">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="user_id_group_header">그룹장
+                            <input class="form-control" name="group_id" id="user_id_group_header" value="${group.user_id_group_header}" readonly="readonly">
+                        </label>
                     </div>
                     <div class="form-group">
                         <label for="group_name">
@@ -32,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="group_is_secret">비밀방
-                            <input type="checkbox"  name="group_is_secret" id="group_is_secret" onclick="checkClick()" />
+                            <input type="checkbox"  name="group_is_secret" id="group_is_secret" onclick="checkClick()" readonly="readonly"/>
                             </label>
 
                     </div>
@@ -74,28 +80,7 @@
         </div> <!-- end panel -->
     </div> <!-- col-lg-12 -->
 </div> <!-- row -->
-<%--<script type="text/javascript">
-    $(document).ready(function(){
-        var formObj = $("form");
-        $("button").click(function(e){
-            e.preventDefault(); //이벤트 잠시 멈춤
-            var operation = $(this).data("oper");//위의 data- 이후의 값 추출
-            console.log(operation);
-            if(operation==='remove'){
-                $("form").attr("action" ,"/board/remove").submit();
-            } else if(operation ==='list'){
-                $("form").attr("action" ,"/board/list").attr("method", "get")
-                var pageNumTag = $("input[name='pageNum']").clone(); //복제하여 저장함
-                var amountTag = $("input[name='amount']").clone(); //복제하여 저장함
-                var keywordTag = $("input[name='keyword']").clone();
-                var typeTag = $("input[name='type']").clone();
-                formObj.empty().append(pageNumTag).append(amountTag)
-                    .append(keywordTag).append(typeTag).submit();
-            }
-            formObj.submit();
-        });
-    });
-</script>--%>
+
 <script>
     function checkClick(){
         var valueClick =0;
