@@ -22,8 +22,28 @@ var messageService = (function (){
         })
     }
 
+    // function remove(group_id,callback,error){
+    //     $.ajax({
+    //         type : 'delete',
+    //         url : '/group/ajax/message/'+group_id,
+    //         data : JSON.stringify(delete),
+    //         contentType : "application/json; charset=utf-8",
+    //         success:function (deleteResult,status,xhr){
+    //             if(callback){
+    //                 callback(deleteResult);
+    //             }
+    //         },
+    //         error:function (xhr,status,er){
+    //             if(error){
+    //                 error(er);
+    //             }
+    //         }
+    //     });
+    // }
+
     return {
-        add:add
+        add:add,
+        //remove:remove
     };
 
 })();

@@ -15,7 +15,7 @@
     </select>
 
     <delete id="deleteGroupMessage" parameterType="HashMap">
-        delete from group_message where user_id = #{user_id} and group_message_id = #{group_message_id}
+        delete from group_message where group_message_id = #{group_message_id} and user_id = #{user_id}
     </delete>
 
 </mapper>

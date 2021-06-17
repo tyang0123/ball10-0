@@ -77,10 +77,6 @@
                 },
                 error : (log)=>{alert("실패"+log)}
             })
-
-
-
-
         });
     });
     const displayTime = (timeValue)=>{
