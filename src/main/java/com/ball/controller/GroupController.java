@@ -71,6 +71,7 @@ public class GroupController {
         model.addAttribute("group", groupService.get(group_id));
         return "group/groupRead";
     }
+
     @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);

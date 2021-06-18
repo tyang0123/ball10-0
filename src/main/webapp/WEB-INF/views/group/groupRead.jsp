@@ -40,12 +40,43 @@
 <%--                    <input type='hidden' name='type' value='<c:out value ="${cri.type}"/>'>--%>
 <%--                    <input type='hidden' name='keyword' value='<c:out value ="${cri.keyword}"/>'>--%>
                 </form>
+
+
+                <button id="modalShowButton">그룹메세지</button>
+                <%--모달시작--%>
+                <div class="modal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">그룹 메세지</h3>
+                                <div class="groupMessageTable"></div>
+                                <button id="modal_close" class="btn-close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <button class = "remove_message btn btn-outline-danger btn-sm">삭제</button>
+                                <form id = "sendGroupMessage" action="/group/ajax/new" method="post">
+                                    <div class = "md-3">
+                                        <label for = "message-text" class="col-form-label"> 입력창 </label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="message_submit" class="btn btn-primary">전송</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div> <!-- end panel-body -->
         </div> <!-- end panel -->
     </div> <!-- col-lg-12 -->
 </div> <!-- row -->
 <%@ include file="../includes/footer.jsp" %>
 
+<script type="text/javascript" src="/resources/js/message.js"></script>
 <script>
     $(document).ready(function (){
         $(".btn-default").click(function (){
@@ -54,6 +85,17 @@
         $(".btn-info").click(function (){
             $(operForm).find("#group_id").remove();
             $(operForm).attr("action", "/group/list").submit();
+        })
+
+        var group_id = '${group.group_id}'
+
+        $("#modalShowButton").click(function (){
+            $('.modal').modal("show")
+            console.log(messageService.getList(group_id));
+
+        })
+        $("#modal_close").click(function (){
+            $('.modal').modal("hide")
         })
     })
 </script>

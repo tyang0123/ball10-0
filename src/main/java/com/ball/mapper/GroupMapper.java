@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface GroupMapper {
     public void insertGroup(GroupVO vo);
-    public GroupVO read(@Param("group_id")  Long group_id); //하나만
+    public GroupVO readGroup(Long group_id); //하나만
     public List<GroupVO> selectGroupList(Criteria cri); // 그룹 리스트 조회
-    public int update(GroupVO vo);
+    public int updateGroup(GroupVO vo);
 
     public int getTotalCount(Criteria cri);
 }
