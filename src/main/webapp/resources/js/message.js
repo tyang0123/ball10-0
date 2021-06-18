@@ -34,21 +34,17 @@ var messageService = (function (){
     //     });
     // }
 
-    function getList(group_id){
+    function getList(group_id,callback){
         console.log('들어오는지 확인 : ',group_id);
-        let result;
         $.ajax({
-            data : {"group_id":group_id},
             url:'/group/read/ajax/list/?group_id='+group_id,
             type:'GET',
-            dataType: "html",
+            dataType: "json",
             success:function (data){
-                result = data;
+                callback(data)
             },
             error: (log)=>{alert("실패"+log)}
         });
-        console.log("리턴값: "+result);
-        return result
     }
 
     function remove(group_message_id,callback,error){

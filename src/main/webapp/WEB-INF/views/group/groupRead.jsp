@@ -49,18 +49,16 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h3 class="modal-title">그룹 메세지</h3>
-                                <div class="groupMessageTable"></div>
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
-
                             <div class="modal-body">
-                                <button class = "remove_message btn btn-outline-danger btn-sm">삭제</button>
-                                <form id = "sendGroupMessage" action="/group/ajax/new" method="post">
-                                    <div class = "md-3">
-                                        <label for = "message-text" class="col-form-label"> 입력창 </label>
-                                        <textarea class="form-control" id="message-text"></textarea>
+                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
+                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
+                                    <div class = 'md-3'>";
+                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>";
+                                        <textarea class='form-control' id='message-text'></textarea>";
                                     </div>
-                                </form>
+                                </form>";
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" id="message_submit" class="btn btn-primary">전송</button>
@@ -91,9 +89,24 @@
 
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
-            console.log(messageService.getList(group_id));
-
+            messageService.getList(group_id,function(result){
+                for(var i = 0; i<result.length; i++){
+                    var text = "";
+                    // text += "<button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
+                    // text += "<form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
+                    // text += "<div class = 'md-3'>";
+                    // text += "<label for = 'message-text' class='col-form-label'> 입력창 </label>";
+                    // text += "<textarea class='form-control' id='message-text'></textarea>";
+                    // text += "</div></form>";
+                    // $('.modal-body').html(text);
+                }
+            });
         })
+
+        $(".remove_message").click(function (){
+            console.log("삭제 버튼 클릭")
+        })
+
         $("#modal_close").click(function (){
             $('.modal').modal("hide")
         })
