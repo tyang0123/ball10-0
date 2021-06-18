@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/group/ajax/")
+@RequestMapping("/ajax/group/*")
 @Slf4j
 public class GroupAjaxController {
 
@@ -28,8 +28,8 @@ public class GroupAjaxController {
         System.out.println("들어오는지 확인");
         log.info("ReplyVO: "+vo);
 
-        int insertCount = messageService.groupMessageInsert(vo);
-
+//        int insertCount = messageService.groupMessageInsert(vo);
+        int insertCount = 0;
         return insertCount == 1
                 ? new ResponseEntity<>("success", HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,6 +56,4 @@ public class GroupAjaxController {
                 ? new ResponseEntity<>("success",HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }

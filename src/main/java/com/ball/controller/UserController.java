@@ -16,12 +16,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 @Controller
 @Slf4j
@@ -92,13 +89,14 @@ public class UserController {
 
             session.setMaxInactiveInterval(60*60*24*180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
         }
+
         rAttr.addFlashAttribute("successLogin", "success");
         return "redirect:/user/login";
     }
 
     @GetMapping("/create")
     public String temp(){
-        return "redirect:/";
+        return "user/create";
     }
 
     @GetMapping("/user")
@@ -120,12 +118,10 @@ public class UserController {
         }
         response.addCookie(timerCookie);
 
-        System.out.println("=============="+timerCookie);
-
-        for (Cookie c : request.getCookies())
-            System.out.println(c.getName()+" + "+c.getValue()+" + "+c.getComment());
-
+        // user nickname DB에서 가져오기
         model.addAttribute("user_nickname",userService.getUserNickname(userID));
+
+
 
         return "user/user";
     }
