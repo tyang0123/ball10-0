@@ -1,6 +1,7 @@
 package com.ball.service;
 
 import com.ball.mapper.GroupMapper;
+import com.ball.vo.Criteria;
 import com.ball.vo.GroupVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public List<GroupVO> allRead(GroupVO group) {
-        return null;
+    public List<GroupVO> allRead(Criteria cri) {
+        return mapper.selectGroupList(cri);
     }
 
     @Override
@@ -36,5 +37,11 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Long remove(Long group_id) {
         return null;
+    }
+
+    @Override
+    public int getTotal(Criteria cri) {
+        System.out.println("서비스에서 총 데이터 갯수는 : "+ cri);
+        return mapper.getTotalCount(cri);
     }
 }

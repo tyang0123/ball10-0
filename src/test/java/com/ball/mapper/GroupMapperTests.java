@@ -46,6 +46,7 @@ public class GroupMapperTests {
 
     }
 
+
     @Test
     public void testSelectGroupList(){
         Criteria cri = new Criteria();
@@ -62,14 +63,15 @@ public class GroupMapperTests {
         }
 
         System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        cri.setCategory("토익");
+        System.out.println("카테고리에 들어오나");
+        cri.setCategory("자격증");
         for (GroupVO groupVO : mapper.selectGroupList(cri)) {
             System.out.println(groupVO);
         }
 
         System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        cri.setKeyword("1");
-        cri.setCategory(null);
+        cri.setKeyword("댕댕");
+        cri.setCategory("취업");
         for (GroupVO groupVO : mapper.selectGroupList(cri)) {
             System.out.println(groupVO);
         }
@@ -87,5 +89,13 @@ public class GroupMapperTests {
         vo.setGroup_content("수정이 되나");
 
         mapper.update(vo);
+    }
+
+    @Test
+    public void testCount(){
+        Criteria cri = new Criteria();
+        mapper.getTotalCount(cri);
+
+        System.out.println("전체 갯수는 ? :" + mapper.getTotalCount(cri));
     }
 }
