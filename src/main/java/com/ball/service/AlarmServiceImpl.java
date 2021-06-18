@@ -29,7 +29,13 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
-    public void modify(AlarmVO alarm) {
-        mapper.update(alarm);
+    public void modify(Long alarm_message_id) {
+        AlarmVO vo = mapper.read(alarm_message_id);
+        mapper.update(vo.getAlarm_message_id());
+    }
+
+    @Override
+    public String alarmCount(String user_id) {
+        return mapper.count(user_id);
     }
 }
