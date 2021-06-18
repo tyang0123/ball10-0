@@ -2,7 +2,6 @@ package com.ball.service;
 
 import com.ball.mapper.GroupMapper;
 import com.ball.vo.Criteria;
-import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +39,9 @@ public class GroupServiceImpl implements GroupService{
         return null;
     }
 
+    @Override
+    public int getTotal(Criteria cri) {
+        System.out.println("서비스에서 총 데이터 갯수는 : "+ cri);
+        return mapper.getTotalCount(cri);
+    }
 }

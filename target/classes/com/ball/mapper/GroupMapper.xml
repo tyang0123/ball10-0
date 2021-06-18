@@ -14,7 +14,6 @@
     <select id="read" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_id = #{group_id}
     </select>
-
     <select id="selectGroupList" resultType="com.ball.vo.GroupVO">
         select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header,
         g.group_name, g.group_category, g.group_is_secret, count(gr.user_id) as group_join_person_number,
@@ -24,7 +23,7 @@
         left outer join group_user_relationship gr on gr.group_id = g.group_id
         <where>
             <if test="category != null">
-                g.group_category like #{category}
+                g.group_category like CONCAT('%',#{category},'%')
             </if>
             <if test="keyword != null">
                 And (g.group_name like CONCAT('%',#{keyword},'%') or g.group_content like CONCAT('%',#{keyword},'%'))
@@ -46,4 +45,7 @@
                                group_mod_date = sysdate()
             where group_id = #{group_id}
     </update>
+    <select id="getTotalCount" resultType="int">
+        select count(*) from group_table where group_id > 0
+    </select>
 </mapper>

@@ -11,29 +11,52 @@
     <title>그룹</title>
 </head>
 <body>
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>스터디 그룹</h2>
-            <form id="operForm" action="/group/create" method="get">
+<div class="row">
+    <div class="col-sm-12">
+        <h2>스터디 그룹</h2>
+        <form id="operForm" action="/group/create" method="get">
             <button id="groupBtn" type="button" class="btn pull-right btn-warning">그룹 생성</button>
-            </form>
-            <table width="100%" class="table table-striped table-bordered table-hover"
-                   id="dataTables-example">
-                <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>그룹 이름</th>
-                    <th>그룹장</th>
-                    <th>카테고리</th>
-                    <th>참여인원</th>
-                    <th>생성일자</th>
+        </form>
+        <table width="100%" class="table table-striped table-bordered table-hover"
+               id="dataTables-example">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form id="searchForm" action="/group/list" method="get">
+                        <select name="category">
+                            <option value="" <c:out value="${cri.category ==null?'selected':''}"/>>---</option>
+                            <option value="토익"
+                                    <c:out value="${cri.category eq '토익'?'selected':''}"/>>토익</option>
+                            <option value="입시"
+                                    <c:out value="${cri.category eq '입시'?'selected':''}"/>>입시</option>
+                            <option value="자격증"
+                                    <c:out value="${cri.category eq '자격증'?'selected':''}"/>>자격증</option>
+                            <option value="이직"
+                                    <c:out value="${cri.category eq '이직'?'selected':''}"/>>이직</option>
 
-                </tr>
-                </thead>
-                <c:forEach items="${group}" var="group" end="${group.size()}">
+                        </select>
+                        <input type="text" name="keyword"/>
+<%--                        <input type="hidden" name="pageNum" value="${cri.pageNum}" >--%>
+<%--                        <input type="hidden" name="amount" value="${cri.amount}" >--%>
+<%--                        <input type="hidden" name="category" value="${cri.category}" >--%>
+<%--                        <input type="hidden" name="keyword" value="${cri.keyword}" >--%>
+
+                        <button class='btn btn-default'>검색</button>
+                    </form>
+                    <thead>
                     <tr>
-                        <td><a class="move" href="list/read/${group.group_id}">${group.group_id}</a></td>
-                        <td><a class='move' href='${group.group_name}'>${group.group_name}
+                        <th>번호</th>
+                        <th>그룹 이름</th>
+                        <th>그룹장</th>
+                        <th>카테고리</th>
+                        <th>참여인원</th>
+                        <th>생성일자</th>
+
+                    </tr>
+                    </thead>
+                    <c:forEach items="${group}" var="group" end="${group.size()}">
+                    <tr>
+                        <td>${group.group_id}</td>
+                        <td><a class='move' href='read?group_id=${group.group_id}'>${group.group_name}
                         </a></td>
                         <td>${group.user_id_group_header}</td>
                         <td>${group.group_category}</td>
@@ -47,18 +70,19 @@
                                 ${date2}
                         </td>
                     </tr>
-                </c:forEach>
-            </table>
-<%--            <c:forEach var="group" items="${group}">--%>
-<%--                <div>--%>
-<%--                    <row>--%>
-<%--                            ${list.user_nickname}--%>
-<%--                            ${list.group_message_reg_date}--%>
-<%--                    </row>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-        </div>
+                    </c:forEach>
+        </table>
+
+        <%--            <c:forEach var="group" items="${group}">--%>
+        <%--                <div>--%>
+        <%--                    <row>--%>
+        <%--                            ${list.user_nickname}--%>
+        <%--                            ${list.group_message_reg_date}--%>
+        <%--                    </row>--%>
+        <%--                </div>--%>
+        <%--            </c:forEach>--%>
     </div>
+</div>
 </body>
 </html>
 
@@ -69,6 +93,20 @@
             $("#operForm").attr("action", "/group/create").submit();
         })
     })
+    // var searchForm = $("#searchForm");
+    // $("#searchForm").click(function (e){
+    //     if(!searchForm.find("option:selected").val()){
+    //         alert("검색 종류를 선택하세요");
+    //         return false;
+    //     }
+    //     if(!searchForm.find("input[name='keyword']").val()){
+    //         alert("키워드를 입력하세요")
+    //         return false;
+    //     }
+    //     e.preventDefault();
+    //     searchForm.submit();
+    //
+    // })
 
 </script>
 

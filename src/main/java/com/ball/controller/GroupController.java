@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @AllArgsConstructor
 public class GroupController {
 
+//    private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
 
@@ -28,11 +29,18 @@ public class GroupController {
     private GroupMessageService messageService;
 
     @GetMapping("/list")
-    public String group(Criteria cri, Model model) {
-        System.out.println("그룹 전체 목록 조회");
-//        model.addAttribute("list",messageService.groupMessageRead(1L));
+    public String group(Long group_id ,Criteria cri, Model model) {
+        System.out.println("컨트롤러 그룹 전체 목록 조회");
+        model.addAttribute("list",messageService.groupMessageRead(1L));
+        model.addAttribute("search", groupService.get(group_id));
         model.addAttribute("group", groupService.allRead(cri));
-        System.out.println("cri가 들어오나 " +cri);
+        System.out.println("컨트롤러에 cri가 들어오나 " +cri);
+        int total = groupService.getTotal(cri);
+        System.out.println("토탈값이 들어오나 "+total);
+//        model.addAttribute("pageMaker", new Criteria(1L, total));
+        System.out.println("검색어가 들어오나 "+ cri.getKeyword());
+        System.out.println("카테고리가 들어오나 "+ cri.getCategory());
+
 
         return "group/groupList";
     }
@@ -46,34 +54,31 @@ public class GroupController {
     public String register(GroupVO group, RedirectAttributes rttr){
 
         groupService.register(group);
-        System.out.println("컨트롤러에 레지스터 값이 들어오나?"+group);
+        System.out.println("컨트롤러에 레지스터 값이 들어오나?"+group.getGroup_category());
+        rttr.addFlashAttribute("result", group.getGroup_id());
         return "redirect:/group/list";
 
     }
-    @GetMapping({"/modify"})
+    @GetMapping("/modify")
     //@RequestParam("group_id") Long group_id
-    public String get( Model model, @ModelAttribute("cri")Criteria cri){
-        System.out.println("게시글 컨트롤러에서 데이터 하나 조회 / ");
-        model.addAttribute("group", groupService.get(3L));
-        System.out.println("두 번째 모디파이"+groupService.get(3L));
+    public String get(Long group_id, Model model, @ModelAttribute("cri") Criteria cri){
+        System.out.println("게시글 컨트롤러에서 데이터 하나 수정 / ");
+        model.addAttribute("group", groupService.get(group_id));
         return "group/groupModify";
-
+    }
+    @GetMapping("/read")
+    public String read(Long group_id, Model model){
+        model.addAttribute("group", groupService.get(group_id));
+        return "group/groupRead";
     }
     @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);
         groupService.modify(group);
-//        rttr.addAttribute("amount", cri.getAmount());
-//        rttr.addAttribute("criterionNumber", cri.getCriterionNumber());
+        rttr.addAttribute("amount", cri.getAmount());
+        rttr.addAttribute("criterionNumber", cri.getCriterionNumber());
+        rttr.addAttribute("category", cri.getCategory());
+        rttr.addAttribute("keyword", cri.getKeyword());
         return "redirect:/group/list";
-    }
-
-
-    @GetMapping("list/read/{group_id}")
-    public String readGroup(@PathVariable("group_id") Long group_id,Model model){
-        System.out.println(group_id);
-        groupService.get(group_id);
-//        System.out.println(groupService.allRead(cri));
-        return "group/groupRead";
     }
 }

@@ -2,6 +2,7 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../includes/header.jsp" %>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <div class="row">
     <div class="col-lg-12">
@@ -14,6 +15,10 @@
                         <label for="group_name">
                             <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
                         </label>
+                        <div class="form-group">
+                            <label for="user_id_group_header">방장</label>
+                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="group_category">그룹 카테고리</label><br>
@@ -33,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="group_password"> 비밀번호
-                            <input class="form-control" name="group_password" id="group_password" placeholder="비밀번호" value="${group.group_password}"/>
+                            <input class="form-control" name="group_password" id="group_password" placeholder="비밀번호" value="${group.group_password}" readonly="readonly"/>
                         </label>
                     </div>
                     <div class="form-group">
@@ -74,11 +79,21 @@
         }else{
             valueClick=0;
             $("#group_is_secret").val(valueClick)
-            console.log("여기가 들어오나",valueClick)
+            console.log("클릭 풀면 여기가 들어오나",valueClick)
         }
     }
     $(".btn-danger").click(function (){
         $("#formBtn").attr("action", "/group/list").submit();
+    })
+
+    $("#group_is_secret").click(function (){
+        console.log("클릭이 되나?")
+        if($("#group_is_secret").is(':checked')){
+            console.log("클릭됐다.")
+            $("#group_password").attr('readonly',false)
+        }else{
+            $("#group_password").attr('readonly',true)
+        }
     })
 </script>
 
