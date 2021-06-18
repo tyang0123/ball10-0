@@ -65,8 +65,6 @@ public class UserController {
             rAttr.addFlashAttribute("errorMessage", "fail");
             return "redirect:/user/login";
         }
-
-
         //add user info to session
         session.setAttribute("userID", userVO.getUser_id());
         if(user_checked) { //로그인 상태 유지하면 userid를 쿠키에 저장함
@@ -112,9 +110,12 @@ public class UserController {
         timerCookie.setMaxAge(remainSecondsFrom3AM());
         timerCookie.setSecure(false);
         TimerVO timerVO = timerService.addNewTimerToDataBaseIfNotExist(userID);
-        if(timerVO != null && timerVO.getTimer_accumulated_day() != null){
+        if(timerVO != null && timerVO.getTimer_accumulated_day() != null){ //
             System.out.println("get TimerVO from DB: "+timerVO);
-            timerCookie.setValue(timerVO.getTimer_accumulated_day().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            timerCookie.setValue(timerVO.getTimer_id()+"-"
+                    +timerVO.getTimer_accumulated_day().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        }else{
+            timerCookie.setValue(timerVO.getTimer_id()+"-00:00:00");
         }
         response.addCookie(timerCookie);
 

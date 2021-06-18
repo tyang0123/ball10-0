@@ -29,4 +29,11 @@ public class TimerServiceImpl implements TimerService{
         timerMapper.insertTodayTimer(timerVO);
         return timerVO;
     }
+
+    @Override
+    public int modifyTimerAccumulatedDayTime(TimerVO vo) {
+        return timerMapper.updateAccumulatedTime(vo);
+    }
+
+
 }

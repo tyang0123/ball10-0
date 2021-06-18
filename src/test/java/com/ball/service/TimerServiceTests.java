@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,5 +38,13 @@ public class TimerServiceTests {
         System.out.println(diff/(1000*60*60));
 //        System.out.println( cal.get(Calendar.DATE)+" "+cal.get(Calendar.HOUR) +" "+cal.get(Calendar.MINUTE));
 
+    }
+
+    @Test
+    public void testTimeFormat(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime timer_time = LocalTime.parse("12:10:20", dtf);
+
+        System.out.println(timer_time.toString());
     }
 }

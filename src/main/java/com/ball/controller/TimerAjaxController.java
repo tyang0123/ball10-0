@@ -1,6 +1,7 @@
 package com.ball.controller;
 
 import com.ball.service.GroupMessageService;
+import com.ball.service.TimerService;
 import com.ball.vo.GroupMessageVO;
 import com.ball.vo.TimerVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,31 +28,31 @@ import java.util.List;
 @RequestMapping("/ajax/timer/*")
 @Slf4j
 public class TimerAjaxController {
+    @Setter(onMethod_=@Autowired )
+    private TimerService timerService;
 
+    @PutMapping(value = "/put/{timer_id}")
+    public ResponseEntity<String> timerUpdate(@PathVariable(value = "timer_id") Long timer_id
+            , @RequestBody String timer_date
+            , HttpSession session){
 
-    @PutMapping(value = "/put"
-        ,consumes = "application/json; charset=UTF-8;"
-        , produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public void insert(@RequestBody TimerVO vo){
-        log.info("TimerVO: "+vo.toString());
+        try{
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime timer_time = LocalTime.parse(timer_date, dtf);
 
-//        int insertCount = messageService.groupMessageInsert(vo);
-        int insertCount = 1;
-        return ;
-    }
+            TimerVO vo = new TimerVO();
 
-    @PostMapping(value = "/post"
-        ,consumes = "application/json; charset=UTF-8;"
-        , produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public void test(@RequestParam("timer_date") @JsonFormat(pattern = "YYYY-MM-DDTHH:mm:ss") LocalDateTime timer_date){
-        log.info(timer_date.toString());
+            vo.setTimer_id(timer_id);
+            vo.setTimer_accumulated_day(timer_time);
+            vo.setUser_id(String.valueOf(session.getAttribute("userID")));
 
-    }
+            log.info("TimerVO: "+vo);
 
-    @PutMapping(value = "/newput"
-            ,consumes = "application/json; charset=UTF-8;"
-            , produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public void test2(@RequestBody String str){
-        log.info(str);
+            return timerService.modifyTimerAccumulatedDayTime(vo) == 1?
+                    new ResponseEntity<String>("success", HttpStatus.OK)
+                    : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e){
+            return new ResponseEntity<String>("parsing error", HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }

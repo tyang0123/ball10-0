@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,5 +47,15 @@ public class TimerMapperTests {
 
         vo.setUser_id("user20");
         System.out.println(mapper.selectTodayTimer(vo));
+    }
+
+    @Test
+    public void testUpdateAccumulatedTime(){
+        TimerVO vo = new TimerVO();
+        vo.setUser_id("user1");
+        vo.setTimer_id(1L);
+        vo.setTimer_accumulated_day(LocalTime.of(10,20,10));
+
+        System.out.println(mapper.updateAccumulatedTime(vo));
     }
 }

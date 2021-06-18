@@ -16,7 +16,8 @@
 
 
     <update id="updateAccumulatedTime">
-
+        update timer set timer_accumulated_day = #{timer_accumulated_day}
+        where timer_id = #{timer_id} and user_id =  #{user_id}
     </update>
 
 </mapper>

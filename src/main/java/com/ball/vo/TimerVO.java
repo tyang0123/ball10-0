@@ -15,14 +15,8 @@ import java.time.LocalTime;
 public class TimerVO {
     private Long timer_id;
     private String user_id;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timer_date;
-
-    @JsonFormat(pattern = "kk:mm:ss")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime timer_accumulated_day;
-
     private LocalDateTime timer_reg_date;
     private LocalDateTime timer_mod_date;
 }
