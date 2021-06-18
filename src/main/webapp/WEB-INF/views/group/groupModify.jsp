@@ -71,8 +71,8 @@
 <%--                               value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate}"/>'--%>
 <%--                               readonly="readonly">--%>
 <%--                    </div>--%>
-                    <button class="btn btn-default" type="submit"> 수정하기 </button>
-                    <button class="btn btn-info" type="submit">취소</button>
+                    <button data-oper="modify" class="btn btn-default" type="submit"> 수정하기 </button>
+                    <button data-oper="list" class="btn btn-info">취소</button>
                     <a href="group/list"></a>
                 </form>
             </div> <!-- end panel-body -->
@@ -113,23 +113,28 @@
                 }
             }
         })
-        $(".btn-info").click(function (){
-            $(".btn-info").attr("action","/board/list")
 
+        $("button").click(function (){
+            var operation = $(this).data("oper");
+            if(operation === 'list'){
+                $("#operForm").attr("action", "/group/list").attr("method", "get")
+            }
         })
+
+
     })
 
 
-    function checkClick(){
-        var valueClick =0;
-        if($("#group_is_secret").is(':checked')){
-            valueClick=1;
+    function checkClick() {
+        var valueClick = 0;
+        if ($("#group_is_secret").is(':checked')) {
+            valueClick = 1;
             $("#group_is_secret").val(valueClick)
-            console.log("여기가 들어오나",valueClick)
-        }else{
-            valueClick=0;
+            console.log("여기가 들어오나", valueClick)
+        } else {
+            valueClick = 0;
             $("#group_is_secret").val(valueClick)
-            console.log("여기가 들어오나",valueClick)
+            console.log("여기가 들어오나", valueClick)
         }
     }
 
