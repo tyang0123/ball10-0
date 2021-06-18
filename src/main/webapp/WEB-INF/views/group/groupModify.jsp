@@ -9,8 +9,6 @@
             <div class="panel-heading"> 그룹 수정 페이지 </div> <!-- /.panel-heading -->
             <div class="panel-body">
                 <form id="operForm" action="/group/modify" role="form" method="post">
-
-
                     <div class="form-group">
                         <label for="group_id">번호
                         <input class="form-control" name="group_id" id="group_id" value="${group.group_id}" readonly="readonly">
@@ -73,8 +71,9 @@
 <%--                               value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate}"/>'--%>
 <%--                               readonly="readonly">--%>
 <%--                    </div>--%>
-                    <button class="btn btn-default"> 수정하기 </button>
-                    <button class="btn btn-info" href="/group/list">취소</button>
+                    <button data-oper="modify" class="btn btn-default" type="submit"> 수정하기 </button>
+                    <button data-oper="list" class="btn btn-info">취소</button>
+                    <a href="group/list"></a>
                 </form>
             </div> <!-- end panel-body -->
         </div> <!-- end panel -->
@@ -110,34 +109,32 @@
             if($("#group_is_secret").is(':checked')){
                 if($("#group_password").val() == ""){
                     alert("비밀번호를 입력하세요!")
+                    return false;
                 }
-            }else{
-                $(".btn-default").attr("action", "/group/list").submit();
+            }
+        })
+
+        $("button").click(function (){
+            var operation = $(this).data("oper");
+            if(operation === 'list'){
+                $("#operForm").attr("action", "/group/list").attr("method", "get")
             }
         })
 
 
-
-
-
-        // $(".btn-info").click(function (){
-        //     console.log("취소버튼이 눌리나")
-        //     $("#operForm").find("#group_id").remove();
-        //     $("#operForm").attr("action", "/group/list").submit();
-        // })
     })
 
 
-    function checkClick(){
-        var valueClick =0;
-        if($("#group_is_secret").is(':checked')){
-            valueClick=1;
+    function checkClick() {
+        var valueClick = 0;
+        if ($("#group_is_secret").is(':checked')) {
+            valueClick = 1;
             $("#group_is_secret").val(valueClick)
-            console.log("여기가 들어오나",valueClick)
-        }else{
-            valueClick=0;
+            console.log("여기가 들어오나", valueClick)
+        } else {
+            valueClick = 0;
             $("#group_is_secret").val(valueClick)
-            console.log("여기가 들어오나",valueClick)
+            console.log("여기가 들어오나", valueClick)
         }
     }
 
