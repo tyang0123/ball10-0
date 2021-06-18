@@ -60,7 +60,7 @@
         })
         $(".btn-info").click(function (){
             $(operForm).find("#group_id").remove();
-            $(operForm).attr("action", "/group/list").submit();
+            $(operForm).attr("action", "/group/list").submit(); //리스트로 돌아가기
         })
     })
 </script>
