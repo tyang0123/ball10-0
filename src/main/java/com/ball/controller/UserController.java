@@ -74,6 +74,7 @@ public class UserController {
             userCookie = new Cookie("userCookie", userVO.getUser_id());
             userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
             userCookie.setSecure(true);
+            userCookie.setPath("/");
             res.addCookie(userCookie);
 
             //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
@@ -109,6 +110,7 @@ public class UserController {
         }
         timerCookie.setMaxAge(remainSecondsFrom3AM());
         timerCookie.setSecure(false);
+        timerCookie.setPath("/");
         TimerVO timerVO = timerService.addNewTimerToDataBaseIfNotExist(userID);
         if(timerVO != null && timerVO.getTimer_accumulated_day() != null){ //
             System.out.println("get TimerVO from DB: "+timerVO);
@@ -121,7 +123,6 @@ public class UserController {
 
         // user nickname DB에서 가져오기
         model.addAttribute("user_nickname",userService.getUserNickname(userID));
-
 
 
         return "user/user";

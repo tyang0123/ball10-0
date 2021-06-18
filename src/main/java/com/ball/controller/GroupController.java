@@ -35,11 +35,13 @@ public class GroupController {
     public String group(Long group_id ,Criteria cri, Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
+        log.info("groupMessageRead 완료");
         model.addAttribute("search", groupService.get(group_id));
+        log.info("group.get 완료");
         model.addAttribute("group", groupService.allRead(cri));
-        System.out.println("컨트롤러에 cri가 들어오나 " +cri);
+        System.out.println("groupService.allRead " +cri);
         int total = groupService.getTotal(cri);
-        System.out.println("토탈값이 들어오나 "+total);
+        System.out.println("groupService.getTotal 완료 "+total);
 //        model.addAttribute("pageMaker", new Criteria(1L, total));
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
         System.out.println("카테고리가 들어오나 "+ cri.getCategory());

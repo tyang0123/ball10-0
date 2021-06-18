@@ -35,6 +35,7 @@ public class TimerCookieCheckInterceptor implements HandlerInterceptor {
                 }
                 if(timerCookie != null){
                     log.info("user Timer is existed.............");
+                    return true;
                 }
             }
         }
