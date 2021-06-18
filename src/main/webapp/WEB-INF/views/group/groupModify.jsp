@@ -31,7 +31,7 @@
 <%--                        <input class="form-control" name="group_category" id="group_category"  value="${group.group_category}"/>--%>
                         <select id="group_category" name="group_category">
                             <option value="취업">취업</option>
-                            <option value="토익">토익</option>
+                            <option value="토익" >토익</option>
                             <option value="이직">이직</option>
                             <option value="자격증">자격증</option>
                         </select>
@@ -73,8 +73,8 @@
 <%--                               value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate}"/>'--%>
 <%--                               readonly="readonly">--%>
 <%--                    </div>--%>
-                    <button data-oper='modify' class="btn btn-default" type="submit"> 수정하기 </button>
-                    <button data-oper='list' class="btn btn-info" type="submit">취소</button>
+                    <button class="btn btn-default"> 수정하기 </button>
+                    <button class="btn btn-info" href="/group/list">취소</button>
                 </form>
             </div> <!-- end panel-body -->
         </div> <!-- end panel -->
@@ -83,14 +83,48 @@
 
 <script>
     $(document).ready(function (){
-        if($("#group_is_secret").val()==1){
-            $("#group_is_secret").attr("checked",true);
-            $("#group_password").attr('readonly',true);
-        }
-        $(".btn-info").click(function (){
-            console.log("취소버튼이 눌리나")
-            $("#operForm").attr("action", "/group/list").submit();
+
+            if($("#group_is_secret").val()==1){
+                $("#group_is_secret").attr("checked",true);
+                $("#group_password").attr('readonly',false);
+                <%--$("#group_password").attr('value',${group.group_password})--%>
+            }else{
+                $("#group_is_secret").attr("checked",false);
+                $("#group_password").attr('readonly',true);
+            }
+
+
+        $("#group_category").val("${group.group_category}").attr("selected", true);
+        $("#group_person_count").val("${group.group_person_count}").attr("selected", true);
+
+        $("#group_is_secret").click(function (){
+            if($("#group_is_secret").is(':checked')){
+                $("#group_password").attr('readonly',false)
+
+            }else{
+                $("#group_password").attr('readonly',true)
+                $("#group_password").attr('value',null)
+            }
         })
+        $(".btn-default").click(function (){
+            if($("#group_is_secret").is(':checked')){
+                if($("#group_password").val() == ""){
+                    alert("비밀번호를 입력하세요!")
+                }
+            }else{
+                $(".btn-default").attr("action", "/group/list").submit();
+            }
+        })
+
+
+
+
+
+        // $(".btn-info").click(function (){
+        //     console.log("취소버튼이 눌리나")
+        //     $("#operForm").find("#group_id").remove();
+        //     $("#operForm").attr("action", "/group/list").submit();
+        // })
     })
 
 
@@ -106,16 +140,6 @@
             console.log("여기가 들어오나",valueClick)
         }
     }
-    $("#group_is_secret").click(function (){
-        console.log("클릭이 되나?")
-        if($("#group_is_secret").is(':checked')){
-            console.log("클릭됐다.")
-            $("#group_password").attr('readonly',false)
-        }else{
-            $("#group_password").attr('readonly',true)
-            $("#group_password").attr('value',null)
 
-        }
-    })
 </script>
 <%@ include file="../includes/footer.jsp" %>

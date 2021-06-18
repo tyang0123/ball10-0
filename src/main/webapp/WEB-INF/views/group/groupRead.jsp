@@ -20,6 +20,13 @@
                     <input class="form-control" name="group_name" id="group_name" value="${group.group_name}"
                            readonly="readonly">
                 </div>
+                <div>
+                    <label for="group_category">그룹 카테고리</label>
+                    <input class="form-control" name="group_category" id="group_category" value="${group.group_category}"
+                           readonly="readonly">
+                </div>
+
+
                 <div class="form-group">
                     <label for="group_content">텍스트 영역</label>
                     <textarea class="form-control" rows="3" name="group_content" id="group_content"
