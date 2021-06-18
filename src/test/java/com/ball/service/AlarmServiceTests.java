@@ -36,9 +36,12 @@ public class AlarmServiceTests {
     }
     @Test
     public void testModify(){
-        AlarmVO vo = service.get(101L);
-        vo.setAlarm_message_is_new((byte)0);
-        service.modify(vo);
+        AlarmVO vo = service.get(103L);
+        service.modify(vo.getAlarm_message_id());
+    }
+    @Test
+    public void testAlarmCount(){
+        System.out.println(service.alarmCount("user1"));
     }
 
 }
