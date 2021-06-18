@@ -24,18 +24,15 @@
                     <form id="searchForm" action="/group/list" method="get">
                         <select name="category">
                             <option value="" <c:out value="${cri.category ==null?'selected':''}"/>>---</option>
-                            <option value="${search.group_name}"
-                                    <c:out value="${cri.category eq '${search.group_name}'?'selected':''}"/>>그룹 이름</option>
-                            <option value="C"
-                                    <c:out value="${cri.category eq 'C'?'selected':''}"/>>카테고리</option>
-                            <option value="H"
-                                    <c:out value="${cri.category eq 'H'?'selected':''}"/>>그룹장</option>
-                            <option value="TC"
-                                    <c:out value="${cri.category == 'TC'?'selected':''}"/>>그룹 이름 또는 카테고리 </option>
-                            <option value="TW"
-                                    <c:out value="${cri.category == 'TW'?'selected':''}"/>>그룹 이름 또는 그룹장 </option>
-                            <option value="TWC"
-                                    <c:out value="${cri.category == 'TWC'?'selected':''}"/>>그룹 이름 또는 그룹장 또는 카테고리  </option>
+                            <option value="토익"
+                                    <c:out value="${cri.category eq '토익'?'selected':''}"/>>토익</option>
+                            <option value="입시"
+                                    <c:out value="${cri.category eq '입시'?'selected':''}"/>>입시</option>
+                            <option value="자격증"
+                                    <c:out value="${cri.category eq '자격증'?'selected':''}"/>>자격증</option>
+                            <option value="이직"
+                                    <c:out value="${cri.category eq '이직'?'selected':''}"/>>이직</option>
+
                         </select>
                         <input type="text" name="keyword"/>
 <%--                        <input type="hidden" name="pageNum" value="${cri.pageNum}" >--%>
@@ -96,20 +93,20 @@
             $("#operForm").attr("action", "/group/create").submit();
         })
     })
-    var searchForm = $("#searchForm");
-    $("#searchForm").click(function (e){
-        if(!searchForm.find("option:selected").val()){
-            alert("검색 종류를 선택하세요");
-            return false;
-        }
-        if(!searchForm.find("input[name='keyword']").val()){
-            alert("키워드를 입력하세요")
-            return false;
-        }
-        e.preventDefault();
-        searchForm.submit();
-
-    })
+    // var searchForm = $("#searchForm");
+    // $("#searchForm").click(function (e){
+    //     if(!searchForm.find("option:selected").val()){
+    //         alert("검색 종류를 선택하세요");
+    //         return false;
+    //     }
+    //     if(!searchForm.find("input[name='keyword']").val()){
+    //         alert("키워드를 입력하세요")
+    //         return false;
+    //     }
+    //     e.preventDefault();
+    //     searchForm.submit();
+    //
+    // })
 
 </script>
 

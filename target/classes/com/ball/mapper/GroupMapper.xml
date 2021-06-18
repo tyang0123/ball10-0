@@ -10,25 +10,6 @@
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
-    <sql id="criteria">
-        <trim prefix="(" suffix=") AND  " prefixOverrides="OR">
-            <foreach item="category" collection="typeArr">
-                <trim prefix="OR">
-                    <choose>
-                        <when test="category=='N'.toString()">
-                            group_name like '%'||#{keyword} ||'%'
-                        </when>
-                        <when test="category=='C'.toString()">
-                            group_category like '%'||#{keyword} ||'%'
-                        </when>
-                        <when test="category=='H'.toString()">
-                            user_id_group_header like '%'||#{keyword} ||'%'
-                        </when>
-                    </choose>
-                </trim>
-            </foreach>
-        </trim>
-    </sql>
 
     <select id="read" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_id = #{group_id}
@@ -42,7 +23,7 @@
         left outer join group_user_relationship gr on gr.group_id = g.group_id
         <where>
             <if test="category != null">
-                g.group_category like #{category}
+                g.group_category like CONCAT('%',#{category},'%')
             </if>
             <if test="keyword != null">
                 And (g.group_name like CONCAT('%',#{keyword},'%') or g.group_content like CONCAT('%',#{keyword},'%'))

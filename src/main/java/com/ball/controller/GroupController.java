@@ -41,6 +41,7 @@ public class GroupController {
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
         System.out.println("카테고리가 들어오나 "+ cri.getCategory());
 
+
         return "group/groupList";
     }
 

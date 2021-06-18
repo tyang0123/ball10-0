@@ -19,7 +19,6 @@ public class Criteria {
     public Criteria(){
         this(0L, 20);
     }
-
     public Criteria(Long criterionNumber, int amount){
         this.criterionNumber = criterionNumber;
         this.amount = amount;
