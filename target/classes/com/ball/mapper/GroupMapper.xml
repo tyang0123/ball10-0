@@ -12,7 +12,7 @@
     </insert>
 
     <select id="read" resultType="com.ball.vo.GroupVO">
-        select * from group_table where group_name = #{group_name}
+        select * from group_table where group_id = #{group_id}
     </select>
     <select id="selectGroupList" resultType="com.ball.vo.GroupVO">
         select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header,
