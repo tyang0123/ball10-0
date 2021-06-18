@@ -93,20 +93,6 @@
             $("#operForm").attr("action", "/group/create").submit();
         })
     })
-    // var searchForm = $("#searchForm");
-    // $("#searchForm").click(function (e){
-    //     if(!searchForm.find("option:selected").val()){
-    //         alert("검색 종류를 선택하세요");
-    //         return false;
-    //     }
-    //     if(!searchForm.find("input[name='keyword']").val()){
-    //         alert("키워드를 입력하세요")
-    //         return false;
-    //     }
-    //     e.preventDefault();
-    //     searchForm.submit();
-    //
-    // })
 
 </script>
 
