@@ -26,22 +26,22 @@ import java.util.List;
 @AllArgsConstructor
 public class GroupController {
 
-    @Setter(onMethod_ = @Autowired)
-    private GroupMessageService messageService;
+//    private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
+
+    @Setter(onMethod_=@Autowired)
+    private GroupMessageService messageService;
 
     @GetMapping("/list")
     public String group(Long group_id ,Criteria cri, Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
-        log.info("groupMessageRead 완료");
         model.addAttribute("search", groupService.get(group_id));
-        log.info("group.get 완료");
         model.addAttribute("group", groupService.allRead(cri));
-        System.out.println("groupService.allRead " +cri);
+        System.out.println("컨트롤러에 cri가 들어오나 " +cri);
         int total = groupService.getTotal(cri);
-        System.out.println("groupService.getTotal 완료 "+total);
+        System.out.println("토탈값이 들어오나 "+total);
 //        model.addAttribute("pageMaker", new Criteria(1L, total));
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
         System.out.println("카테고리가 들어오나 "+ cri.getCategory());
@@ -70,13 +70,14 @@ public class GroupController {
         System.out.println("게시글 컨트롤러에서 데이터 하나 수정 / ");
         model.addAttribute("group", groupService.get(group_id));
         return "group/groupModify";
-
     }
+
     @GetMapping("/read")
     public String read(Long group_id, Model model){
         model.addAttribute("group", groupService.get(group_id));
         return "group/groupRead";
     }
+
     @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);

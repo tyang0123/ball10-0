@@ -21,7 +21,7 @@ public class GroupMessageServiceTests {
 
     @Test
     public void testGroupMessageRead(){
-        System.out.println(service.groupMessageRead(1L));
+        service.groupMessageRead(1L);
     }
 
     @Test

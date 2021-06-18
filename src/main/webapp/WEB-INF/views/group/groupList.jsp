@@ -84,48 +84,6 @@
     </div>
 </div>
 </body>
-
-<script type="text/javascript" src="/resources/js/message.js"></script>
-<script type="text/javascript">
-    $(document).ready(function (){
-
-        var operForm = $("#operForm");
-
-        $('#modal_click').click(function (){
-            $('.modal').modal("show")
-        })
-        $('#modal_close').click(function (){
-            $('.modal').modal("hide")
-        })
-        $("#message_submit").click(function (){
-            operForm.attributes("action","/group/ajax/new").submit();
-        });
-
-        console.log("=============")
-        console.log("JS TEST")
-
-        // messageService.add(
-        //     {group_id:1,user_id:"user1",group_message_content:"ajax test"},
-        //     function (result){
-        //         alert("RESULT: "+result);
-        //     }
-        // );
-
-        $("#remove_message").click(function (){
-            messageService.remove(23,function (result){
-                console.log(result);
-                if(result=="success"){
-                    alert("REMOVED");
-                }
-            }, function (err){
-                alert('ERROR...');
-            });
-        })
-    })
-</script>
-
-
-
 </html>
 
 <script>
