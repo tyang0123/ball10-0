@@ -53,7 +53,7 @@
                         <td>${group.group_id}</td>
                         <td><a class='move' href='read?group_id=${group.group_id}'>${group.group_name}
                         </a></td>
-                        <td>${group.user_id_group_header}</td>
+                        <td>${group.user_nickname_group_header}</td>
                         <td>${group.group_category}</td>
                         <td>3 /${group.group_person_count}
                             <c:if test="${group.group_is_secret==1}">

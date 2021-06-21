@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/userA")
 public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService alarmService;

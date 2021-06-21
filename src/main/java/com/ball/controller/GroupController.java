@@ -2,9 +2,11 @@ package com.ball.controller;
 
 
 import com.ball.service.GroupService;
+import com.ball.service.UserService;
 import com.ball.vo.Criteria;
 import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
+import com.ball.vo.UserVO;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import com.ball.service.GroupMessageService;
@@ -18,6 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -31,18 +36,23 @@ public class GroupController {
     private GroupService groupService;
 
     @Setter(onMethod_=@Autowired)
+    private UserService userService;
+
+    @Setter(onMethod_=@Autowired)
     private GroupMessageService messageService;
 
     @GetMapping("/list")
-    public String group(Long group_id ,Criteria cri, Model model) {
+    public String group(Long group_id , Criteria cri,  Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
-        model.addAttribute("search", groupService.get(group_id));
+        model.addAttribute("search", groupService.oneRead(group_id));
         model.addAttribute("group", groupService.allRead(cri));
+//        session.setAttribute("user", user.getUser_nickname());
+
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
+
         int total = groupService.getTotal(cri);
         System.out.println("토탈값이 들어오나 "+total);
-//        model.addAttribute("pageMaker", new Criteria(1L, total));
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
         System.out.println("카테고리가 들어오나 "+ cri.getCategory());
 
@@ -51,16 +61,26 @@ public class GroupController {
     }
 
     @GetMapping("/create")
-    public String register(){
+    public String register(HttpServletRequest request, Model model){
         System.out.println("그룹 생성 GetMapping에 들어오나");
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        System.out.println("유저 아이디의 값이 들어오나 : "+userID);
+        model.addAttribute("user_nickname",userService.getUserNickname(userID));
+
         return "group/groupCreate";
     }
     @PostMapping("/create")
-    public String register(GroupVO group, RedirectAttributes rttr){
+    public String register(GroupVO group, RedirectAttributes rttr, UserVO userVO,HttpSession session,
+                           Model model, HttpServletRequest request, HttpServletResponse response){
 
         groupService.register(group);
+        session.setAttribute("userID", userVO.getUser_id());
+
         System.out.println("컨트롤러에 레지스터 값이 들어오나?"+group.getGroup_category());
         rttr.addFlashAttribute("result", group.getGroup_id());
+//        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+//        System.out.println("유저 아이디의 값이 들어오나 : "+userID);
+//        model.addAttribute("user_nickname",userService.getUserNickname(userID));
         return "redirect:/group/list";
 
     }
@@ -68,14 +88,14 @@ public class GroupController {
     //@RequestParam("group_id") Long group_id
     public String get(Long group_id, Model model, @ModelAttribute("cri") Criteria cri){
         System.out.println("게시글 컨트롤러에서 데이터 하나 수정 / ");
-        model.addAttribute("group", groupService.get(group_id));
+        model.addAttribute("group", groupService.oneRead(group_id));
         return "group/groupModify";
     }
 
     @GetMapping("/read")
     public String read(Long group_id, Model model){
-        model.addAttribute("group", groupService.get(group_id));
-        model.addAttribute("delete", groupService.remove(group_id));
+        model.addAttribute("group", groupService.oneRead(group_id));
+//        model.addAttribute("delete", groupService.remove(group_id));
         return "group/groupRead";
     }
 

@@ -34,8 +34,8 @@
                               readonly="readonly">${group.group_content}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="user_id_group_header">방장</label>
-                    <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}"
+                    <label for="user_nickname_group_header">그룹장</label>
+                    <input class="form-control" name="user_nickname_group_header" id="user_nickname_group_header" value="${group.user_nickname_group_header}"
                            readonly="readonly">
                 </div>
                 <div class="form-group">
