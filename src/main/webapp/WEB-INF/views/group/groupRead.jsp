@@ -88,18 +88,21 @@
         })
 
         var group_id = '${group.group_id}'
-        var pageCount = 0
+
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
             messageService.getList(group_id,function(result){
+                var criterionNumber = result[result.length-1].group_message_id;
                 console.log(result)
                 text = ""
-                for(var i = 0; i<10; i++){
-                    pageCount++;
+                for(var i = 0; i<result.length; i++){
                     text += "<div>"+result[i].group_message_content;
                     text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+result[i].group_message_id+"'>삭제</button></div>"
                 }
 
+                $('#moreReadMessage').click(function (){
+                    criterionNumber = criterionNumber-10;
+                })
 
                 $('.readGroupMessage').html(text);
 

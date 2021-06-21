@@ -1,6 +1,8 @@
 package com.ball.controller;
 
 import com.ball.service.GroupMessageService;
+import com.ball.vo.Criteria;
+import com.ball.vo.GroupMessagePageVO;
 import com.ball.vo.GroupMessageVO;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -26,9 +28,15 @@ public class GroupMessageAjaxController {
 
     //메세지(댓글) 목록 확인
     @GetMapping("/list")
-    public ResponseEntity<List<GroupMessageVO>> readMessage(@RequestParam("group_id") Long group_id){
+    public ResponseEntity<List<GroupMessageVO>> readMessage(@RequestParam("group_id") Long group_id,@RequestBody Long criterionNumber){
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(criterionNumber);
         System.out.println("메세지 목록 확인");
-        return new ResponseEntity<>(messageService.groupMessageRead(group_id), HttpStatus.OK);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("criterionNumber",cri.getCriterionNumber());
+        hashMap.put("group_id",group_id);
+        return new ResponseEntity<>(messageService.groupMessageRead(hashMap), HttpStatus.OK);
+        //return new ResponseEntity<>( messageService.getMessageListPage(cri,group_id), HttpStatus.OK);
     }
 
     @PostMapping("/new")

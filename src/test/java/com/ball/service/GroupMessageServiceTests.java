@@ -1,5 +1,6 @@
 package com.ball.service;
 
+import com.ball.vo.Criteria;
 import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,12 @@ public class GroupMessageServiceTests {
 
     @Test
     public void testGroupMessageRead(){
-        service.groupMessageRead(1L);
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(48L);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("criterionNumber",cri.getCriterionNumber());
+        hashMap.put("group_id",1L);
+        System.out.println(service.groupMessageRead(hashMap));
     }
 
     @Test
@@ -40,5 +46,12 @@ public class GroupMessageServiceTests {
         groupHash.put("user_id","user1");
         groupHash.put("group_message_id",13L);
         service.groupMessageDelete(groupHash);
+    }
+
+    @Test
+    public void testCntGroupMessage(){
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(48L);
+        System.out.println(service.getMessageListPage(cri,1L));
     }
 }

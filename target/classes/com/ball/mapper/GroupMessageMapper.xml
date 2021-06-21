@@ -11,7 +11,9 @@
     </insert>
 
     <select id="readGroupMessage" resultType="com.ball.vo.GroupMessageVO">
-        select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = #{group_message.group_id}
+        <![CDATA[
+            select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = #{group_id} and group_message.group_message_id > #{criterionNumber} order by group_message.group_message_id limit 10
+        ]]>
     </select>
 
 <!--    추후에 group_id-->
@@ -19,4 +21,13 @@
         delete from group_message where group_message_id = #{group_message_id}
     </delete>
 
+<!--    <select id="readGroupMessageWithPaging" resultType="com.ball.vo.GroupMessageVO">-->
+<!--        <![CDATA[-->
+<!--        select * from group_message inner join user on user.user_id = group_message.user_id where group_message.group_id = #{group_message.group_id} and group_message.group_message_id > #{cri.criterionNumber} order by group_message.group_message_id limit 10-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="getCountByGroupMessage" resultType="int">
+       select count(group_message_id) from group_message where group_id = #{group_id}
+    </select>
 </mapper>

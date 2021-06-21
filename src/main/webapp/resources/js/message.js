@@ -23,11 +23,7 @@ var messageService = (function (){
             success:function (data){
                 callback(data)
             },
-            error: function (xhr,status,er){
-                if(error){
-                    error(er);
-                }
-            }
+            error: (log)=>{alert(log)}
         });
     }
 

@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
+
 @Controller
 @RequestMapping("/group/*")
 @Slf4j
@@ -31,7 +33,10 @@ public class GroupController {
     @GetMapping("/list")
     public String group(Long group_id ,Criteria cri, Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
-        model.addAttribute("list",messageService.groupMessageRead(1L));
+//        HashMap<String,Object> hashMap = new HashMap<>();
+//        hashMap.put("criterionNumber",cri);
+//        hashMap.put("group_id",group_id);
+//        model.addAttribute("list",messageService.groupMessageRead(hashMap));
         model.addAttribute("search", groupService.get(group_id));
         model.addAttribute("group", groupService.allRead(cri));
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
@@ -67,8 +72,10 @@ public class GroupController {
     }
     @GetMapping("/read")
     public String read(Long group_id, Model model){
+//        Criteria cri = new Criteria();
+//        cri.setCriterionNumber(48L);
         model.addAttribute("group", groupService.get(group_id));
-        model.addAttribute("message",messageService.groupMessageRead(group_id));
+//        model.addAttribute("message",messageService.groupMessageRead(cri,group_id));
         return "group/groupRead";
     }
 
