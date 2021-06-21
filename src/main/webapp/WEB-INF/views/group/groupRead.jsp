@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../includes/header.jsp" %>
 
 
@@ -37,9 +38,18 @@
                     <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}"
                            readonly="readonly">
                 </div>
+                <div class="form-group">
+                    <label for="group_reg_date">그룹 생성일</label>
+
+                    <input class="form-control" name="group_reg_date" id="group_reg_date"
+                           value="<fmt:parseDate var="date1" value="${group.group_reg_date}" pattern="yyyy-MM-dd"/><fmt:formatDate value="${date1}" type="DATE" pattern="yyyy-MM-dd"/>"
+                           readonly="readonly">
+
+                </div>
                 <!--  264페이지 수정  -->
                 <button data-oper='modify' class="btn btn-default"> 수정</button>
                 <button data-oper='list' class="btn btn-info">목록 </button>
+                <button data-oper='delete' class="btn btn-danger">그룹 탈퇴 </button>
                 <form id='operForm' action="/group/modify" method="get">
                     <input type="hidden" name="group_id" value="${group.group_id}" />
 <%--                    <input type="hidden" name="pageNum" value="${cri.pageNum}" />--%>
