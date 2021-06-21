@@ -25,7 +25,7 @@ public class UserAlarmController {
     }
 
     @ResponseBody
-    @PostMapping (value = "/alarm") //userVo vo
+    @PostMapping (value = "/alarmMessage") //userVo vo
     public ResponseEntity<HashMap<String, Object>> userAlarmList(String userID) throws Exception {
 
         HashMap<String, Object> result = new HashMap<>();

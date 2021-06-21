@@ -22,7 +22,7 @@ public class AlarmMapperTests {
         for(int i=0;i<15;i++){
             AlarmVO vo = new AlarmVO();
             vo.setUser_id("user1");
-            vo.setAlarm_message_content("그룹에 가입하세요! 같이 으쌰으쌰");
+            vo.setAlarm_message_content("홧팅~~!!");
             vo.setAlarm_message_is_new((byte)1);
             mapper.insert(vo);
         }

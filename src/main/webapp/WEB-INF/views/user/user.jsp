@@ -52,7 +52,7 @@
         $("#Alarm").click(function (){
             $.ajax({
                 type:"post",
-                url:"/user/alarm",
+                url:"/user/alarmMessage",
                 data:{
                     userID:"${userID}"
                 },
@@ -66,7 +66,7 @@
                         data += "<input type='hidden' value='"+list[i].alarm_message_id+"'></input>";
                         data += "<td style='font-size: 12px;' class='align-middle'>"+displayTime(list[i].alarm_message_reg_date)+"</td>";
                         data += "<td><div id='alarm-content'>" + list[i].alarm_message_content + "</div></td>";
-                        data += "<td id='new'>" + list[i].alarm_message_is_new + "</td>";
+                        data += "<td id='new' style='text-align: center;'>" + changeImg(list[i].alarm_message_is_new) + "</td>";
                         data += "</tr><tr class='hideContent'><td colspan='3'>" + list[i].alarm_message_content + "</td></tr>";
                     }
                     $('#dataSection').html(data);
@@ -92,7 +92,16 @@
             return [ yy,'/',(mm>9?'':'0')+mm,'/',(dd>9?'':'0')+dd].join('');
         }
     };
-
+    //읽음부분 이미지처리
+    const changeImg = (newCheck)=>{
+        if(newCheck==1){
+            console.log("여기 1 ")
+            return "<svg style='color:#ff9000' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope-fill' viewBox='0 0 16 16'><path d='M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z'/></svg>";
+        }else {
+            console.log("여기 0 ?")
+            return "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope-open' viewBox='0 0 16 16'><path d='M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.818l5.724 3.465L8 8.917l1.276.766L15 6.218V5.4a1 1 0 0 0-.53-.882l-6-3.2zM15 7.388l-4.754 2.877L15 13.117v-5.73zm-.035 6.874L8 10.083l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738zM1 13.117l4.754-2.852L1 7.387v5.73zM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765l6-3.2z'/></svg>";
+        }
+    }
 </script>
 
 <script type="text/javascript">
@@ -101,7 +110,7 @@
         var alarmShow = (".alarmTable .showContent");
 
         $("#dataSection").on("click","tr",function () {
-            $($(this).find("#new")).text('0');
+            $($(this).find("#new")).html("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope-open' viewBox='0 0 16 16'><path d='M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.818l5.724 3.465L8 8.917l1.276.766L15 6.218V5.4a1 1 0 0 0-.53-.882l-6-3.2zM15 7.388l-4.754 2.877L15 13.117v-5.73zm-.035 6.874L8 10.083l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738zM1 13.117l4.754-2.852L1 7.387v5.73zM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765l6-3.2z'/></svg>");
             var alarmID = $(this).find("input").val();
             console.log("여기 메세지 아이디 : "+$(this).find("input").val());
             $.ajax({
