@@ -5,15 +5,14 @@ import com.ball.vo.Criteria;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @CrossOrigin(origins = "*")
-@Controller
-@RequestMapping("/users")
+@RestController
+@RequestMapping("/ajax/user/")
 public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService alarmService;
@@ -46,5 +45,4 @@ public class UserAlarmController {
         result.put("alarmCount", alarmService.alarmCount(userID));
         return ResponseEntity.ok(result);
     }
-
 }

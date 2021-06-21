@@ -44,6 +44,8 @@ public class UserController {
             cal.add(Calendar.DATE, 1);
         }
         cal.set(Calendar.HOUR_OF_DAY, 3);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
         Date tomorrowDawn = cal.getTime();
 
         long diff = tomorrowDawn.getTime() - now.getTime();
@@ -51,47 +53,58 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginPost(UserVO userVO, boolean user_checked
+    public String loginPost(UserVO userVO, boolean user_remember
             , RedirectAttributes rAttr, HttpSession session
             ,@CookieValue(name = "userCookie", required = false) Cookie userCookie
             ,@CookieValue(name = "JSESSIONID", required = false) Cookie JSESSIONID
-            , HttpServletResponse res){
-        log.info("login post..............................."+user_checked);
+            , HttpServletResponse res) {
+        log.info("login post..............................." + user_remember);
         //login-password DB check
         boolean checkLoginResult = userService.userLoginCheck(userVO.getUser_id(), userVO.getUser_password());
 
-        if(! checkLoginResult){// id, password 불일치시 다시 login
+        if (!checkLoginResult) {// id, password 불일치시 다시 login
             log.info("...........redirect fail");
             rAttr.addFlashAttribute("errorMessage", "fail");
             return "redirect:/user/login";
         }
         //add user info to session
         session.setAttribute("userID", userVO.getUser_id());
-        if(user_checked) { //로그인 상태 유지하면 userid를 쿠키에 저장함
+        if (user_remember) { //로그인 상태 유지하면 userid를 쿠키에 저장함
             //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
             //add user cookie
 
+            if (userCookie != null) {
+                userCookie.setMaxAge(0);
+                res.addCookie(userCookie);
+            }
             userCookie = new Cookie("userCookie", userVO.getUser_id());
-            userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
-//            userCookie.setSecure(true);
+            userCookie.setSecure(true);
             userCookie.setPath("/");
-            res.addCookie(userCookie);
+            userCookie.setMaxAge(60 * 60 * 24);
 
             //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
-            JSESSIONID.setMaxAge(0);
-            JSESSIONID = new Cookie("JSESSIONID",session.getId());
+            if (JSESSIONID != null) {
+                JSESSIONID.setMaxAge(0);
+                res.addCookie(JSESSIONID);
+            }
+            JSESSIONID = new Cookie("JSESSIONID", session.getId());
             JSESSIONID.setPath("/");
-            JSESSIONID.setMaxAge(60*60*24*180);
             JSESSIONID.setHttpOnly(true);
             JSESSIONID.setSecure(true);
+
+            if (user_remember) { //로그인 상태 유지하면 userid를 쿠키에 저장함
+                //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
+                userCookie.setMaxAge(60 * 60 * 24 * 365 * 10); //set cookie 10 years
+                JSESSIONID.setMaxAge(60 * 60 * 24 * 180);
+
+                session.setMaxInactiveInterval(60 * 60 * 24 * 180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
+            }
+            res.addCookie(userCookie);
             res.addCookie(JSESSIONID);
 
-            session.setMaxInactiveInterval(60*60*24*180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
+            rAttr.addFlashAttribute("successLogin", "success");
+            return "redirect:/user/login";
         }
-
-        rAttr.addFlashAttribute("successLogin", "success");
-//        return "redirect:/user/login";
-        return "redirect:/user/user";
     }
 
     @GetMapping("/create")
@@ -106,19 +119,21 @@ public class UserController {
 
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
         //add timer cookie
-        if(timerCookie == null) {
-            timerCookie = new Cookie("timerCookie", "00:00:00");
+        if(timerCookie != null) {
+            timerCookie.setMaxAge(0);
         }
+        timerCookie = new Cookie("timerCookie", "");
         timerCookie.setMaxAge(remainSecondsFrom3AM());
         timerCookie.setSecure(false);
         timerCookie.setPath("/");
         TimerVO timerVO = timerService.addNewTimerToDataBaseIfNotExist(userID);
-        if(timerVO != null && timerVO.getTimer_accumulated_day() != null){ //
-            System.out.println("get TimerVO from DB: "+timerVO);
-            timerCookie.setValue(timerVO.getTimer_id()+"-"
+
+        if(timerVO != null && timerVO.getTimer_accumulated_day() != null){ //오늘 2번이상 접속해서 timer정보가 있는 경우
+//            System.out.println("get TimerVO from DB: "+timerVO);
+            timerCookie.setValue(timerVO.getTimer_id()+"-"+timerVO.getTimer_is_play()+"-"
                     +timerVO.getTimer_accumulated_day().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        }else{
-            timerCookie.setValue(timerVO.getTimer_id()+"-00:00:00");
+        }else{ //오늘 처음 접속해서 타이머 정보가 없는 경우
+            timerCookie.setValue(timerVO.getTimer_id()+"-0-00:00:00");
         }
         response.addCookie(timerCookie);
 

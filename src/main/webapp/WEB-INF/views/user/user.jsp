@@ -167,36 +167,41 @@
     });
 </script>
 
-<!-- 타이머 관련 Script-->
 <script src="/resources/js/timer.js"></script>
 <script>
     $(document).ready(function () {
-        var timerStr = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('timerCookie'))
-            .split('=')[1];
+        var timerCookieStr = document.cookie
+                      .split('; ')
+                      .find(row => row.startsWith('timerCookie'))
+                      .split('=')[1];
 
-        var [timerID, accumulatedTime] = timerStr.split('-');
-        // console.log(accumulatedTime)
-        // console.log(timerID)
-
-        //타이머 셋팅
-        timerNumberInit($(".my-timer"), accumulatedTime);
+        // var timerCookieStr = "125-1-10:20:10"
 
         var timerPlayFlag = false;
         $("#timer-btn").click(function(e){
             if(timerPlayFlag){
                 $("#timer-btn").html("Start");
                 timerPlayFlag = false;
-                timerStop(timerID, function(resultTime){
-                    document.cookie = "timerCookie="+timerID+"-"+resultTime+";";
+                timerStop(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer+";path=/;max-age="+getRemainSecondsFrom3AM()+";";
+
+                    console.log(document.cookie);
                 });
             }else{
                 $("#timer-btn").html("Stop");
                 timerPlayFlag = true;
-                accumulatedTime = timerStart();
+                timerStart(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer+";path=/;max-age="+getRemainSecondsFrom3AM()+";";
+
+                    console.log(document.cookie);
+                });
             }
-        })
+        });//end timer-btn click
+
+        //타이머 셋팅
+        timerNumberInit($(".my-timer"), $("#timer-btn"), timerCookieStr);
     });
 </script>
 

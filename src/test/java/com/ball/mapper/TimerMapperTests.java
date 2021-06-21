@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Log4j
@@ -30,7 +29,7 @@ public class TimerMapperTests {
     @Test
     public void testInsertTimer(){
         TimerVO vo = new TimerVO();
-        vo.setUser_id("user10");
+        vo.setUser_id("testmapper");
 
 
         System.out.println(mapper.insertTodayTimer(vo));
@@ -40,22 +39,40 @@ public class TimerMapperTests {
     @Test
     public void testSelectTodayTimer(){
         TimerVO vo = new TimerVO();
-        vo.setUser_id("user10");
-        vo = mapper.selectTodayTimer(vo);
+        vo.setUser_id("testmapper");
+        vo = mapper.selectTodayTimerByUserID(vo);
         System.out.println(vo);
         System.out.println(vo.getTimer_accumulated_day().toString());
 
         vo.setUser_id("user20");
-        System.out.println(mapper.selectTodayTimer(vo));
+        System.out.println(mapper.selectTodayTimerByUserID(vo));
     }
 
     @Test
     public void testUpdateAccumulatedTime(){
         TimerVO vo = new TimerVO();
-        vo.setUser_id("user1");
-        vo.setTimer_id(1L);
+        vo.setUser_id("testmapper");
+        vo.setTimer_id(125L);
         vo.setTimer_accumulated_day(LocalTime.of(10,20,10));
 
-        System.out.println(mapper.updateAccumulatedTime(vo));
+        System.out.println(mapper.updateAccumulatedTimeAndState(vo));
+    }
+
+    @Test
+    public void testUpdateTimerPlayState(){
+        TimerVO vo = new TimerVO();
+        vo.setUser_id("testmapper");
+        vo.setTimer_id(125L);
+
+        System.out.println(mapper.updateAccumulatedTimeAndState(vo));
+
+        System.out.println(mapper.selectTimerByTimerID(vo.getTimer_id()));
+    }
+
+    @Test
+    public void testSelectListTodayUserTimerbyGroupID(){
+        for (TimerVO timerVO : mapper.selectListTodayUserTimerbyGroupID(8L)) {
+            System.out.println(timerVO);
+        }
     }
 }
