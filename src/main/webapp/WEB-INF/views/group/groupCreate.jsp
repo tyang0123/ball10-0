@@ -100,8 +100,8 @@
     $(".btn-success").click(function (){
         if($("#group_is_secret").is(':checked')){
             if($("#group_password").val() == ""){
-                alert("비밀번호를 입력하세요!")
-                return false;
+                $("#group_password").attr('required', true)
+
             }
         }
     })
