@@ -22,7 +22,7 @@
                 <input type="password" class="form-control" id="user-password" name="user_password">
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="user-check" value="true" checked="checked" name="user_checked">
+                <input class="form-check-input" type="checkbox" id="user-check" value="true" checked="checked" name="user_remember">
                 <label class="form-check-label" for="user-check">
                     로그인 상태 유지하기
                 </label>
