@@ -21,7 +21,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public GroupVO get(Long group_id) {
-        return mapper.read(group_id);
+        return mapper.readGroup(group_id);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void modify(GroupVO group) {
-        mapper.update(group);
+        mapper.updateGroup(group);
     }
 
     @Override

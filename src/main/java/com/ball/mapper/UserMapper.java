@@ -12,4 +12,7 @@ public interface UserMapper {
 
     //유저 정보 수정
     public int updateUser(UserVO vo);
+
+    //유저 닉네임 조회
+    public String selectUserNickNameByID(@Param("user_id") String userId);
 }

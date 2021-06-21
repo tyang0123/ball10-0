@@ -4,11 +4,14 @@ import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
@@ -37,5 +40,13 @@ public class GroupMessageMapperTests {
     public void testReadGroupMessage(){
         mapper.readGroupMessage(1L);
         System.out.println(mapper.readGroupMessage(1L));
+    }
+
+    @Test
+    public void testDeleteGroupMessage(){
+        HashMap<String, Object> groupHash = new HashMap<String, Object>();
+        groupHash.put("user_id","user1");
+        groupHash.put("group_message_id",19L);
+        mapper.deleteGroupMessage(groupHash);
     }
 }

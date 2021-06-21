@@ -19,11 +19,14 @@ public class AlarmMapperTests {
 
     @Test
     public void testInsert(){
-        AlarmVO vo = new AlarmVO();
-        vo.setUser_id("user1");
-        vo.setAlarm_message_content("그룹에 가입하세요! 같이 으쌰으쌰");
-        vo.setAlarm_message_is_new((byte)1);
-        mapper.insert(vo);
+        for(int i=0;i<15;i++){
+            AlarmVO vo = new AlarmVO();
+            vo.setUser_id("user1");
+            vo.setAlarm_message_content("그룹에 가입하세요! 같이 으쌰으쌰");
+            vo.setAlarm_message_is_new((byte)1);
+            mapper.insert(vo);
+        }
+
     }
 
     @Test
@@ -38,10 +41,14 @@ public class AlarmMapperTests {
     }
     @Test
     public void testUpdate(){
-        AlarmVO vo = mapper.read(100L);
+        AlarmVO vo = mapper.read(102L);
         vo.setAlarm_message_is_new((byte)0);
-        mapper.update(vo);
+        mapper.update(vo.getAlarm_message_id());
 
     }
 
+    @Test
+    public void testCount(){
+        System.out.println(mapper.count("user1"));
+    }
 }

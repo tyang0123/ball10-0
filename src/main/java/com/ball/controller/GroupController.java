@@ -3,6 +3,7 @@ package com.ball.controller;
 
 import com.ball.service.GroupService;
 import com.ball.vo.Criteria;
+import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -10,10 +11,14 @@ import com.ball.service.GroupMessageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/group/*")
@@ -66,12 +71,14 @@ public class GroupController {
         model.addAttribute("group", groupService.get(group_id));
         return "group/groupModify";
     }
+
     @GetMapping("/read")
     public String read(Long group_id, Model model){
         model.addAttribute("group", groupService.get(group_id));
         model.addAttribute("delete", groupService.remove(group_id));
         return "group/groupRead";
     }
+
     @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
         System.out.println("컨트롤러에서 수정이 들어오나 : "+ group);

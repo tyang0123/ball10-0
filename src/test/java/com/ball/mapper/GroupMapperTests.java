@@ -3,7 +3,6 @@ package com.ball.mapper;
 
 import com.ball.vo.Criteria;
 import com.ball.vo.GroupVO;
-import com.ball.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
@@ -41,7 +40,7 @@ public class GroupMapperTests {
     }
     @Test
     public void testread(){
-        GroupVO vo = mapper.read(3L);
+        GroupVO vo = mapper.readGroup(3L);
         System.out.println("===================");
         System.out.println(vo);
 
@@ -89,7 +88,7 @@ public class GroupMapperTests {
         vo.setGroup_person_count(7);
         vo.setGroup_content("수정이 되나");
 
-        mapper.update(vo);
+        mapper.updateGroup(vo);
     }
 
     @Test

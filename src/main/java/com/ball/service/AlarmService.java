@@ -8,5 +8,6 @@ public interface AlarmService {
     public void register(AlarmVO alarm);
     public AlarmVO get(Long alarm_message_id);
     public List<AlarmVO> getTotal(String user_id);
-    public void modify(AlarmVO alarm);
+    public void modify(Long alarm_message_id);
+    public String alarmCount(String user_id);
 }

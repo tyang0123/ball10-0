@@ -1,6 +1,7 @@
 package com.ball.mapper;
 
 import com.ball.vo.Criteria;
+import com.ball.vo.GroupMessageVO;
 import com.ball.vo.GroupVO;
 import org.apache.ibatis.annotations.Param;
 
