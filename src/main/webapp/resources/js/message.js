@@ -21,21 +21,7 @@ var messageService = (function (){
         })
     }
 
-    // function getList(group_id,callback,error){
-    //     $.getJSON("group/read/ajax/list"+group_id,
-    //         function (data){
-    //         if(callback){
-    //             callback(data);
-    //         }
-    //         }).fail(function (xhr,status,err){
-    //             if(error){
-    //                 error();
-    //             }
-    //     });
-    // }
-
     function getList(group_id,callback){
-        console.log('들어오는지 확인 : ',group_id);
         $.ajax({
             url:'/group/read/ajax/list/?group_id='+group_id,
             type:'GET',
@@ -50,7 +36,7 @@ var messageService = (function (){
     function remove(group_message_id,callback,error){
         $.ajax({
             type : 'delete',
-            url : '/read/ajax/delete/'+group_message_id,
+            url : '/group/read/ajax/delete/?group_message_id='+group_message_id,
             success:function (deleteResult,status,xhr){
                 if(callback){
                     callback(deleteResult);

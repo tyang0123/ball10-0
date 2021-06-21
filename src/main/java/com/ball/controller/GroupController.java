@@ -52,7 +52,6 @@ public class GroupController {
     }
     @PostMapping("/create")
     public String register(GroupVO group, RedirectAttributes rttr){
-
         groupService.register(group);
         System.out.println("컨트롤러에 레지스터 값이 들어오나?"+group.getGroup_category());
         rttr.addFlashAttribute("result", group.getGroup_id());
@@ -69,6 +68,7 @@ public class GroupController {
     @GetMapping("/read")
     public String read(Long group_id, Model model){
         model.addAttribute("group", groupService.get(group_id));
+        model.addAttribute("message",messageService.groupMessageRead(group_id));
         return "group/groupRead";
     }
 

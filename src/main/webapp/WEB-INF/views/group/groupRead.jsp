@@ -52,13 +52,15 @@
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
                             <div class="modal-body">
-                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
-                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
-                                    <div class = 'md-3'>";
-                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>";
-                                        <textarea class='form-control' id='message-text'></textarea>";
+                                <div class="readGroupMessage">그룹 메세지</div>
+<%--                                <div>${message.group_message_id}</div>--%>
+<%--                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>--%>
+                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
+                                    <div class = 'md-3'>
+                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>
+                                        <textarea class='form-control' id='message-text'></textarea>
                                     </div>
-                                </form>";
+                                </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" id="message_submit" class="btn btn-primary">전송</button>
@@ -90,21 +92,27 @@
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
             messageService.getList(group_id,function(result){
-                for(var i = 0; i<result.length; i++){
-                    var text = "";
-                    // text += "<button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
-                    // text += "<form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
-                    // text += "<div class = 'md-3'>";
-                    // text += "<label for = 'message-text' class='col-form-label'> 입력창 </label>";
-                    // text += "<textarea class='form-control' id='message-text'></textarea>";
-                    // text += "</div></form>";
-                    // $('.modal-body').html(text);
-                }
-            });
-        })
+                console.log(result)
 
-        $(".remove_message").click(function (){
-            console.log("삭제 버튼 클릭")
+                text = ""
+                for(var i = 0; i<result.length; i++){
+                    text += "<div>"+result[i].group_message_content;
+                    text += "번호: "+result[i].group_message_id;
+                    text += "<button class='remove_message btn btn-outline-danger btn-sm'>삭제</button></div>"
+                }
+                $('.readGroupMessage').html(text);
+
+                $(".remove_message").click(function (){
+                    // messageService.remove(group_message_id,function (deleteResult){
+                    //     console.log(deleteResult);
+                    //     if(deleteResult == "success"){
+                    //         alert("삭제되었습니다.");
+                    //     }
+                    // }, function (err){
+                    //     alert("에러 발생");
+                    // })
+                })
+            });
         })
 
         $("#modal_close").click(function (){

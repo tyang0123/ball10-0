@@ -45,8 +45,8 @@ public class GroupMessageAjaxController {
 
     //메세지(댓글) 삭제
     //group/read/{group_id}/delete/{group_message_id}
-    @DeleteMapping("/delete/{group_message_id}")
-    public ResponseEntity<String> deleteMessage(@PathVariable("group_message_id") Long group_message_id){
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteMessage(@RequestParam("group_message_id") Long group_message_id){
         System.out.println("메세지 삭제 확인 : "+group_message_id);
         HashMap<String,Object> groupHash = new HashMap<>();
         groupHash.put("group_message_id",group_message_id);
