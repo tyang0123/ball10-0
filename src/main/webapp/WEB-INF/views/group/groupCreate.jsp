@@ -16,8 +16,9 @@
                             <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
                         </label>
                         <div class="form-group">
+
                             <label for="user_id_group_header">방장
-                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}">
+                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${user_nickname}" readonly="readonly">
                             </label>
                         </div>
                     </div>

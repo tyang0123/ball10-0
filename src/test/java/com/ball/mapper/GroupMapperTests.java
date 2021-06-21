@@ -39,8 +39,8 @@ public class GroupMapperTests {
         mapper.insertGroup(vo);
     }
     @Test
-    public void testread(){
-        GroupVO vo = mapper.readGroup(3L);
+    public void testRead(){
+        GroupVO vo = mapper.groupRead(3L);
         System.out.println("===================");
         System.out.println(vo);
 
@@ -88,7 +88,7 @@ public class GroupMapperTests {
         vo.setGroup_person_count(7);
         vo.setGroup_content("수정이 되나");
 
-        mapper.updateGroup(vo);
+        mapper.groupUpdate(vo);
     }
 
     @Test

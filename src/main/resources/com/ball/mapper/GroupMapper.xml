@@ -10,14 +10,6 @@
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
             #{group_password}, #{group_person_count}, #{group_content}, sysdate(), sysdate())
     </insert>
-
-    <select id="allRead" resultType="com.ball.vo.GroupVO">
-        select * from group_table where group_id = #{group_id}
-    </select>
-
-    <select id="get" resultType="com.ball.vo.GroupVO">
-        select * from group_table where group_id = #{group_id}
-    </select>
     <select id="selectGroupList" resultType="com.ball.vo.GroupVO">
         select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header,
         g.group_name, g.group_category, g.group_is_secret, count(gr.user_id) as group_join_person_number,
@@ -42,7 +34,7 @@
         order by g.group_id desc
         limit #{amount}
     </select>
-    <update id="updateGroup">
+    <update id="groupUpdate">
         update group_table set group_name = #{group_name}, group_category = #{group_category},
                                group_is_secret = #{group_is_secret}, group_password = #{group_password},
                                group_person_count = #{group_person_count}, group_content = #{group_content},
@@ -54,7 +46,7 @@
         select count(*) from group_table where group_id > 0
     </select>
 
-    <select id="readGroup" resultType="com.ball.vo.GroupVO">
+    <select id="groupRead" resultType="com.ball.vo.GroupVO">
         select * from group_table where group_id = #{group_id}
     </select>
 </mapper>
