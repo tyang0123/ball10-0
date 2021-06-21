@@ -1,24 +1,19 @@
 console.log("Message Module......");
 var messageService = (function (){
 
-    function add(message, callback, error){
-        console.log("new message ................ ");
+    function add(group_id,message, callback){
+        console.log("add message ... ");
         $.ajax({
-            type:'post',
-            url : '/read/ajax/new',
+            url :'/group/read/ajax/new/?group_id='+group_id,
+            type:'POST',
             data : JSON.stringify(message),
             contentType : "application/json; charset=utf-8",
-            success : function(result,status,xhr){
-                if (callback){
-                    callback(result);
-                }
+            success : function(result){
+                callback(result)
+                console.log(result)
             },
-            error:function(xhr,status,er){
-                if(error){
-                    error(er);
-                }
-            }
-        })
+            error:(log)=>{alert("실패"+log)}
+        });
     }
 
     function getList(group_id,callback){

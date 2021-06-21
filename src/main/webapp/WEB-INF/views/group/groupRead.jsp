@@ -41,7 +41,6 @@
 <%--                    <input type='hidden' name='keyword' value='<c:out value ="${cri.keyword}"/>'>--%>
                 </form>
 
-
                 <button id="modalShowButton">그룹메세지</button>
                 <%--모달시작--%>
                 <div class="modal" tabindex="-1">
@@ -97,20 +96,34 @@
                 text = ""
                 for(var i = 0; i<result.length; i++){
                     text += "<div>"+result[i].group_message_content;
-                    text += "번호: "+result[i].group_message_id;
-                    text += "<button class='remove_message btn btn-outline-danger btn-sm'>삭제</button></div>"
+                    text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+result[i].group_message_id+"'>삭제</button></div>"
                 }
                 $('.readGroupMessage').html(text);
 
                 $(".remove_message").click(function (){
-                    // messageService.remove(group_message_id,function (deleteResult){
-                    //     console.log(deleteResult);
-                    //     if(deleteResult == "success"){
-                    //         alert("삭제되었습니다.");
-                    //     }
-                    // }, function (err){
-                    //     alert("에러 발생");
-                    // })
+                    var group_message_id = $(this).val()
+                    messageService.remove(group_message_id,function (deleteResult){
+                        if(deleteResult == "success"){
+                            alert("삭제되었습니다.");
+                            $('.modal').modal("hide");
+                        }
+                    }, function (err){
+                        alert("에러 발생");
+                    })
+                })
+
+                $("#message_submit").click(function (){
+                    var message = {
+                        "user_id":'user1', //이후 쿠키에서 가져온 뒤 수정
+                        "group_message_content": $('#message-text').val()
+                    }
+                    messageService.add(group_id,message,function (result){
+                        if(result == "success"){
+                            alert("입력되었습니다.")
+                            $('#message-text').val("");
+                            $('.modal').modal("hide");
+                        }
+                    })
                 })
             });
         })

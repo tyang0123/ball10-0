@@ -32,9 +32,10 @@ public class GroupMessageAjaxController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<String> insert(@RequestBody GroupMessageVO vo){
+    public ResponseEntity<String> insert(@RequestParam("group_id") Long group_id,@RequestBody GroupMessageVO vo){
         System.out.println("들어오는지 확인");
         log.info("ReplyVO: "+vo);
+        vo.setGroup_id(group_id);
 
         int insertCount = messageService.groupMessageInsert(vo);
 
