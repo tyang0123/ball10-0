@@ -51,9 +51,10 @@
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
                             <div class="modal-body">
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button id="moreReadMessage" class="btn btn-outline-info" >더보기</button>
+                                </div>
                                 <div class="readGroupMessage">그룹 메세지</div>
-<%--                                <div>${message.group_message_id}</div>--%>
-<%--                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>--%>
                                 <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
                                     <div class = 'md-3'>
                                         <label for = 'message-text' class='col-form-label'> 입력창 </label>
@@ -87,17 +88,19 @@
         })
 
         var group_id = '${group.group_id}'
-
+        var pageCount = 0
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
             messageService.getList(group_id,function(result){
                 console.log(result)
-
                 text = ""
-                for(var i = 0; i<result.length; i++){
+                for(var i = 0; i<10; i++){
+                    pageCount++;
                     text += "<div>"+result[i].group_message_content;
                     text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+result[i].group_message_id+"'>삭제</button></div>"
                 }
+
+
                 $('.readGroupMessage').html(text);
 
                 $(".remove_message").click(function (){

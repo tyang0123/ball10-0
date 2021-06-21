@@ -10,7 +10,6 @@ var messageService = (function (){
             contentType : "application/json; charset=utf-8",
             success : function(result){
                 callback(result)
-                console.log(result)
             },
             error:(log)=>{alert("실패"+log)}
         });
@@ -24,7 +23,11 @@ var messageService = (function (){
             success:function (data){
                 callback(data)
             },
-            error: (log)=>{alert("실패"+log)}
+            error: function (xhr,status,er){
+                if(error){
+                    error(er);
+                }
+            }
         });
     }
 
