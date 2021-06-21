@@ -48,4 +48,7 @@
     <select id="getTotalCount" resultType="int">
         select count(*) from group_table where group_id > 0
     </select>
+    <delete id="groupDelete">
+        delete from group_table where group_id= #{group_id}
+    </delete>
 </mapper>

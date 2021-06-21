@@ -99,4 +99,10 @@ public class GroupMapperTests {
 
         System.out.println("전체 갯수는 ? :" + mapper.getTotalCount(cri));
     }
+
+    @Test
+    public void testDelete(){
+        mapper.groupDelete(18L);
+        System.out.println("========== 삭제 되었습니다 ==========");
+    }
 }

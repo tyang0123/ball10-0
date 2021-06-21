@@ -69,6 +69,7 @@ public class GroupController {
     @GetMapping("/read")
     public String read(Long group_id, Model model){
         model.addAttribute("group", groupService.get(group_id));
+        model.addAttribute("delete", groupService.remove(group_id));
         return "group/groupRead";
     }
     @PostMapping({"/list","/modify"})

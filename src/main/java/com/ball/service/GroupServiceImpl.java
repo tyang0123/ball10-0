@@ -35,8 +35,8 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public Long remove(Long group_id) {
-        return null;
+    public int remove(Long group_id) {
+        return mapper.groupDelete(group_id);
     }
 
     @Override
