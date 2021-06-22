@@ -1,6 +1,7 @@
 package com.ball.controller;
 
 import com.ball.service.AlarmService;
+import com.ball.vo.AlarmVO;
 import com.ball.vo.Criteria;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -48,6 +48,7 @@
 <%--                    <input type='hidden' name='keyword' value='<c:out value ="${cri.keyword}"/>'>--%>
                 </form>
 
+
                 <button id="modalShowButton">그룹메세지</button>
                 <%--모달시작--%>
                 <div class="modal" tabindex="-1">
@@ -58,11 +59,11 @@
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="readGroupMessage"></div>
-                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
-                                    <div class = 'md-3'>
-                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>
-                                        <textarea class='form-control' id='message-text'></textarea>
+                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
+                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
+                                    <div class = 'md-3'>";
+                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>";
+                                        <textarea class='form-control' id='message-text'></textarea>";
                                     </div>
                                 </form>
                             </div>
@@ -79,6 +80,32 @@
     </div> <!-- col-lg-12 -->
 </div> <!-- row -->
 <%@ include file="../includes/footer.jsp" %>
+<!---------------------------------------------------------------------------------------->
+<!-- 타이머 스타일 -->
+<style>
+    .my-img{
+        width: 150px;
+        height: 150px;
+
+        -webkit-mask:url("/resources/img/pngegg (1).png");
+        -webkit-mask-size: contain;
+        /*-webkit-mask:url("/resources/img/pngegg (1).png") no-repeat center/contain;*/
+        /*mask:url("/resources/img/pngegg (1).png") center/contain;*/
+    }
+
+    .my-img-yellow{
+        background:#ff9000;
+    }
+
+    .my-font-yellow{
+        color:#ff9000;
+    }
+
+    .my-img-balck{
+        background:black;
+    }
+</style>
+<!---------------------------------------------------------------------------------------->
 
 <script type="text/javascript" src="/resources/js/message.js"></script>
 <script>
@@ -159,4 +186,113 @@
         })
     })
 </script>
+<!---------------------------------------------------------------------------------------->
+<!-- 타이머 script -->
+<script>
+
+    var group_id = "${group.group_id}";
+
+
+    function returnAccumulatedTimeToStringFormat(timeValue){
+        var array2 = [0,0,0].concat(timeValue)
+        return new Date(Date.UTC(...array2)).toISOString().substring(11,19);
+    };
+
+
+
+    function getStringIconUserDOMObjects(list){
+        var str = '';
+        list.forEach(data => {
+            str+='<div class="col-md-3 mt-2">'
+            str+='  <div class="row">'
+            str+='    <div class="col-6 col-md-12">'
+            str+='      <div class="my-img '+ (data.timer_is_play===1 ?'my-img-yellow':'my-img-balck')+'"></div>'
+            str+='    </div>'
+            str+='    <div class="col-6 col-md-12">'
+            str+='      <div class="caption">'
+            str+='        <p class="h6 text-center '+ (data.timer_is_play===1 ?'my-font-yellow':'')+'">'+data.user_nickname;
+            str+='           <br>'+returnAccumulatedTimeToStringFormat(data.timer_accumulated_day)+'</p>'
+            str+='      </div>'
+            str+='    </div>'
+            str+='  </div>'
+            str+='</div>'
+
+            // timer 증가
+            if(data.timer_is_play===1){
+                // timer_accumulated_day가 배열형식으로 되어있음
+                [hour, minute, second] = data.timer_accumulated_day;
+
+                second = second + 1;
+                if (second >= 60) {
+                    minute = minute + 1;
+                    second = 0;
+                }
+                if (minute >= 60) {
+                    hour = hour + 1;
+                    minute = 0;
+                }
+                data.timer_accumulated_day = [hour, minute, second]
+            }
+        })
+
+        $(".spinner-row").hide();
+        $('.my-user-and-timer-row').empty().html(str);
+    };
+
+    var viewTimer;
+
+    function startIntervalViewUserTimerList(list){
+        clearInterval(viewTimer);
+        getStringIconUserDOMObjects(list)
+        viewTimer = setInterval(function(){
+            getStringIconUserDOMObjects(list)
+        }, 1000)
+    }
+
+
+    function getGroupUserTimerList(){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ajax/timer/gettimers/"+group_id,
+            success: function(result, status, xhr){
+                for(var i in result){
+                    console.log(result[i])
+                    console.log(new Date(...result[i].timer_mod_date))
+
+                    if(result[i].timer_accumulated_day.length < 3){
+                        result[i].timer_accumulated_day = [0,0,0];
+                    }
+                    if(result[i].timer_is_play===1){
+                        // timer_accumulated_day가 배열형식으로 되어있음
+                        var now = new Date();
+                        var lastModTime = new Date(...result[i].timer_mod_date);
+
+                        [hour, minute, second] = result[i].timer_accumulated_day
+                        result[i].timer_accumulated_day = [
+                            now.getHours()-lastModTime.getHours()+hour,
+                            now.getMinutes()-lastModTime.getMinutes()+minute,
+                            now.getSeconds()-lastModTime.getSeconds()+second
+                        ]
+                    }
+                }
+                startIntervalViewUserTimerList(result);
+            },//end ajax success
+            error: function(xhr, status, er){
+                alert("error : "+er)
+            }
+        });//end ajax
+    }
+
+    function startIntervalGetUserTimerList(){
+        getGroupUserTimerList();
+        timerIntervalID = setInterval(function () {
+            getGroupUserTimerList();
+        }, 60000); //1 min
+    }//end startIntervalGetUserTimerList
+
+    $(document).ready(function () {
+        startIntervalGetUserTimerList();
+    });
+</script>
+<!-- end timer script -->
 

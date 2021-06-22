@@ -65,11 +65,16 @@ function viewTimerStartInterval(){
     hourScreen.html((hour < 10 ? '0' : '') + hour);
     minScreen.html((minute < 10 ? '0' : '') + minute);
     secScreen.html((second < 10 ? '0' : '') + second);
+
+    if(getRemainSecondsFrom3AM()<2000) {
+      timerStop();
+      ////////////////////////////////////////////////////////////////////////////////페이지 리셋 및 user 페이지 이동해야함
+    }
   }, 1000);
 }
 
 var timerStart = function(resultFunc) {
-  setAccumulatedTimeStrFromHHMMSS();
+  setAccumulatedTimeStrFromHHMMSS();//타이머시간-> accumulatedTimeStr string변환
   //DB에 상태를 play상태를 업데이트 하면 timer시작
   $.ajax({
     type: "PUT",
@@ -78,7 +83,9 @@ var timerStart = function(resultFunc) {
       console.log("success")
       clearInterval(timerIntervalID);
       viewTimerStartInterval();
-      resultFunc(timerID+"-1-"+accumulatedTimeStr);
+      if(resultFunc != null1){
+        resultFunc(timerID+"-1-"+accumulatedTimeStr);
+      }
     },
     error: function(xhr, status, er){
       clearInterval(timerIntervalID);
@@ -88,7 +95,7 @@ var timerStart = function(resultFunc) {
   });//end ajax
 }
 var timerStop = function (resultFunc) {
-  setAccumulatedTimeStrFromHHMMSS();//타이머시간->string변환
+  setAccumulatedTimeStrFromHHMMSS();//타이머시간-> accumulatedTimeStr string변환
 
   $.ajax({
     type: "PUT",
