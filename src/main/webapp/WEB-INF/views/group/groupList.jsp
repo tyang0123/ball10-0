@@ -55,7 +55,7 @@
                         </a></td>
                         <td>${group.user_nickname_group_header}</td>
                         <td>${group.group_category}</td>
-                        <td>3 /${group.group_person_count}
+                        <td>${group.group_join_person_number}/${group.group_person_count}
                             <c:if test="${group.group_is_secret==1}">
                                 <i class="fa fa-lock"  aria-hidden="true"/>
                             </c:if>
