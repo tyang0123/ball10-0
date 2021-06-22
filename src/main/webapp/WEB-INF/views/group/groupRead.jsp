@@ -88,24 +88,28 @@
         })
 
         var group_id = '${group.group_id}'
+        var criterionNumber = ${firstCriNumber}
 
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
-            messageService.getList(group_id,function(result){
-                var criterionNumber = result[0].group_message_id;
-                console.log(criterionNumber)
-                console.log(result)
-                text = ""
-                for(var i = 0; i<result.length; i++){
-                    text += "<div>"+result[i].group_message_content;
-                    text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+result[i].group_message_id+"'>삭제</button></div>"
-                }
+
+            criterionNumber = criterionNumber-10;
+            console.log(criterionNumber)
+
+            messageService.getList(group_id,criterionNumber,function(result){
+
+                $('.readGroupMessage').html(result);
 
                 $('#moreReadMessage').click(function (){
-                    criterionNumber = criterionNumber-10;
-                })
 
-                $('.readGroupMessage').html(text);
+                    criterionNumber = criterionNumber-10;
+                    console.log("클릭을때 크리넘버: "+criterionNumber)
+
+                    messageService.getList(group_id,criterionNumber,function (result){
+                        $('.readGroupMessage').html(result);
+                    })
+
+                })
 
                 $(".remove_message").click(function (){
                     var group_message_id = $(this).val()

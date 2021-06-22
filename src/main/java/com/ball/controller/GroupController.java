@@ -72,10 +72,8 @@ public class GroupController {
     }
     @GetMapping("/read")
     public String read(Long group_id, Model model){
-//        Criteria cri = new Criteria();
-//        cri.setCriterionNumber(48L);
         model.addAttribute("group", groupService.get(group_id));
-//        model.addAttribute("message",messageService.groupMessageRead(cri,group_id));
+        model.addAttribute("firstCriNumber",messageService.getFirstGroupMessageId(group_id));
         return "group/groupRead";
     }
 

@@ -39,20 +39,25 @@ public class GroupMessageMapperTests {
 
     @Test
     public void testReadGroupMessage(){
-        Criteria cri = new Criteria();
-        cri.setCriterionNumber(48L);
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("criterionNumber",cri.getCriterionNumber());
-        hashMap.put("group_id",1L);
-        mapper.readGroupMessage(hashMap);
-        System.out.println(mapper.readGroupMessage(hashMap));
+        System.out.println(mapper.readGroupMessage(1L));
     }
 
     @Test
     public void testDeleteGroupMessage(){
-        HashMap<String, Object> groupHash = new HashMap<String, Object>();
-        groupHash.put("user_id","user1");
-        groupHash.put("group_message_id",19L);
-        mapper.deleteGroupMessage(groupHash);
+        mapper.deleteGroupMessage(1L);
+    }
+
+    @Test
+    public void testReadGroupMessagePage(){
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(1L);
+
+        mapper.readGroupMessagePaging(cri,1L);
+        System.out.println(mapper.readGroupMessagePaging(cri,1L));
+    }
+
+    @Test
+    public void testGetFirst(){
+        System.out.println(mapper.getFirstGroupMessageId(2L));
     }
 }

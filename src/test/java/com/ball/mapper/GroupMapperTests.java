@@ -95,8 +95,7 @@ public class GroupMapperTests {
     @Test
     public void testCount(){
         Criteria cri = new Criteria();
-        mapper.getTotalCount(cri);
 
-        System.out.println("전체 갯수는 ? :" + mapper.getTotalCount(cri));
+        System.out.println("전체 갯수는 ? :");
     }
 }

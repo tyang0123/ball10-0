@@ -2,16 +2,13 @@ package com.ball.controller;
 
 import com.ball.service.GroupMessageService;
 import com.ball.vo.Criteria;
-import com.ball.vo.GroupMessagePageVO;
 import com.ball.vo.GroupMessageVO;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,15 +25,16 @@ public class GroupMessageAjaxController {
 
     //메세지(댓글) 목록 확인
     @GetMapping("/list")
-    public ResponseEntity<List<GroupMessageVO>> readMessage(@RequestParam("group_id") Long group_id){
+    public ResponseEntity<HashMap<String,Object>> readMessage(@RequestParam("group_id") Long group_id, Long criterionNumber, Model model){
+        System.out.println("메세지 목록 확인: "+criterionNumber);
+
         Criteria cri = new Criteria();
-        cri.setCriterionNumber(10L);
-        System.out.println("메세지 목록 확인");
+        cri.setCriterionNumber(criterionNumber);
+
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("criterionNumber",cri.getCriterionNumber());
-        hashMap.put("group_id",group_id);
-        return new ResponseEntity<>(messageService.groupMessageRead(hashMap), HttpStatus.OK);
-        //return new ResponseEntity<>( messageService.getMessageListPage(cri,group_id), HttpStatus.OK);
+        hashMap.put("list",messageService.groupMessageMoreRead(cri,group_id));
+
+        return ResponseEntity.ok(hashMap);
     }
 
     @PostMapping("/new")
@@ -53,14 +51,11 @@ public class GroupMessageAjaxController {
     }
 
     //메세지(댓글) 삭제
-    //group/read/{group_id}/delete/{group_message_id}
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteMessage(@RequestParam("group_message_id") Long group_message_id){
         System.out.println("메세지 삭제 확인 : "+group_message_id);
-        HashMap<String,Object> groupHash = new HashMap<>();
-        groupHash.put("group_message_id",group_message_id);
 
-        return messageService.groupMessageDelete(groupHash) == 1
+        return messageService.groupMessageDelete(group_message_id) == 1
                 ? new ResponseEntity<>("success",HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

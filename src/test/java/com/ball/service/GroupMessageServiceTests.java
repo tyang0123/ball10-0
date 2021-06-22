@@ -22,36 +22,36 @@ public class GroupMessageServiceTests {
 
     @Test
     public void testGroupMessageRead(){
-        Criteria cri = new Criteria();
-        cri.setCriterionNumber(48L);
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("criterionNumber",cri.getCriterionNumber());
-        hashMap.put("group_id",1L);
-        System.out.println(service.groupMessageRead(hashMap));
+        service.groupMessageRead(1L);
     }
 
     @Test
     public void testGroupMessageInsert(){
         GroupMessageVO vo = new GroupMessageVO();
+
         vo.setGroup_id(1L);
         vo.setUser_id("user1");
-        vo.setGroup_message_content("서비스에서 테스트");
-        service.groupMessageInsert(vo);
-        System.out.println(vo);
+        vo.setGroup_message_content("테스트로 넣습니다.");
+
+        System.out.println(service.groupMessageInsert(vo));
     }
 
     @Test
     public void testGroupMessageDelete(){
-        HashMap<String,Object> groupHash = new HashMap<>();
-        groupHash.put("user_id","user1");
-        groupHash.put("group_message_id",13L);
-        service.groupMessageDelete(groupHash);
+        //group_message_id 있는지 확인
+        service.groupMessageDelete(1L);
     }
 
     @Test
-    public void testCntGroupMessage(){
+    public void testGroupMessageMoreRead(){
         Criteria cri = new Criteria();
-        cri.setCriterionNumber(48L);
-        System.out.println(service.getMessageListPage(cri,1L));
+        cri.setCriterionNumber(1L);
+
+        service.groupMessageMoreRead(cri,1L);
+    }
+
+    @Test
+    public void testFirstGroupMessageId(){
+        System.out.println(service.getFirstGroupMessageId(2L));
     }
 }

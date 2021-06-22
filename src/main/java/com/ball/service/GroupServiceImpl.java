@@ -42,6 +42,6 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public int getTotal(Criteria cri) {
         System.out.println("서비스에서 총 데이터 갯수는 : "+ cri);
-        return mapper.getTotalCount(cri);
+        return 0;
     }
 }

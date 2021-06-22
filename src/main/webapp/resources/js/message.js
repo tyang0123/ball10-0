@@ -15,13 +15,25 @@ var messageService = (function (){
         });
     }
 
-    function getList(group_id,callback){
+    function getList(group_id,criterionNumber,callback){
         $.ajax({
             url:'/group/read/ajax/list/?group_id='+group_id,
             type:'GET',
+            data:{
+                criterionNumber:criterionNumber
+            },
             dataType: "json",
             success:function (data){
-                callback(data)
+                console.log(data['list'])
+                text = ""
+                const list = data['list'];
+                for(var i=0; i<list.length; i++){
+                    text += "<div>"+list[i].group_message_content;
+                    text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+list[i].group_message_id+"'>삭제</button></div>"
+
+                }
+
+                callback(text)
             },
             error: (log)=>{alert(log)}
         });

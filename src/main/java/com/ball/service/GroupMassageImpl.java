@@ -2,7 +2,6 @@ package com.ball.service;
 
 import com.ball.mapper.GroupMessageMapper;
 import com.ball.vo.Criteria;
-import com.ball.vo.GroupMessagePageVO;
 import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +21,23 @@ public class GroupMassageImpl implements GroupMessageService{
     }
 
     @Override
-    public List<GroupMessageVO> groupMessageRead(HashMap<String, Object> messagePageHash) {
-        return mapper.readGroupMessage(messagePageHash);
+    public int groupMessageDelete(Long group_message_id) {
+        return mapper.deleteGroupMessage(group_message_id);
     }
 
     @Override
-    public int groupMessageDelete(HashMap<String, Object> groupHash) {
-        return mapper.deleteGroupMessage(groupHash);
+    public List<GroupMessageVO> groupMessageRead(Long group_id) {
+        return mapper.readGroupMessage(group_id);
     }
 
     @Override
-    public GroupMessagePageVO getMessageListPage(Criteria cri, Long group_id) {
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("criterionNumber",cri.getCriterionNumber());
-        hashMap.put("group_id",group_id);
-        return new GroupMessagePageVO(
-                mapper.getCountByGroupMessage(group_id),
-                mapper.readGroupMessage(hashMap)
-        );
+    public List<GroupMessageVO> groupMessageMoreRead(Criteria cri, Long group_id) {
+        return mapper.readGroupMessagePaging(cri,group_id);
     }
+
+    @Override
+    public int getFirstGroupMessageId(Long group_id) {
+        return mapper.getFirstGroupMessageId(group_id);
+    }
+
 }
