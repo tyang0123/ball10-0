@@ -27,8 +27,6 @@ public class GroupServiceImpl implements GroupService{
         return group;
     }
 
-
-
     @Override
     public GroupVO oneRead(Long group_id) {
         return mapper.groupRead(group_id);
@@ -57,19 +55,20 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public List<GroupJoinVO> joinAllRead(Long group_id) {
-        return mapper.joinAllRead(group_id);
+    public int joinAllRead(Long group_id, String user_id) {
+
+        return mapper.joinAllRead(group_id, user_id);
     }
 
-    public boolean groupCheck(Long group_id){
-
-        for(GroupJoinVO vo : mapper.joinAllRead(group_id)){
-            System.out.println("===================");
-            if(vo.getGroup_id() == group_id){
-                return false;
-            }
-        }
-        return true;
-    }
+//    public boolean groupCheck(Long group_id){
+//
+//        for(GroupJoinVO vo : mapper.joinAllRead(group_id)){
+//            System.out.println("===================");
+//            if(vo.getGroup_id() == group_id){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
 }

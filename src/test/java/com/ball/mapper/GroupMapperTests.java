@@ -106,11 +106,16 @@ public class GroupMapperTests {
         System.out.println("==== 유저 5번이 3번방에 들어갔나 ====");
     }
 
+//    @Test
+//    public void testJoinRead(){
+//        for (GroupJoinVO join : mapper.joinAllRead(24L)) {
+//            System.out.println(join);
+//        }
+//    }
     @Test
-    public void testJoinRead(){
-        for(GroupJoinVO vo : mapper.joinAllRead(24L)){
-            System.out.println("===================");
-            System.out.println(vo.getUser_id());
-        }
+    public void testGroupCheck(){
+
+        System.out.println(mapper.joinAllRead(24L,"user7"));
     }
+
 }

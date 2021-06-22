@@ -83,8 +83,7 @@ public class GroupController {
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
         System.out.println("리드에서 유저 아이디의 값이 들어오나 : "+userID);
         model.addAttribute("user_id",userID);
-//        model.addAttribute("join", groupService.joinAllRead(group_id));
-
+        model.addAttribute("join", groupService.joinAllRead(group_id,userID));
 //        groupService.remove(group_id);
         return "group/groupRead";
     }
@@ -94,6 +93,7 @@ public class GroupController {
         join.setGroup_id(group_id);
         join.setUser_id(userID);
         groupService.joinGroup(join);
+        System.out.println("==========" + join);
 
         return "redirect:/group/list";
     }
