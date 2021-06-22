@@ -63,7 +63,10 @@
         (`group_id`,`user_id`,`group_user_relationship_reg_date`,`group_user_relationship_mod_date`)
         VALUES( #{group_id}, #{user_id}, sysdate(), sysdate() )
     </insert>
-    <select id="joinAllRead" resultType="com.ball.vo.GroupJoinVO">
-        select * from group_user_relationship where group_id = #{group_id}
+<!--    <select id="joinAllRead" resultType="com.ball.vo.GroupJoinVO">-->
+<!--        select * from group_user_relationship where group_id = #{group_id}-->
+<!--    </select>-->
+    <select id="joinAllRead" resultType="int">
+        select count(*) from group_user_relationship where group_id = #{group_id} and user_id = #{user_id}
     </select>
 </mapper>

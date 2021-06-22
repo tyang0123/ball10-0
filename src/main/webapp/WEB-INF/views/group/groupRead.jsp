@@ -129,39 +129,35 @@
         $(".btn-default").click(function (){
             $(operForm).attr("action","/group/modify").attr("method","get").submit(); //수정으로 돌아기기
         })
+
         $(".btn-info").click(function (){
             $(operForm).find("#group_id").remove();
             $(operForm).attr("action", "/group/list").attr("method","get").submit(); //리스트로 돌아가기
         })
+
         if(${group.user_id_group_header eq user_id}) {
             console.log("아이디가 같나?")
             $('.btn-warning').attr('hidden', true)
         }else{
             $('.btn-danger').attr('hidden', true)
             $('.btn-default').attr('hidden', true)
-
         }
+        if(${join >=1}){
+            $('.btn-warning').attr('hidden',true);
+        }
+
         $('.btn-warning').click(function (){
             console.log('그룹가입 버튼이 눌리나')
-            // if() {
-            //     $('.btn-warning').hidden(); //가입된 유저 거르기
-            // }
+
             if(${group.group_join_person_number == group.group_person_count}){
                 alert('인원수가 초과되었습니다.')
                 return false;
             }
             if(${group.group_is_secret==1}){
                 alert('비밀번호를 입력하세요')
-                if(${group.group_password eq true}){
-
-                }
-                else{
-                    return false;
-                }
-
-            }else{
-                (operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
+                return false;
             }
+            $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
         })
         // $('.btn-danger').click(function (){
         //     $(operForm).attr("action","/group/list").attr("method","get").submit();  //그룹 파괴

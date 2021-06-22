@@ -14,7 +14,7 @@ public interface GroupService {
     public int remove(Long group_id);      //삭제
 
     public void joinGroup(GroupJoinVO join);
-    public List<GroupJoinVO> joinAllRead(Long group_id);
+    public int joinAllRead(Long group_id, String user_id);
 
 
 
