@@ -51,9 +51,6 @@
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="d-grid gap-2 col-6 mx-auto">
-                                    <button id="moreReadMessage" class="btn btn-outline-info" >더보기</button>
-                                </div>
                                 <div class="readGroupMessage"></div>
                                 <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
                                     <div class = 'md-3'>
@@ -89,28 +86,40 @@
 
         var group_id = '${group.group_id}'
         var criterionNumber = ${firstCriNumber};
+        //스크롤로 더보기 구현
+        var isLoading = false;
 
+        //modal창 보여주기
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
-
+            //첫번째 10개 메세지
             criterionNumber = criterionNumber-10;
             console.log(criterionNumber)
 
             messageService.getList(group_id,criterionNumber,function(result){
-
                 $('.readGroupMessage').html(result);
+                    //스크롤 이벤트
+                    function loadNewPage(){
+                        //다음 10개 추가
+                        criterionNumber = criterionNumber-10;
+                        console.log("스크롤 했을때 크리넘버: "+criterionNumber)
 
-                $('#moreReadMessage').click(function (){
+                        var temp = $('.modal').height();
+                        messageService.getList(group_id,criterionNumber,function (result){
+                            $('.readGroupMessage').html(result);
+                            if(criterionNumber < 0) alert("마지막 메세지입니다.")
 
-                    criterionNumber = criterionNumber-10;
-                    console.log("클릭을때 크리넘버: "+criterionNumber)
+                            $('.modal').scrollTop($('.modal').height()-temp);
+                            isLoading = false;
+                        })
+                    }
 
-                    messageService.getList(group_id,criterionNumber,function (result){
-                        $('.readGroupMessage').html(result);
-                        if (criterionNumber <= 0) alert("마지막 메세지입니다.")
+                    $('.modal').scroll(function (){
+                        if($('.modal').scrollTop() <60 && !isLoading){
+                            isLoading = true;
+                            setTimeout(loadNewPage,1200);
+                        }
                     })
-
-                })
 
                 $(".remove_message").click(function (){
                     var group_message_id = $(this).val()
