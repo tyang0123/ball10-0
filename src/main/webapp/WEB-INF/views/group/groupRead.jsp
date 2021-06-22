@@ -92,7 +92,8 @@
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
             messageService.getList(group_id,function(result){
-                var criterionNumber = result[result.length-1].group_message_id;
+                var criterionNumber = result[0].group_message_id;
+                console.log(criterionNumber)
                 console.log(result)
                 text = ""
                 for(var i = 0; i<result.length; i++){
