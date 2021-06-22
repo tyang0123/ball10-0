@@ -18,7 +18,7 @@
                         <div class="form-group">
 
                             <label for="user_id_group_header">방장
-                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${user_nickname}" readonly="readonly">
+                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${user_id}" readonly="readonly">
                             </label>
                         </div>
                     </div>

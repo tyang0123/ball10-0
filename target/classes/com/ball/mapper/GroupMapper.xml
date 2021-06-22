@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ball.mapper.GroupMapper">
-    <insert id="insertGroup" parameterType="com.ball.vo.GroupVO">
+    <insert id="insertGroup" parameterType="com.ball.vo.GroupVO"
+            useGeneratedKeys="true" keyProperty="group_id">
         insert into group_table (user_id_group_header, group_name, group_category, group_is_secret,
                                  group_password, group_person_count, group_content, group_reg_date, group_mod_date)
         values(#{user_id_group_header},#{group_name},#{group_category}, #{group_is_secret},
@@ -41,15 +42,28 @@
                                group_mod_date = sysdate()
             where group_id = #{group_id}
     </update>
-
-    <select id="getTotalCount" resultType="int">
-        select count(*) from group_table where group_id > 0
-    </select>
-
     <select id="groupRead" resultType="com.ball.vo.GroupVO">
-        select * from group_table where group_id = #{group_id}
+        select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header, g.group_content,
+               g.group_name, g.group_category, g.group_is_secret, count(gr.user_id) as group_join_person_number,
+               g.group_person_count, g.group_reg_date
+        from group_table g
+                 left outer join user u on g.user_id_group_header = u.user_id
+                 left outer join group_user_relationship gr on gr.group_id = g.group_id
+        where g.group_id = #{group_id}
+        group by g.group_id
     </select>
     <delete id="groupDelete">
         delete from group_table where group_id= #{group_id}
     </delete>
+    <delete id="joinDelete">
+        delete from group_user_relationship where group_id = #{group_id}
+    </delete>
+    <insert id="joinGroup" parameterType = "com.ball.vo.GroupVO">
+        INSERT INTO group_user_relationship
+        (`group_id`,`user_id`,`group_user_relationship_reg_date`,`group_user_relationship_mod_date`)
+        VALUES( #{group_id}, #{user_id}, sysdate(), sysdate() )
+    </insert>
+    <select id="joinAllRead" resultType="com.ball.vo.GroupJoinVO">
+        select * from group_user_relationship where group_id = #{group_id}
+    </select>
 </mapper>

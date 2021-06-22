@@ -3,10 +3,7 @@ package com.ball.controller;
 
 import com.ball.service.GroupService;
 import com.ball.service.UserService;
-import com.ball.vo.Criteria;
-import com.ball.vo.GroupMessageVO;
-import com.ball.vo.GroupVO;
-import com.ball.vo.UserVO;
+import com.ball.vo.*;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import com.ball.service.GroupMessageService;
@@ -36,23 +33,15 @@ public class GroupController {
     private GroupService groupService;
 
     @Setter(onMethod_=@Autowired)
-    private UserService userService;
-
-    @Setter(onMethod_=@Autowired)
     private GroupMessageService messageService;
 
     @GetMapping("/list")
-    public String group(Long group_id , Criteria cri,  Model model) {
+    public String groupList(Long group_id , Criteria cri,  Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
-        model.addAttribute("search", groupService.oneRead(group_id));
         model.addAttribute("group", groupService.allRead(cri));
-//        session.setAttribute("user", user.getUser_nickname());
 
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
-
-        int total = groupService.getTotal(cri);
-        System.out.println("토탈값이 들어오나 "+total);
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
         System.out.println("카테고리가 들어오나 "+ cri.getCategory());
 
@@ -65,39 +54,50 @@ public class GroupController {
         System.out.println("그룹 생성 GetMapping에 들어오나");
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
         System.out.println("유저 아이디의 값이 들어오나 : "+userID);
-        model.addAttribute("user_nickname",userService.getUserNickname(userID));
+        model.addAttribute("user_id",userID);
 
         return "group/groupCreate";
     }
     @PostMapping("/create")
-    public String register(GroupVO group, RedirectAttributes rttr, UserVO userVO,HttpSession session,
-                           Model model, HttpServletRequest request, HttpServletResponse response){
+    public String register(GroupVO group, Long group_id, GroupJoinVO join, HttpServletRequest request, RedirectAttributes rttr){
 
-        groupService.register(group);
-        session.setAttribute("userID", userVO.getUser_id());
-
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        groupService.register(group, userID);
         System.out.println("컨트롤러에 레지스터 값이 들어오나?"+group.getGroup_category());
         rttr.addFlashAttribute("result", group.getGroup_id());
-//        String userID = String.valueOf(request.getSession().getAttribute("userID"));
-//        System.out.println("유저 아이디의 값이 들어오나 : "+userID);
-//        model.addAttribute("user_nickname",userService.getUserNickname(userID));
+        join.setGroup_id(group_id);
+        join.setUser_id(userID);
         return "redirect:/group/list";
 
     }
     @GetMapping("/modify")
-    //@RequestParam("group_id") Long group_id
-    public String get(Long group_id, Model model, @ModelAttribute("cri") Criteria cri){
+    public String modify(Long group_id, Model model, @ModelAttribute("cri") Criteria cri){
         System.out.println("게시글 컨트롤러에서 데이터 하나 수정 / ");
         model.addAttribute("group", groupService.oneRead(group_id));
         return "group/groupModify";
     }
 
     @GetMapping("/read")
-    public String read(Long group_id, Model model){
+    public String oneRead(Long group_id, HttpServletRequest request, Model model){
         model.addAttribute("group", groupService.oneRead(group_id));
-//        model.addAttribute("delete", groupService.remove(group_id));
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        System.out.println("리드에서 유저 아이디의 값이 들어오나 : "+userID);
+        model.addAttribute("user_id",userID);
+//        model.addAttribute("join", groupService.joinAllRead(group_id));
+
+//        groupService.remove(group_id);
         return "group/groupRead";
     }
+    @PostMapping("/read")
+    public String oneRead(Long group_id, GroupJoinVO join, HttpServletRequest request){
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        join.setGroup_id(group_id);
+        join.setUser_id(userID);
+        groupService.joinGroup(join);
+
+        return "redirect:/group/list";
+    }
+
 
     @PostMapping({"/list","/modify"})
     public String modify(GroupVO group, RedirectAttributes rttr, @ModelAttribute ("cri") Criteria cri){
