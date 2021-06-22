@@ -1,6 +1,7 @@
 package com.ball.controller;
 
 import com.ball.service.AlarmService;
+import com.ball.vo.AlarmVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,10 @@ public class UserAlarmController {
     public ResponseEntity<HashMap<String, Object>> userAlarmList(String userID) throws Exception {
 
         HashMap<String, Object> result = new HashMap<>();
+
+        for (AlarmVO alarmVO : alarmService.getTotal(userID)) {
+            System.out.println(alarmVO);
+        }
 
         // 알람 화면 출력
         result.put("list", alarmService.getTotal(userID));
