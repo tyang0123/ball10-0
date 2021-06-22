@@ -1,6 +1,7 @@
 package com.ball.service;
 
 import com.ball.vo.AlarmVO;
+import com.ball.vo.Criteria;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class AlarmServiceTests {
     @Test
     public void testTotal()
     {
-        service.getTotal("user1").forEach(i -> System.out.println(i));
+        System.out.println(service.getFirstCriterionNumber("user1"));
     }
     @Test
     public void testModify(){
@@ -44,4 +45,10 @@ public class AlarmServiceTests {
         System.out.println(service.alarmCount("user1"));
     }
 
+    @Test
+    public void testGetListWithPage(){
+        Long pageID = 0L;
+        Criteria cri = new Criteria(pageID,20);
+        service.getListWithPage(cri,"user1").forEach(i -> System.out.println(i));
+    }
 }

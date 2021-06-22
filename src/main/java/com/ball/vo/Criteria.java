@@ -13,7 +13,7 @@ public class Criteria {
 
     private String keyword; //검색을 위한 키워드
     private String category; //그룹 검색시 category
-    private Long criterionNumber; //마지막으로 조회된 id값(group, groupMessage, notice)
+    private Long criterionNumber; //마지막으로 조회된 id값(group, groupMessage, notice, alarmMessage)
     private int amount; //한번에 조회될 list값
 
     public Criteria(){

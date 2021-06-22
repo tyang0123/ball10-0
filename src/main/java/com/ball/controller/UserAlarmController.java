@@ -1,6 +1,7 @@
 package com.ball.controller;
 
 import com.ball.service.AlarmService;
+import com.ball.vo.Criteria;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,17 @@ public class UserAlarmController {
     public void user(Model model){//userVo vo
         String userID = "user1";
         model.addAttribute("alarmCount",alarmService.alarmCount(userID));
+        model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID));
         model.addAttribute("userID",userID);
     }
 
     @ResponseBody
     @PostMapping (value = "/alarmMessage") //userVo vo
-    public ResponseEntity<HashMap<String, Object>> userAlarmList(String userID) throws Exception {
-
+    public ResponseEntity<HashMap<String, Object>> userAlarmList(Long criterionNumber,String userID) throws Exception {
+        Criteria cri = new Criteria(criterionNumber,10);
         HashMap<String, Object> result = new HashMap<>();
-
         // 알람 화면 출력
-        result.put("list", alarmService.getTotal(userID));
+        result.put("list", alarmService.getListWithPage(cri,userID));
         return ResponseEntity.ok(result);
     }
 
