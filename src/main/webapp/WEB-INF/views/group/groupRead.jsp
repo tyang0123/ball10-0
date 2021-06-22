@@ -54,7 +54,7 @@
                                 <div class="d-grid gap-2 col-6 mx-auto">
                                     <button id="moreReadMessage" class="btn btn-outline-info" >더보기</button>
                                 </div>
-                                <div class="readGroupMessage">그룹 메세지</div>
+                                <div class="readGroupMessage"></div>
                                 <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
                                     <div class = 'md-3'>
                                         <label for = 'message-text' class='col-form-label'> 입력창 </label>
@@ -88,7 +88,7 @@
         })
 
         var group_id = '${group.group_id}'
-        var criterionNumber = ${firstCriNumber}
+        var criterionNumber = ${firstCriNumber};
 
         $("#modalShowButton").click(function (){
             $('.modal').modal("show")
@@ -107,6 +107,7 @@
 
                     messageService.getList(group_id,criterionNumber,function (result){
                         $('.readGroupMessage').html(result);
+                        if (criterionNumber <= 0) alert("마지막 메세지입니다.")
                     })
 
                 })

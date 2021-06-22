@@ -30,9 +30,7 @@ var messageService = (function (){
                 for(var i=0; i<list.length; i++){
                     text += "<div>"+list[i].group_message_content;
                     text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+list[i].group_message_id+"'>삭제</button></div>"
-
                 }
-
                 callback(text)
             },
             error: (log)=>{alert(log)}
