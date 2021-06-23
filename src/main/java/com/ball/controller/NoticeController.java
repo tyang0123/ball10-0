@@ -5,7 +5,9 @@ import com.ball.vo.NoticeVO;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/notice/*")
 public class NoticeController {
 
@@ -35,5 +38,17 @@ public class NoticeController {
         model.addAttribute("userID",userID);
         model.addAttribute("list",service.readListNotice());
         return "notice/noticelist";
+    }
+
+    @ResponseBody
+    @PostMapping("/add")
+    public ResponseEntity<String> addNotice(@RequestBody NoticeVO vo){
+        System.out.println("/notice/add 들어오는지 확인");
+        log.info("NoticeVO: "+vo);
+
+        int insertCount = service.insertNotice(vo);
+        return insertCount == 1
+                ? new ResponseEntity<>("success", HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -19,8 +19,8 @@ public class NoticeServiceImpl implements NoticeService{
     private NoticeMapper mapper;
 
     @Override
-    public void insertNotice(NoticeVO noticeVO) {
-        mapper.noticeInsert(noticeVO);
+    public int insertNotice(NoticeVO noticeVO) {
+        return mapper.noticeInsert(noticeVO);
     }
 
     @Override
