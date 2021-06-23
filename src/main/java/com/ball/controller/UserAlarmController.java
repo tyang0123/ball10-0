@@ -42,10 +42,10 @@ public class UserAlarmController {
     @PostMapping (value = "/alarmMessage") //userVo vo
     public ResponseEntity<HashMap<String, Object>> userAlarmList(Long criterionNumber, String userID) throws Exception {
         log.info("user controller userAlarmList...........................................................");
-        log.info(criterionNumber+" "+userID);
+
         Criteria cri = new Criteria(criterionNumber,10);
         HashMap<String, Object> result = new HashMap<>();
-        System.out.println(alarmService.getListWithPage(cri,userID));
+
         // 알람 화면 출력
         result.put("list", alarmService.getListWithPage(cri,userID));
         return ResponseEntity.ok(result);

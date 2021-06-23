@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../includes/header.jsp" %>
 
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading"> 그룹 조회 페이지 </div> <!-- /.panel-heading -->
             <div class="panel-body">
-
+                <form id='operForm' action="/group/read">
                 <div class="form-group">
                     <label for="group_id">방번호</label>
                     <input class="form-control" name="group_id" id="group_id" value="${group.group_id}"
@@ -32,14 +33,31 @@
                               readonly="readonly">${group.group_content}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="user_id_group_header">방장</label>
-                    <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}"
+                    <label for="user_nickname_group_header">그룹장</label>
+                    <input class="form-control" name="user_nickname_group_header" id="user_nickname_group_header" value="${group.user_nickname_group_header}"
                            readonly="readonly">
                 </div>
-                <!--  264페이지 수정  -->
-                <button data-oper='modify' class="btn btn-default"> 수정</button>
-                <button data-oper='list' class="btn btn-info">목록 </button>
-                <form id='operForm' action="/group/modify" method="get">
+                <div class="form-group">
+                    <label for="group_person_count">참여인원</label>
+                    <input class="form-control" name="group_person_count" id="group_person_count" value="${group.group_join_person_number}/${group.group_person_count}"
+                           readonly="readonly">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="group_reg_date">그룹 생성일</label>
+
+                    <input class="form-control" name="group_reg_date" id="group_reg_date"
+                           value="<fmt:parseDate var="date1" value="${group.group_reg_date}" pattern="yyyy-MM-dd"/><fmt:formatDate value="${date1}" type="DATE" pattern="yyyy-MM-dd"/>"
+                           readonly="readonly">
+
+                </div>
+                    <button data-oper='modify' class="btn btn-default"> 수정</button>
+                    <button data-oper='list' class="btn btn-info">목록 </button>
+                    <button data-oper='remove' class="btn btn-danger">그룹 파괴</button>
+                    <button data-oper='remove' class="btn btn-block">탈퇴 하기</button>
+                    <button data-oper='join' class="btn btn-warning">그룹 가입 </button>
+
                     <input type="hidden" name="group_id" value="${group.group_id}" />
 <%--                    <input type="hidden" name="pageNum" value="${cri.pageNum}" />--%>
 <%--                    <input type="hidden" name="amount" value="${cri.amount}" />--%>
@@ -151,12 +169,57 @@
 <script type="text/javascript" src="/resources/js/message.js"></script>
 <script>
     $(document).ready(function (){
+
         $(".btn-default").click(function (){
-            $(operForm).attr("action","/group/modify").submit();
+            $(operForm).attr("action","/group/modify").attr("method","get").submit(); //수정으로 돌아기기
         })
+
         $(".btn-info").click(function (){
             $(operForm).find("#group_id").remove();
-            $(operForm).attr("action", "/group/list").submit(); //리스트로 돌아가기
+            $(operForm).attr("action", "/group/list").attr("method","get").submit(); //리스트로 돌아가기
+        })
+
+        if(${group.user_id_group_header eq user_id}) {
+            console.log("아이디가 같나?")
+            $('.btn-warning').attr('hidden', true)
+            $('.btn-block').attr('hidden', true)
+        }else{
+            $('.btn-danger').attr('hidden', true)
+            $('.btn-default').attr('hidden', true)
+        }
+        if(${join >=1}){
+            $('.btn-warning').attr('hidden',true);
+        }else{
+            $('.btn-block').attr('hidden', true)
+        }
+
+        $('.btn-warning').click(function (){
+            console.log('그룹가입 버튼이 눌리나')
+
+            if(${group.group_join_person_number == group.group_person_count}){
+                alert('인원수가 초과되었습니다.')
+                return false;
+            }
+
+            if(${group.group_is_secret==1}){
+                console.log(${group.group_password});
+                var checkPass = prompt('비밀번호를 입력하세요');
+
+                if(checkPass === '1234'){
+                    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
+                }
+                <%--if(${group.group_password}== checkPass){--%>
+                <%--    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입--%>
+                <%--}--%>
+                return false;
+
+            }
+        })
+        $('.btn-danger').click(function (){
+            $(operForm).attr("action","/group/groupRemove").attr("method","post").submit();  //그룹 파괴
+        })
+        $('.btn-block').click(function (){
+            $(operForm).attr("action","/group/userRemove").attr("method","post").submit();  //탈퇴하기
         })
 
         var group_id = '${group.group_id}'
