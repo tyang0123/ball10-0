@@ -1,6 +1,7 @@
 package com.ball.controller;
 
 import com.ball.service.AlarmService;
+import com.ball.service.UserService;
 import com.ball.vo.Criteria;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService alarmService;
 
+    @Setter(onMethod_=@Autowired)
+    private UserService userService;
+
     @GetMapping("/user")
     public void user(Model model){//userVo vo
         String userID = "user1";
+        model.addAttribute("nickName","유정짱이야");
         model.addAttribute("alarmCount",alarmService.alarmCount(userID));
         model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID));
         model.addAttribute("userID",userID);
+        model.addAttribute("userJoinGroupList",userService.userJoinGroupList(userID));
     }
 
     @ResponseBody

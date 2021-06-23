@@ -54,4 +54,9 @@ public class UserMapperTests {
 
         mapper.updateUser(vo);
     }
+
+    @Test
+    public void testUserJoinGroup(){
+        mapper.userJoinGroup("user1").forEach(i -> System.out.println(i));
+    }
 }

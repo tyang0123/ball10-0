@@ -5,18 +5,69 @@
 
 <%@ include file="../includes/header.jsp" %>
 
-
+<!-- 유저페이지 알람모달 -->
 <div class="row">
-    <div class="col-sm-12">
-
-        <div style="margin-top: 30px; position: relative;">
-            <a data-bs-toggle="modal" href="#staticBackdrop" id="Alarm">
-                <img src="/resources/img/letter.png" id="letter-img" /><span id="alarm-count" class="badge rounded-pill bg-warning text-dark">${alarmCount}</span>
-            </a>
-        </div>
+    <div class="col-2"></div>
+    <div class="col-8 userMarker"><span>${nickName}님의 오늘의 공부량</span></div>
+    <div style="margin-top: 30px; position: relative;" class="col-2">
+        <a data-bs-toggle="modal" href="#staticBackdrop" id="Alarm">
+            <img src="/resources/img/letter.png" id="letter-img" /><span id="alarm-count" class="badge rounded-pill bg-warning text-dark">${alarmCount}</span>
+        </a>
+    </div>
+</div>
+<!-- 유저페이지 타이머 -->
+<div class="row">
+    <div class="col-12 userTimer"><span>00:00:00</span></div>
+</div>
+<div class="row">
+    <div style="text-align: center;">
+        <button style="width: 150px;" type="button" class="button-timer-custom" id="timeToggle">공부시작하기</button>
+        <div class="userMarker"><span>${nickName}님의 속한 그룹</span></div>
+    </div>
+</div>
+<!-- 유저페이지 그룹리스트 -->
+<div class="row">
+    <div style="background-color: #efefef; margin-top: 20px; padding-top:20px; padding-bottom: 40px;" class="center-block;">
+        <c:if test="${empty userJoinGroupList}">
+            <div style="text-align: center; margin-top: 20px;">
+            <img src='/resources/img/group_empty.jpg' class="group-empty"/>
+            </div>
+        </c:if>
+        <c:forEach var="groupList" items="${userJoinGroupList}">
+            <div class="card user-card-group">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10 group-category">${groupList.group_category}</div>
+                        <div class="col-2 text-end groupSecret">
+                            <c:if test="${groupList.group_is_secret==1}">
+                                <img src='/resources/img/lock.png' id='lockImg'/>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="group-list-margin">
+                        <span class="group-title">${groupList.group_name}</span>
+                    </div>
+                    <div>
+                        <span class="group-list-title">목표시간 : </span><span class="group-list-content">7시간</span><span class="group-list-title"> 그룹인원 : </span><span class="group-list-content">${groupList.group_join_person_number}/${groupList.group_person_count}명</span><span class="group-list-title">  그룹장 : </span><span class="group-list-content">${groupList.user_nickname_group_header}</span>
+                    </div>
+                    <div>
+                        <span class="group-list-title">공부량 : </span><span class="group-list-content">6시간 50분</span>
+                        <span class="group-list-title">  시작일 : </span><span class="group-list-content">
+                        <fmt:parseDate var="date" value="${groupList.group_reg_date}" pattern="yyyy-MM-dd"/>
+                            <fmt:formatDate value="${date}" type="DATE" pattern="yyyy-MM-dd"/></span>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item group-content">${groupList.group_content}</li>
+                </ul>
+            </div>
+        </c:forEach>
 
     </div>
 </div>
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -49,6 +100,8 @@
 <script type="text/javascript">
     var changeCriterionNumber=${firstCriterionNumber};
     $(document).ready(function (){
+
+        //알람메세지 모달
         $("#Alarm").click(function (){
 
             //페이지 로딩시 첫 실행
@@ -56,10 +109,19 @@
 
             //더보기 버튼 클릭시
            $("#addBtn").click(function (){
-               $(moreList(changeCriterionNumber)).prependTo('#dataSection');
+               moreList(changeCriterionNumber);
            })
         });
 
+        //timer버튼 온오프
+        $("#timeToggle").click(function(){
+            if($(this).html()=='공부시작하기') {
+                $(this).html('공부그만하기');
+            }
+            else {
+                $(this).html('공부시작하기');
+            }
+        });
      });
     //시간 디스플레이 변환
     const displayTime = (timeValue)=>{
