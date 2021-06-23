@@ -20,6 +20,13 @@
                     <input class="form-control" name="group_name" id="group_name" value="${group.group_name}"
                            readonly="readonly">
                 </div>
+                <div>
+                    <label for="group_category">그룹 카테고리</label>
+                    <input class="form-control" name="group_category" id="group_category" value="${group.group_category}"
+                           readonly="readonly">
+                </div>
+
+
                 <div class="form-group">
                     <label for="group_content">텍스트 영역</label>
                     <textarea class="form-control" rows="3" name="group_content" id="group_content"
@@ -81,7 +88,7 @@
         })
         $(".btn-info").click(function (){
             $(operForm).find("#group_id").remove();
-            $(operForm).attr("action", "/group/list").submit();
+            $(operForm).attr("action", "/group/list").submit(); //리스트로 돌아가기
         })
 
         var group_id = '${group.group_id}'

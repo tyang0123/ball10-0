@@ -3,7 +3,6 @@ package com.ball.mapper;
 
 import com.ball.vo.Criteria;
 import com.ball.vo.GroupVO;
-import com.ball.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;

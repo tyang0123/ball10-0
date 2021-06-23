@@ -43,8 +43,8 @@ public class GroupMessageAjaxController {
         log.info("ReplyVO: "+vo);
         vo.setGroup_id(group_id);
 
-        int insertCount = messageService.groupMessageInsert(vo);
-
+//        int insertCount = messageService.groupMessageInsert(vo);
+        int insertCount = 0;
         return insertCount == 1
                 ? new ResponseEntity<>("success", HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,6 +59,4 @@ public class GroupMessageAjaxController {
                 ? new ResponseEntity<>("success",HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }

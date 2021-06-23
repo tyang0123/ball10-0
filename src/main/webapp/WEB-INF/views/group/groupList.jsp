@@ -2,11 +2,12 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<i class="bi bi-lock-fill"></i>
+
 <%@ include file="../includes/header.jsp" %>
 
 <html>
 <head>
+    <i class="bi bi-lock-fill"></i>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>그룹</title>
 </head>
@@ -93,20 +94,6 @@
             $("#operForm").attr("action", "/group/create").submit();
         })
     })
-    // var searchForm = $("#searchForm");
-    // $("#searchForm").click(function (e){
-    //     if(!searchForm.find("option:selected").val()){
-    //         alert("검색 종류를 선택하세요");
-    //         return false;
-    //     }
-    //     if(!searchForm.find("input[name='keyword']").val()){
-    //         alert("키워드를 입력하세요")
-    //         return false;
-    //     }
-    //     e.preventDefault();
-    //     searchForm.submit();
-    //
-    // })
 
 </script>
 

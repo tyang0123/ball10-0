@@ -54,4 +54,9 @@ public class UserMapperTests {
 
         mapper.updateUser(vo);
     }
+
+    @Test
+    public void testSelectUserNickname(){
+        System.out.println(mapper.selectUserNickNameByID("user1"));
+    }
 }
