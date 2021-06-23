@@ -57,12 +57,12 @@ public class UserController {
             , RedirectAttributes rAttr, HttpSession session
             ,@CookieValue(name = "userCookie", required = false) Cookie userCookie
             ,@CookieValue(name = "JSESSIONID", required = false) Cookie JSESSIONID
-            , HttpServletResponse res) {
-        log.info("login post..............................." + user_remember);
+            , HttpServletResponse res){
+        log.info("login post..............................."+user_remember);
         //login-password DB check
         boolean checkLoginResult = userService.userLoginCheck(userVO.getUser_id(), userVO.getUser_password());
 
-        if (!checkLoginResult) {// id, password 불일치시 다시 login
+        if(! checkLoginResult){// id, password 불일치시 다시 login
             log.info("...........redirect fail");
             rAttr.addFlashAttribute("errorMessage", "fail");
             return "redirect:/user/login";
@@ -82,29 +82,28 @@ public class UserController {
             userCookie.setPath("/");
             userCookie.setMaxAge(60 * 60 * 24);
 
-            //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
-            if (JSESSIONID != null) {
-                JSESSIONID.setMaxAge(0);
-                res.addCookie(JSESSIONID);
-            }
-            JSESSIONID = new Cookie("JSESSIONID", session.getId());
-            JSESSIONID.setPath("/");
-            JSESSIONID.setHttpOnly(true);
-            JSESSIONID.setSecure(true);
-
-            if (user_remember) { //로그인 상태 유지하면 userid를 쿠키에 저장함
-                //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
-                userCookie.setMaxAge(60 * 60 * 24 * 365 * 10); //set cookie 10 years
-                JSESSIONID.setMaxAge(60 * 60 * 24 * 180);
-
-                session.setMaxInactiveInterval(60 * 60 * 24 * 180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
-            }
-            res.addCookie(userCookie);
+        //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
+        if(JSESSIONID!=null){
+            JSESSIONID.setMaxAge(0);
             res.addCookie(JSESSIONID);
-
-            rAttr.addFlashAttribute("successLogin", "success");
-            return "redirect:/user/login";
         }
+        JSESSIONID = new Cookie("JSESSIONID",session.getId());
+        JSESSIONID.setPath("/");
+        JSESSIONID.setHttpOnly(true);
+        JSESSIONID.setSecure(true);
+
+        if(user_remember) { //로그인 상태 유지하면 userid를 쿠키에 저장함
+            //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
+            userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
+            JSESSIONID.setMaxAge(60*60*24*180);
+
+            session.setMaxInactiveInterval(60*60*24*180); // session은 6개월로  기본 세션 시간은 24시간 (web.xml 에 기술함)
+        }
+        res.addCookie(userCookie);
+        res.addCookie(JSESSIONID);
+
+        rAttr.addFlashAttribute("successLogin", "success");
+        return "redirect:/user/login";
     }
 
     @GetMapping("/create")
