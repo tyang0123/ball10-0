@@ -264,6 +264,12 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
 .group-list-margin {
   margin-bottom: 10px;
 }
+
+.group-empty {
+  max-width: 98vw;
+  border-radius: 1em !important;
+}
+
 @media (min-width: 768px) {
   #margin {
     padding-top: 72px;
@@ -342,6 +348,9 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 300px;
+  }
+  .group-empty {
+    max-width: 80vw;
   }
 }
 
@@ -434,6 +443,9 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
   .group-list-margin {
     margin-bottom: 20px;
   }
+  .group-empty {
+    max-width: 80vw;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -472,5 +484,8 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
     margin: 15px auto;
     width: 1000px;
     border: #000000 1px solid;
+  }
+  .group-empty {
+    max-width: 70vw;
   }
 }
