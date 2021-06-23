@@ -77,7 +77,7 @@ public class UserController {
             res.addCookie(userCookie);
         }
         userCookie = new Cookie("userCookie", userVO.getUser_id());
-        userCookie.setSecure(true);
+//        userCookie.setSecure(true); 다른 엔트포인트에 쿠키전달이 안되서 true를 하면 안됨
         userCookie.setPath("/");
         userCookie.setMaxAge(60*60*24);
 
@@ -136,8 +136,7 @@ public class UserController {
         response.addCookie(timerCookie);
 
         // user nickname DB에서 가져오기
-        model.addAttribute("user_nickname",userService.getUserNickname(userID));
-
+        model.addAttribute("nickName",userService.getUserNickname(userID));
 
         return "user/user";
     }

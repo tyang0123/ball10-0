@@ -47,14 +47,10 @@ public class TimerAjaxController {
             , HttpSession session){
 
         try{
-            log.info(timer_date);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime timer_time = LocalTime.parse(timer_date, dtf);
-            log.info(timer_time.toString());
-
 
             TimerVO vo = new TimerVO();
-
             vo.setTimer_id(timer_id);
             vo.setTimer_accumulated_day(timer_time);
             vo.setUser_id(String.valueOf(session.getAttribute("userID")));

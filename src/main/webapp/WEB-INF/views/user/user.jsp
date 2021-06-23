@@ -20,28 +20,21 @@
 
     </div>
 </div>
-<!-- timer -->
-<div class="row mt-4">
-    <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div class="card bg-light">
-                <div class="card-body bg-light text-center">
-                    <p class="card-title mt-2 my-timer">
-                        <a><span class="fs-1 timer-hours"></span></a> <span class="fs-1">:</span>
-                        <a><span class="fs-1 timer-min"></span></a> <span class="fs-1">:</span>
-                        <a><span class="fs-1 timer-sec"></span></a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
+<!-- 유저페이지 타이머 -->
+<div class="row">
+    <div class="col-12 userTimer">
+        <span class="timer-hours">00</span><span>:</span>
+        <span class="timer-min">00</span><span>:</span>
+        <span class="timer-sec">00</span>
     </div>
-    <div cloass = "row">
-        <div class="d-grid gap-2 col-2 mx-auto">
-            <button class="btn btn-warning btn-lg mt-2 btn-rounded" id="timer-btn">Start</button>
-        </div>
+</div>
+<div class="row">
+    <div style="text-align: center;">
+        <button style="width: 150px;" type="button" class="button-timer-custom" id="time-toggle">공부시작하기</button>
+        <div class="userMarker"><span>${nickName}님의 속한 그룹</span></div>
     </div>
-</div><!-- end timer -->
+</div>
+<!-- end timer -->
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -178,30 +171,26 @@
         // var timerCookieStr = "125-1-10:20:10"
 
         var timerPlayFlag = false;
-        $("#timer-btn").click(function(e){
+        $("#time-toggle").click(function(e){
             if(timerPlayFlag){
-                $("#timer-btn").html("Start");
+                $(this).html('공부시작하기');
                 timerPlayFlag = false;
                 timerStop(function(resultCookieTimer){
                     //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
-                    document.cookie = "timerCookie="+resultCookieTimer+";path=/;max-age="+getRemainSecondsFrom3AM()+";";
-
-                    console.log(document.cookie);
+                    document.cookie = "timerCookie="+resultCookieTimer;
                 });
             }else{
-                $("#timer-btn").html("Stop");
+                $(this).html('공부그만하기');
                 timerPlayFlag = true;
                 timerStart(function(resultCookieTimer){
                     //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
-                    document.cookie = "timerCookie="+resultCookieTimer+";path=/;max-age="+getRemainSecondsFrom3AM()+";";
-
-                    console.log(document.cookie);
+                    document.cookie = "timerCookie="+resultCookieTimer;
                 });
             }
-        });//end timer-btn click
+        });//end time-toggle click
 
         //타이머 셋팅
-        timerNumberInit($(".my-timer"), $("#timer-btn"), timerCookieStr);
+        timerNumberInit($(".userTimer"), $("#time-toggle"), timerCookieStr);
     });
 </script>
 
