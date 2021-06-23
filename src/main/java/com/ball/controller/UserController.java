@@ -73,7 +73,7 @@ public class UserController {
 
             userCookie = new Cookie("userCookie", userVO.getUser_id());
             userCookie.setMaxAge(60*60*24*365*10); //set cookie 10 years
-            userCookie.setSecure(true);
+//            userCookie.setSecure(true);
             userCookie.setPath("/");
             res.addCookie(userCookie);
 
@@ -90,7 +90,8 @@ public class UserController {
         }
 
         rAttr.addFlashAttribute("successLogin", "success");
-        return "redirect:/user/login";
+//        return "redirect:/user/login";
+        return "redirect:/user/user";
     }
 
     @GetMapping("/create")
