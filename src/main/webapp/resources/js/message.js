@@ -1,56 +1,46 @@
 console.log("Message Module......");
 var messageService = (function (){
 
-    function add(message, callback, error){
-        console.log("new message ................ ");
+    function add(group_id,message, callback){
+        console.log("add message ... ");
         $.ajax({
-            type:'post',
-            url : '/read/ajax/new',
+            url :'/group/read/ajax/new/?group_id='+group_id,
+            type:'POST',
             data : JSON.stringify(message),
             contentType : "application/json; charset=utf-8",
-            success : function(result,status,xhr){
-                if (callback){
-                    callback(result);
-                }
+            success : function(result){
+                callback(result)
             },
-            error:function(xhr,status,er){
-                if(error){
-                    error(er);
-                }
-            }
-        })
+            error:(log)=>{alert("실패"+log)}
+        });
     }
 
-    // function getList(group_id,callback,error){
-    //     $.getJSON("group/read/ajax/list"+group_id,
-    //         function (data){
-    //         if(callback){
-    //             callback(data);
-    //         }
-    //         }).fail(function (xhr,status,err){
-    //             if(error){
-    //                 error();
-    //             }
-    //     });
-    // }
-
-    function getList(group_id,callback){
-        console.log('들어오는지 확인 : ',group_id);
+    function getList(group_id,criterionNumber,callback){
         $.ajax({
             url:'/group/read/ajax/list/?group_id='+group_id,
             type:'GET',
+            data:{
+                criterionNumber:criterionNumber
+            },
             dataType: "json",
             success:function (data){
-                callback(data)
+                console.log(data['list'])
+                text = ""
+                const list = data['list'];
+                for(var i=0; i<list.length; i++){
+                    text += "<div>"+list[i].group_message_content;
+                    text += "<button class='remove_message btn btn-outline-danger btn-sm' value='"+list[i].group_message_id+"'>삭제</button></div>"
+                }
+                callback(text)
             },
-            error: (log)=>{alert("실패"+log)}
+            error: (log)=>{alert(log)}
         });
     }
 
     function remove(group_message_id,callback,error){
         $.ajax({
             type : 'delete',
-            url : '/read/ajax/delete/'+group_message_id,
+            url : '/group/read/ajax/delete/?group_message_id='+group_message_id,
             success:function (deleteResult,status,xhr){
                 if(callback){
                     callback(deleteResult);

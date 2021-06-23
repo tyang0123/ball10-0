@@ -218,6 +218,7 @@
     });
 </script>
 
+<!-- 타이머 관련 Script-->
 <script src="/resources/js/timer.js"></script>
 <script>
     $(document).ready(function () {

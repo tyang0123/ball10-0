@@ -10,4 +10,6 @@ public interface NoticeService {
     public void updateNotice(NoticeVO noticeVO); //update, delete 는 책에서 boolean 으로 해줬지만 void 로 진행하겠습니다.
     public void deleteNotice(Long notice_id);
     public List<NoticeVO> readListNotice(); //notice 페이지에 보여줄 리스트
+
+    public int getNoticeCount();
 }

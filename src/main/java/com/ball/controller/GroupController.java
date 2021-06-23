@@ -2,6 +2,8 @@ package com.ball.controller;
 
 
 import com.ball.service.GroupService;
+import com.ball.vo.Criteria;
+import com.ball.vo.GroupVO;
 import com.ball.service.UserService;
 import com.ball.vo.*;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,6 +43,11 @@ public class GroupController {
     public String groupList(Long group_id , Criteria cri,  Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
         model.addAttribute("list",messageService.groupMessageRead(1L));
+//        HashMap<String,Object> hashMap = new HashMap<>();
+//        hashMap.put("criterionNumber",cri);
+//        hashMap.put("group_id",group_id);
+//        model.addAttribute("list",messageService.groupMessageRead(hashMap));
+        model.addAttribute("search", groupService.get(group_id));
         model.addAttribute("group", groupService.allRead(cri));
 
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
@@ -86,6 +94,9 @@ public class GroupController {
         model.addAttribute("user_id",userID);
         model.addAttribute("join", groupService.joinAllRead(group_id,userID));
 //        groupService.remove(group_id);
+
+        model.addAttribute("group", groupService.get(group_id));
+        model.addAttribute("firstCriNumber",messageService.getFirstGroupMessageId(group_id));
         return "group/groupRead";
     }
     @PostMapping("/read")

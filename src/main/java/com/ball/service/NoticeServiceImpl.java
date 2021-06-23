@@ -42,4 +42,9 @@ public class NoticeServiceImpl implements NoticeService{
     public List<NoticeVO> readListNotice() {
         return mapper.noticeReadList();
     }
+
+    @Override
+    public int getNoticeCount() {
+        return mapper.noticeCount();
+    }
 }

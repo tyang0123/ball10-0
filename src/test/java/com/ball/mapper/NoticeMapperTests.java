@@ -47,4 +47,9 @@ public class NoticeMapperTests {
         mapper.noticeUpdate(noticeVO);
         System.out.println("업데이트 : "+noticeVO);
     }
+
+    @Test
+    public void testNoticeCount(){
+        System.out.println(mapper.noticeCount());
+    }
 }

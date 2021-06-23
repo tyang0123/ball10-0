@@ -23,4 +23,8 @@
     <update id="noticeUpdate">
         update notice set notice_content = #{notice_content} , notice_mod_date = now()  where notice_id = #{notice_id}
     </update>
+
+    <select id="noticeCount" resultType="int">
+        select count(*) from notice
+    </select>
 </mapper>

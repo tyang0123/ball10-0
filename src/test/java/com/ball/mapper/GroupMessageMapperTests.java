@@ -1,5 +1,6 @@
 package com.ball.mapper;
 
+import com.ball.vo.Criteria;
 import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -38,15 +39,25 @@ public class GroupMessageMapperTests {
 
     @Test
     public void testReadGroupMessage(){
-        mapper.readGroupMessage(1L);
         System.out.println(mapper.readGroupMessage(1L));
     }
 
     @Test
     public void testDeleteGroupMessage(){
-        HashMap<String, Object> groupHash = new HashMap<String, Object>();
-        groupHash.put("user_id","user1");
-        groupHash.put("group_message_id",19L);
-        mapper.deleteGroupMessage(groupHash);
+        mapper.deleteGroupMessage(1L);
+    }
+
+    @Test
+    public void testReadGroupMessagePage(){
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(1L);
+
+        mapper.readGroupMessagePaging(cri,1L);
+        System.out.println(mapper.readGroupMessagePaging(cri,1L));
+    }
+
+    @Test
+    public void testGetFirst(){
+        System.out.println(mapper.getFirstGroupMessageId(2L));
     }
 }

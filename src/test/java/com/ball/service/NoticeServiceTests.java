@@ -48,4 +48,9 @@ public class NoticeServiceTests {
         service.updateNotice(noticeVO);
         System.out.println(noticeVO);
     }
+
+    @Test
+    public void testGetNoticeCount(){
+        System.out.println(service.getNoticeCount());
+    }
 }
