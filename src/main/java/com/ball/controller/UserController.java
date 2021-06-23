@@ -1,5 +1,7 @@
 package com.ball.controller;
 
+import com.ball.mail.service.MailService;
+import com.ball.mail.vo.MailVO;
 import com.ball.service.TimerService;
 import com.ball.service.UserService;
 import com.ball.vo.TimerVO;
@@ -29,6 +31,12 @@ public class UserController {
 
     @Setter(onMethod_=@Autowired )
     private TimerService timerService;
+
+    @Setter(onMethod_=@Autowired )
+    private MailService mailService;
+
+    private String adminEmail;
+    private String adminEmailPW;
 
     @GetMapping("/login")
     public String loginGet(){
@@ -141,5 +149,57 @@ public class UserController {
 
 
         return "user/user";
+    }
+
+
+    @GetMapping("/findID")
+    public void findIDGet(){}
+
+    @GetMapping("/findPassword")
+    public void findPasswordGet(){}
+
+    private boolean prepareSendingAdminEmail(){
+        UserVO emailVO = userService.getAdminEmailAndPW();
+        if(emailVO == null) return false;
+        adminEmail = emailVO.getUser_email();
+        adminEmailPW = emailVO.getUser_password();
+        System.out.println(emailVO);
+        mailService.setSendEmailID(adminEmail,adminEmailPW);
+        return true;
+    }
+
+    @PostMapping("/findID")
+    public String findIDPostSendEmailID(String user_email
+            , RedirectAttributes rAttr){
+        log.info("user findIDPostSendEmailID..................................."+user_email);
+
+        String userID = userService.getUserId(user_email);
+
+        if(userID == null){
+            rAttr.addFlashAttribute("sendID", "등록된 이메일이 없습니다. 확인 후 다시 입력하여 주세요.");
+            return "redirect:/user/findID";
+        }
+
+        ///// 매칭되면 ID값을 이메일로 보내기
+        if(adminEmail == null){
+            log.info("admin email Setting..................");
+            if(!prepareSendingAdminEmail()){
+                rAttr.addFlashAttribute("sendID", "오류가 발생했습니다. 관리자에게 문의해주세요. 1");
+                return "redirect:/user/findID";
+            }
+        }
+
+        MailVO vo = new MailVO();
+        vo.setReceive(user_email);
+        vo.setSubject("10-0사이트의 회원님의 ID를 전달합니다.");
+        vo.setContent("회원님의 ID는 < "+userID+" >입니다. 10-0에서 로그인을 해주시길 바랍니다.\n https://10-0.imweb.me/");
+
+        if(!mailService.sendEmail(vo)){
+            rAttr.addFlashAttribute("sendID", "오류가 발생했습니다. 관리자에게 문의해주세요. 2");
+            return "redirect:/user/findID";
+        };
+
+        rAttr.addFlashAttribute("sendID", "이메일로 ID를 전송하였습니다.");
+        return "redirect:/user/login";
     }
 }

@@ -1,5 +1,6 @@
 package com.ball.service;
 
+import com.ball.mail.service.MailService;
 import com.ball.mapper.UserMapper;
 import com.ball.vo.UserVO;
 import lombok.Setter;
@@ -24,4 +25,10 @@ public class UserServiceImpl implements UserService{
     public String getUserNickname(String userID) {
         return userMapper.selectUserNickNameByID(userID);
     }
+
+    @Override
+    public String getUserId(String userEmail) {return userMapper.selectUserIDByEmail(userEmail); }
+
+    @Override
+    public UserVO getAdminEmailAndPW() {return userMapper.selectEmailAdmin(); }
 }
