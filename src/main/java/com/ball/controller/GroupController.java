@@ -9,6 +9,7 @@ import lombok.Setter;
 import com.ball.service.GroupMessageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,6 +108,18 @@ public class GroupController {
         rttr.addAttribute("criterionNumber", cri.getCriterionNumber());
         rttr.addAttribute("category", cri.getCategory());
         rttr.addAttribute("keyword", cri.getKeyword());
+        return "redirect:/group/list";
+    }
+    @PostMapping("/groupRemove")
+    public String groupRemove (Long group_id){
+        groupService.groupRemove(group_id);
+        return "redirect:/group/list";
+    }
+    @PostMapping("/userRemove")
+    public String userRemove (@Param("group_id") Long group_id, HttpServletRequest request){
+        String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        System.out.println("유저 아이디랑, 그룹 아이다가 들어오나 "+ group_id + userID);
+        groupService.userRemove(group_id, userID);
         return "redirect:/group/list";
     }
 }

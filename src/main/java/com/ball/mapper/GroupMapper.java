@@ -15,6 +15,7 @@ public interface GroupMapper {
     public int groupUpdate(GroupVO vo);
     public int groupDelete(Long group_id);  //그룹 테이블 삭제
     public int joinDelete(Long group_id);  //relation 테이블 삭제
+    public int joinOneDelete(@Param("group_id") Long group_id, @Param("user_id") String user_id);  //그룹 탈퇴(한 명씩)
 
     public void joinGroup(GroupJoinVO vo);
 //    public List<GroupJoinVO> joinAllRead(Long group_id);    //그룹 가입된 user 전체 조회

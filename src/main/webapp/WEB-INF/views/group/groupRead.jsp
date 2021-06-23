@@ -53,7 +53,8 @@
                 </div>
                     <button data-oper='modify' class="btn btn-default"> 수정</button>
                     <button data-oper='list' class="btn btn-info">목록 </button>
-                    <button data-oper='remove' class="btn btn-danger">그룹 탈퇴 </button>
+                    <button data-oper='remove' class="btn btn-danger">그룹 파괴</button>
+                    <button data-oper='remove' class="btn btn-block">탈퇴 하기</button>
                     <button data-oper='join' class="btn btn-warning">그룹 가입 </button>
 
                     <input type="hidden" name="group_id" value="${group.group_id}" />
@@ -112,12 +113,15 @@
         if(${group.user_id_group_header eq user_id}) {
             console.log("아이디가 같나?")
             $('.btn-warning').attr('hidden', true)
+            $('.btn-block').attr('hidden', true)
         }else{
             $('.btn-danger').attr('hidden', true)
             $('.btn-default').attr('hidden', true)
         }
         if(${join >=1}){
             $('.btn-warning').attr('hidden',true);
+        }else{
+            $('.btn-block').attr('hidden', true)
         }
 
         $('.btn-warning').click(function (){
@@ -133,9 +137,12 @@
             }
             $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
         })
-        // $('.btn-danger').click(function (){
-        //     $(operForm).attr("action","/group/list").attr("method","get").submit();  //그룹 파괴
-        // })
+        $('.btn-danger').click(function (){
+            $(operForm).attr("action","/group/groupRemove").attr("method","post").submit();  //그룹 파괴
+        })
+        $('.btn-block').click(function (){
+            $(operForm).attr("action","/group/userRemove").attr("method","post").submit();  //탈퇴하기
+        })
 
         var group_id = '${group.group_id}'
 

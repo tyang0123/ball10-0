@@ -44,9 +44,14 @@ public class GroupServiceImpl implements GroupService{
 
     @Transactional
     @Override
-    public int remove(Long group_id) {
+    public int groupRemove(Long group_id) {
         mapper.joinDelete(group_id);
         return mapper.groupDelete(group_id);
+    }
+
+    @Override
+    public int userRemove(Long group_id, String user_id) {
+        return mapper.joinOneDelete(group_id, user_id);
     }
 
     @Override
@@ -60,15 +65,5 @@ public class GroupServiceImpl implements GroupService{
         return mapper.joinAllRead(group_id, user_id);
     }
 
-//    public boolean groupCheck(Long group_id){
-//
-//        for(GroupJoinVO vo : mapper.joinAllRead(group_id)){
-//            System.out.println("===================");
-//            if(vo.getGroup_id() == group_id){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
 
 }
