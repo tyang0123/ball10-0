@@ -97,7 +97,6 @@
 </div> <!-- row -->
 <%@ include file="../includes/footer.jsp" %>
 
-<script type="text/javascript" src="/resources/js/message.js"></script>
 <script>
     $(document).ready(function (){
 
@@ -131,11 +130,20 @@
                 alert('인원수가 초과되었습니다.')
                 return false;
             }
+
             if(${group.group_is_secret==1}){
-                alert('비밀번호를 입력하세요')
+                console.log(${group.group_password});
+                var checkPass = prompt('비밀번호를 입력하세요');
+
+                if(checkPass === '1234'){
+                    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
+                }
+                <%--if(${group.group_password}== checkPass){--%>
+                <%--    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입--%>
+                <%--}--%>
                 return false;
+
             }
-            $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
         })
         $('.btn-danger').click(function (){
             $(operForm).attr("action","/group/groupRemove").attr("method","post").submit();  //그룹 파괴
@@ -171,4 +179,5 @@
         })
     })
 </script>
+<script type="text/javascript" src="/resources/js/message.js"></script>
 
