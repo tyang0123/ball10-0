@@ -29,6 +29,7 @@ public class MailSendTests {
         mailVO.setSubject("java test 입니다.");
         mailVO.setContent("test ~~~~~~~~~~~~~~~~~~~~~~~ 성공할까나??????");
 
+        mailService.setSendEmailID("tenball2021pjt@gmail.com", "123ball2021");
         mailService.sendEmail(mailVO);
     }
 }
