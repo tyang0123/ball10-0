@@ -14,7 +14,7 @@ public interface UserService {
 
     //유저가 가입한 그룹 조회
     public List<GroupVO> userJoinGroupList(String userID);
-}
+
     //get userID by email
     public String getUserId(String userEmail);
 

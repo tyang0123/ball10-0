@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
     public List<GroupVO> userJoinGroupList(String userID) {
         return userMapper.userJoinGroup(userID);
     }
-}
+
     public String getUserId(String userEmail) {return userMapper.selectUserIDByEmail(userEmail); }
 
     @Override

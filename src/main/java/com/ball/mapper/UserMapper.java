@@ -1,7 +1,10 @@
 package com.ball.mapper;
 
+import com.ball.vo.GroupVO;
 import com.ball.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface UserMapper {

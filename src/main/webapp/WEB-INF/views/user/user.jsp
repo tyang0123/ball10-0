@@ -148,13 +148,14 @@
     const moreList = (criterionNumber)=>{
         $.ajax({
             type:"post",
-            url:"/user/alarmMessage",
+            url:"/ajax/user/alarmMessage",
             data:{
                 userID:"${userID}",
                 criterionNumber:criterionNumber
             },
             dataType:"json",
             success : function (res){
+                console.log(res)
                 const list = res['list'];
                 var data = "";
 
@@ -190,7 +191,7 @@
             var alarmID = $(this).find("input").val();
             $.ajax({
                 type:"post",
-                url:"/user/alarmCount",
+                url:"/ajax/user/alarmCount",
                 data:{
                     alarmID:alarmID,
                     userID:"${userID}"
