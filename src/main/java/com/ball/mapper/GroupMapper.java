@@ -21,5 +21,4 @@ public interface GroupMapper {
 //    public List<GroupJoinVO> joinAllRead(Long group_id);    //그룹 가입된 user 전체 조회
     public int joinAllRead(@Param("group_id") Long group_id,@Param("user_id") String user_id); //가입된 유저 숫자로 확인
 
-
 }

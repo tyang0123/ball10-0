@@ -47,7 +47,6 @@ public class GroupController {
 //        hashMap.put("criterionNumber",cri);
 //        hashMap.put("group_id",group_id);
 //        model.addAttribute("list",messageService.groupMessageRead(hashMap));
-        model.addAttribute("search", groupService.get(group_id));
         model.addAttribute("group", groupService.allRead(cri));
 
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
@@ -95,7 +94,6 @@ public class GroupController {
         model.addAttribute("join", groupService.joinAllRead(group_id,userID));
 //        groupService.remove(group_id);
 
-        model.addAttribute("group", groupService.get(group_id));
         model.addAttribute("firstCriNumber",messageService.getFirstGroupMessageId(group_id));
         return "group/groupRead";
     }
@@ -119,18 +117,6 @@ public class GroupController {
         rttr.addAttribute("criterionNumber", cri.getCriterionNumber());
         rttr.addAttribute("category", cri.getCategory());
         rttr.addAttribute("keyword", cri.getKeyword());
-        return "redirect:/group/list";
-    }
-    @PostMapping("/groupRemove")
-    public String groupRemove (Long group_id){
-        groupService.groupRemove(group_id);
-        return "redirect:/group/list";
-    }
-    @PostMapping("/userRemove")
-    public String userRemove (@Param("group_id") Long group_id, HttpServletRequest request){
-        String userID = String.valueOf(request.getSession().getAttribute("userID"));
-        System.out.println("유저 아이디랑, 그룹 아이다가 들어오나 "+ group_id + userID);
-        groupService.userRemove(group_id, userID);
         return "redirect:/group/list";
     }
 }

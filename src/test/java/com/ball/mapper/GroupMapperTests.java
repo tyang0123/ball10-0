@@ -106,15 +106,13 @@ public class GroupMapperTests {
         mapper.joinGroup(vo);
         System.out.println("==== 유저 5번이 3번방에 들어갔나 ====");
     }
-    public void testCount(){
-        Criteria cri = new Criteria();
 
-//    @Test
-//    public void testJoinRead(){
-//        for (GroupJoinVO join : mapper.joinAllRead(24L)) {
-//            System.out.println(join);
-//        }
-//    }
+    @Test
+    public void testCount() {
+        Criteria cri = new Criteria();
+    }
+
+
     @Test
     public void testGroupCheck(){
 
