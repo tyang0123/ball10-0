@@ -129,12 +129,14 @@ public class UserController {
     public String userGet(HttpServletResponse response, HttpServletRequest request
             , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie
             , Model model){
+        log.info("userget........................................................");
         /////////////////////////////////////////////////////////////////////////////////////
         /// alarm 작성 부분
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
         model.addAttribute("nickName","유정짱이야");
         model.addAttribute("alarmCount",alarmService.alarmCount(userID));
-        model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID) +1);
+        Long criterionNumber = alarmService.getFirstCriterionNumber(userID);
+        model.addAttribute("firstCriterionNumber", criterionNumber==null? 0: criterionNumber+1);
         model.addAttribute("userID",userID);
         model.addAttribute("userJoinGroupList",userService.userJoinGroupList(userID));
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +177,6 @@ public class UserController {
         if(emailVO == null) return false;
         adminEmail = emailVO.getUser_email();
         adminEmailPW = emailVO.getUser_password();
-        System.out.println(emailVO);
         mailService.setSendEmailID(adminEmail,adminEmailPW);
         return true;
     }

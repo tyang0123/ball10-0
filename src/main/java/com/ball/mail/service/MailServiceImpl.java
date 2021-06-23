@@ -25,8 +25,6 @@ public class MailServiceImpl implements MailService{
         if(((JavaMailSenderImpl)mailSender).getUsername() == null){
             return false;
         }
-        System.out.println(((JavaMailSenderImpl)mailSender).getUsername());
-        System.out.println(((JavaMailSenderImpl)mailSender).getPassword());
         MimeMessage msg = mailSender.createMimeMessage();
         try{
             msg.setSubject(mailVO.getSubject());
