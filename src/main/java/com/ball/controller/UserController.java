@@ -2,13 +2,16 @@ package com.ball.controller;
 
 import com.ball.mail.service.MailService;
 import com.ball.mail.vo.MailVO;
+import com.ball.service.AlarmService;
 import com.ball.service.TimerService;
 import com.ball.service.UserService;
+import com.ball.vo.Criteria;
 import com.ball.vo.TimerVO;
 import com.ball.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +24,15 @@ import javax.servlet.http.HttpSession;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 @Controller
 @Slf4j
 @RequestMapping("/user/*")
 public class UserController {
+    @Setter(onMethod_=@Autowired)
+    private AlarmService alarmService;
+
     @Setter(onMethod_= @Autowired)
     private UserService userService;
 
@@ -123,8 +130,15 @@ public class UserController {
     public String userGet(HttpServletResponse response, HttpServletRequest request
             , @CookieValue(name = "timerCookie", required = false) Cookie timerCookie
             , Model model){
-
+        /////////////////////////////////////////////////////////////////////////////////////
+        /// alarm 작성 부분
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
+        model.addAttribute("nickName","유정짱이야");
+        model.addAttribute("alarmCount",alarmService.alarmCount(userID));
+        model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID) +1);
+        model.addAttribute("userID",userID);
+        model.addAttribute("userJoinGroupList",userService.userJoinGroupList(userID));
+        ////////////////////////////////////////////////////////////////////////////////////////////
         //add timer cookie
         if(timerCookie != null) {
             timerCookie.setMaxAge(0);
@@ -202,4 +216,5 @@ public class UserController {
         rAttr.addFlashAttribute("sendID", "이메일로 ID를 전송하였습니다.");
         return "redirect:/user/login";
     }
+
 }
