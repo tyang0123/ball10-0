@@ -15,4 +15,10 @@ public interface UserMapper {
 
     //유저 닉네임 조회
     public String selectUserNickNameByID(@Param("user_id") String userId);
+    
+    //유저 ID 조회
+    public String selectUserIDByEmail(@Param("user_email") String userEmail);
+
+    //이메일 관리자 정보 조회
+    public UserVO selectEmailAdmin();
 }

@@ -59,4 +59,14 @@ public class UserMapperTests {
     public void testSelectUserNickname(){
         System.out.println(mapper.selectUserNickNameByID("user1"));
     }
+
+    @Test
+    public void testSelectUserID(){
+        System.out.println(mapper.selectUserIDByEmail("userE00@naver.com"));
+    }
+
+    @Test
+    public void testSelectEmailAdmin(){
+        System.out.println(mapper.selectEmailAdmin());
+    }
 }

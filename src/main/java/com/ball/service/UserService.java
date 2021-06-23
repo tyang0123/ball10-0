@@ -8,4 +8,10 @@ public interface UserService {
 
     //get user nickname
     public String getUserNickname(String userID);
+
+    //get userID by email
+    public String getUserId(String userEmail);
+
+    //get Admin Email and password
+    public UserVO getAdminEmailAndPW();
 }

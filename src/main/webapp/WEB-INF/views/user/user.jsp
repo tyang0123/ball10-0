@@ -23,9 +23,7 @@
 <!-- 유저페이지 타이머 -->
 <div class="row">
     <div class="col-12 userTimer">
-        <span class="timer-hours">00</span><span>:</span>
-        <span class="timer-min">00</span><span>:</span>
-        <span class="timer-sec">00</span>
+        <span class="timer-hours">00</span><span>:</span><span class="timer-min">00</span><span>:</span><span class="timer-sec">00</span>
     </div>
 </div>
 <div class="row">

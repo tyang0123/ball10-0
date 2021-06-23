@@ -83,7 +83,7 @@ var timerStart = function(resultFunc) {
       console.log("success")
       clearInterval(timerIntervalID);
       viewTimerStartInterval();
-      if(resultFunc != null1){
+      if(resultFunc != null){
         resultFunc(timerID+"-1-"+accumulatedTimeStr);
       }
     },
