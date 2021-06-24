@@ -28,7 +28,8 @@ public class GroupMapperTests {
     @Test
     public void testInsertGroup(){
         GroupVO vo = new GroupVO();
-        vo.setUser_id_group_header("testmapper");
+
+        vo.setUser_id_group_header("user10");
         vo.setGroup_name("테스트 그룹 이름");
         vo.setGroup_category("입시");
         vo.setGroup_is_secret(0);
@@ -39,11 +40,12 @@ public class GroupMapperTests {
     }
     @Test
     public void testread(){
-        GroupVO vo = mapper.read("그룹이름1");
+        GroupVO vo = mapper.readGroup(3L);
         System.out.println("===================");
         System.out.println(vo);
 
     }
+
 
     @Test
     public void testSelectGroupList(){
@@ -61,16 +63,38 @@ public class GroupMapperTests {
         }
 
         System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        cri.setCategory("토익");
+        System.out.println("카테고리에 들어오나");
+        cri.setCategory("자격증");
         for (GroupVO groupVO : mapper.selectGroupList(cri)) {
             System.out.println(groupVO);
         }
 
         System.out.println("++++++++++++++++++++++++++++++++++++++++++");
-        cri.setKeyword("1");
-        cri.setCategory(null);
+        cri.setKeyword("댕댕");
+        cri.setCategory("취업");
         for (GroupVO groupVO : mapper.selectGroupList(cri)) {
             System.out.println(groupVO);
         }
+    }
+
+    @Test
+    public void testUpdateUser(){
+        GroupVO vo = new GroupVO();
+        vo.setGroup_id(2L);
+        vo.setGroup_name("테스트 그룹 이름");
+        vo.setGroup_category("공부카테고리");
+        vo.setGroup_is_secret(0);
+//        vo.setGroup_password("1234");
+        vo.setGroup_person_count(7);
+        vo.setGroup_content("수정이 되나");
+
+        mapper.updateGroup(vo);
+    }
+
+    @Test
+    public void testCount(){
+        Criteria cri = new Criteria();
+
+        System.out.println("전체 갯수는 ? :");
     }
 }

@@ -1,14 +1,18 @@
 package com.ball.mapper;
 
+import com.ball.vo.Criteria;
 import com.ball.vo.GroupMessageVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
@@ -35,7 +39,25 @@ public class GroupMessageMapperTests {
 
     @Test
     public void testReadGroupMessage(){
-        mapper.readGroupMessage(1L);
         System.out.println(mapper.readGroupMessage(1L));
+    }
+
+    @Test
+    public void testDeleteGroupMessage(){
+        mapper.deleteGroupMessage(1L);
+    }
+
+    @Test
+    public void testReadGroupMessagePage(){
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(1L);
+
+        mapper.readGroupMessagePaging(cri,1L);
+        System.out.println(mapper.readGroupMessagePaging(cri,1L));
+    }
+
+    @Test
+    public void testGetFirst(){
+        System.out.println(mapper.getFirstGroupMessageId(2L));
     }
 }

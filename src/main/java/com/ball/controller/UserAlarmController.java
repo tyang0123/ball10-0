@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService alarmService;

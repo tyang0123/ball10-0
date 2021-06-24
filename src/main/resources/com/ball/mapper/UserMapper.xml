@@ -30,4 +30,9 @@
         group by gr1.group_id
     </select>
 
+    <select id="selectUserNickNameByID" resultType="String">
+        select user_nickname
+        from user where user_id = #{user_id}
+    </select>
+
 </mapper>
