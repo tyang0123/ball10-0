@@ -39,6 +39,7 @@ public class SessionAuthCheckInterceptor implements HandlerInterceptor {
                         JSESSIONID = c;
                     }
                 }
+                System.out.println(userCookie + "---"+JSESSIONID);
                 // JSESSIONID 의 값이 session ID와 일치하고, 
                 // session의 user_id와 cookie의 user_id가 일치하면
                 // auth는 통과

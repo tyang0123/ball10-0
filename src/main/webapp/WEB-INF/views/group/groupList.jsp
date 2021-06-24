@@ -15,14 +15,12 @@
 <div class="row">
     <div class="col-sm-12">
         <h2>스터디 그룹</h2>
-        <form id="operForm" action="/group/create" method="get">
-            <button id="groupBtn" type="button" class="btn pull-right btn-warning">그룹 생성</button>
-        </form>
         <table width="100%" class="table table-striped table-bordered table-hover"
                id="dataTables-example">
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="searchForm" action="/group/list" method="get">
+                    <form id="listForm" action="/group/list" method="get">
+                        <button id="createBtn" type="submit" class="btn pull-right btn-warning">그룹 생성</button>
                         <select name="category">
                             <option value="" <c:out value="${cri.category ==null?'selected':''}"/>>---</option>
                             <option value="토익"
@@ -36,10 +34,6 @@
 
                         </select>
                         <input type="text" name="keyword"/>
-<%--                        <input type="hidden" name="pageNum" value="${cri.pageNum}" >--%>
-<%--                        <input type="hidden" name="amount" value="${cri.amount}" >--%>
-<%--                        <input type="hidden" name="category" value="${cri.category}" >--%>
-<%--                        <input type="hidden" name="keyword" value="${cri.keyword}" >--%>
 
                         <button class='btn btn-default'>검색</button>
                     </form>
@@ -59,9 +53,9 @@
                         <td>${group.group_id}</td>
                         <td><a class='move' href='read?group_id=${group.group_id}'>${group.group_name}
                         </a></td>
-                        <td>${group.user_id_group_header}</td>
+                        <td>${group.user_nickname_group_header}</td>
                         <td>${group.group_category}</td>
-                        <td>3 /${group.group_person_count}
+                        <td>${group.group_join_person_number}/${group.group_person_count}
                             <c:if test="${group.group_is_secret==1}">
                                 <i class="fa fa-lock"  aria-hidden="true"/>
                             </c:if>
@@ -89,11 +83,13 @@
 
 <script>
     $(document).ready(function (){
-        $("#groupBtn").click(function (){
+        $("#createBtn").click(function(){
             console.log("버튼 눌리나")
-            $("#operForm").attr("action", "/group/create").submit();
+            $("#listForm").attr("action", "/group/create").submit();
         })
     })
+
+
 
 </script>
 

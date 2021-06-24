@@ -23,7 +23,5 @@ public class Criteria {
         this.criterionNumber = criterionNumber;
         this.amount = amount;
     }
-    public String[] getTypeArr(){
-        return category == null ? new String[] {} : category.split("");
-    }
+
 }

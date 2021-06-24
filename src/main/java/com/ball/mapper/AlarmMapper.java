@@ -13,6 +13,6 @@ public interface AlarmMapper {
     public void update(Long alarm_message_id); //읽음처리
     public String count(String user_id);//안읽은 알람갯수 확인
 
-    //페이징처리 테스트
+    //페이징처리
     public List<AlarmVO> getListWithPaging(@Param("cri") Criteria cri,@Param("user_id") String user_id);
 }

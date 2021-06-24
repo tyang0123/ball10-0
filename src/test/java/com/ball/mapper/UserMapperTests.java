@@ -56,7 +56,22 @@ public class UserMapperTests {
     }
 
     @Test
+    public void testUserJoinGroup(){
+        mapper.userJoinGroup("user1").forEach(i -> System.out.println(i));
+    }
+
+    @Test
     public void testSelectUserNickname(){
         System.out.println(mapper.selectUserNickNameByID("user1"));
+    }
+
+    @Test
+    public void testSelectUserID(){
+        System.out.println(mapper.selectUserIDByEmail("userE00@naver.com"));
+    }
+
+    @Test
+    public void testSelectEmailAdmin(){
+        System.out.println(mapper.selectEmailAdmin());
     }
 }

@@ -8,31 +8,53 @@
 
 
 <div class="container">
-    <div class="col-sm-12">
-        <h1>LOGIN</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>LOGIN</h1>
 
-        <form method="post" action="/user/login">
-            <div class="mb-3">
-                <label for="user-id" class="form-label">ID</label>
-                <input type="text" class="form-control" id="user-id" name="user_id">
-                <div id="id-help" class="form-text" style="display: none;">영문자+숫자, 40글자</div>
-            </div>
-            <div class="mb-3">
-                <label for="user-password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="user-password" name="user_password">
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="user-check" value="true" checked="checked" name="user_checked">
-                <label class="form-check-label" for="user-check">
-                    로그인 상태 유지하기
-                </label>
-            </div>
-            <input type="submit" class="btn btn-primary" style="margin-top: 1rem;" value="로그인">
-        </form>
+            <form method="post" action="/user/login">
+                <div class="form-group m-3">
+                    <input type="text" class="form-control" id="user-id" name="user_id" placeholder="아이디">
+                    <div id="id-help" class="form-text" style="display: none;">영문자+숫자, 40글자</div>
+                </div>
+                <div class="form-group m-3">
+                    <input type="password" class="form-control" id="user-password" name="user_password" placeholder="비밀번호">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="user-check" value="true" checked="checked" name="user_remember">
+                    <label class="form-check-label" for="user-check">
+                        로그인 상태 유지하기
+                    </label>
+                </div>
+                <input type="submit" class="btn btn-primary" style="margin-top: 1rem;" value="로그인">
+            </form>
+        </div> <!-- end form div col-sm-12 -->
     </div>
-</div>
 
+    <!-- start 회원찾기 및 비번 찾기 -->
+    <div class="row">
+        <div style="text-align: center;">
+            <button style="width: 150px;" type="button" class="button-timer-custom">회원가입</button>
+        </div>
+    </div>
+    <div class="row">
+        <div style="text-align: center;">
+            <a href="/user/findID">
+                <button style="width: 100px;" type="button" class="button-timer-custom">아이디 찾기</button>
+            </a>
+            <a href="/user/findPassword">
+                <button style="width: 100px;" type="button" class="button-timer-custom">비번 찾기</button>
+            </a>
+        </div>
+    </div>
+    <!-- end 회원찾기 및 비번 찾기-->
+</div><!--end div container -->
 
+<style>
+    /* a tag reset */
+    a {color: #fff; text-decoration: none; outline: none}
+    a:hover, a:active {text-decoration: none; color:#fff;}
+</style>
 
 <script>
     $(document).ready(function(){
