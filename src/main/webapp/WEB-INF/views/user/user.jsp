@@ -8,7 +8,7 @@
 <!-- 유저페이지 알람모달 -->
 <div class="row">
     <div class="col-2"></div>
-    <div class="col-8 userMarker"><span>${nickName}님의 오늘의 공부량</span></div>
+    <div class="col-8 userMarker"><span>${nickName}님의 오늘의 공부량 📚</span></div>
     <div style="margin-top: 30px; position: relative;" class="col-2">
         <a data-bs-toggle="modal" href="#staticBackdrop" id="Alarm">
             <img src="/resources/img/letter.png" id="letter-img" /><span id="alarm-count" class="badge rounded-pill bg-warning text-dark">${alarmCount}</span>
@@ -22,7 +22,7 @@
 <div class="row">
     <div style="text-align: center;">
         <button style="width: 150px;" type="button" class="button-timer-custom" id="timeToggle">공부시작하기</button>
-        <div class="userMarker"><span>${nickName}님의 속한 그룹</span></div>
+        <div class="userMarker"><span>${nickName}님의 속한 그룹 😎</span></div>
     </div>
 </div>
 <!-- 유저페이지 그룹리스트 -->
@@ -114,7 +114,7 @@
         });
 
         //timer버튼 온오프
-        $("#timeToggle").click(function(){
+        $(".button-timer-custom").click(function(){
             if($(this).html()=='공부시작하기') {
                 $(this).html('공부그만하기');
             }

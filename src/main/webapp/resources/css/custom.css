@@ -266,8 +266,8 @@ fieldset[disabled] .navbar-custom .btn-link:focus {
 }
 
 .group-empty {
-  max-width: 98vw;
-  border-radius: 1em !important;
+  max-width: 94vw;
+  border-radius: 1em;
 }
 
 @media (min-width: 768px) {

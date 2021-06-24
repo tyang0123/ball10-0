@@ -29,7 +29,7 @@ public class UserAlarmController {
         model.addAttribute("alarmCount",alarmService.alarmCount(userID));
         model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID));
         model.addAttribute("userID",userID);
-        model.addAttribute("userJoinGroupList",userService.userJoinGroupList(userID));
+        model.addAttribute("userJoinGroupList",userService.userJoinGroupList("user1"));
     }
 
     @ResponseBody
