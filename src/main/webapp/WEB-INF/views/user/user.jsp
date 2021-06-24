@@ -72,30 +72,6 @@
 </div>
 
 
-
-<!-- timer -->
-<div class="row mt-4">
-    <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div class="card bg-light">
-                <div class="card-body bg-light text-center">
-                    <p class="card-title mt-2 my-timer">
-                        <a><span class="fs-1 timer-hours"></span></a> <span class="fs-1">:</span>
-                        <a><span class="fs-1 timer-min"></span></a> <span class="fs-1">:</span>
-                        <a><span class="fs-1 timer-sec"></span></a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
-    <div cloass = "row">
-        <div class="d-grid gap-2 col-2 mx-auto">
-            <button class="btn btn-warning btn-lg mt-2 btn-rounded" id="timer-btn">Start</button>
-        </div>
-    </div>
-</div><!-- end timer -->
-
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
