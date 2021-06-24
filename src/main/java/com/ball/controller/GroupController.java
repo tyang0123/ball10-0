@@ -29,7 +29,6 @@ import java.util.List;
 @AllArgsConstructor
 public class GroupController {
 
-//    private GroupMessageService messageService;
     @Setter(onMethod_=@Autowired)
     private GroupService groupService;
 
@@ -39,8 +38,7 @@ public class GroupController {
     @GetMapping("/list")
     public String groupList(Long group_id , Criteria cri,  Model model) {
         System.out.println("컨트롤러 그룹 전체 목록 조회");
-        model.addAttribute("list",messageService.groupMessageRead(1L));
-        model.addAttribute("group", groupService.allRead(cri));
+        model.addAttribute("list", groupService.allRead(cri));
 
         System.out.println("컨트롤러에 cri가 들어오나 " +cri);
         System.out.println("검색어가 들어오나 "+ cri.getKeyword());
@@ -82,6 +80,7 @@ public class GroupController {
     public String oneRead(Long group_id, HttpServletRequest request, Model model){
         model.addAttribute("group", groupService.oneRead(group_id));
         String userID = String.valueOf(request.getSession().getAttribute("userID"));
+//        model.addAttribute("check", groupService.passwordCheck(group_id));
         System.out.println("리드에서 유저 아이디의 값이 들어오나 : "+userID);
         model.addAttribute("user_id",userID);
         model.addAttribute("join", groupService.joinAllRead(group_id,userID));

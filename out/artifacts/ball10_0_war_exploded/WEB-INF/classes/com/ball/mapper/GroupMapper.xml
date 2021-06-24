@@ -44,7 +44,7 @@
     </update>
     <select id="groupRead" resultType="com.ball.vo.GroupVO">
         select g.group_id, g.user_id_group_header, u.user_nickname as user_nickname_group_header, g.group_content,
-               g.group_name, g.group_category, g.group_is_secret, count(gr.user_id) as group_join_person_number,
+               g.group_name, g.group_category, group_password, g.group_is_secret, count(gr.user_id) as group_join_person_number,
                g.group_person_count, g.group_reg_date
         from group_table g
                  left outer join user u on g.user_id_group_header = u.user_id
@@ -68,5 +68,8 @@
     </insert>
     <select id="joinAllRead" resultType="int">
         select count(*) from group_user_relationship where group_id = #{group_id} and user_id = #{user_id}
+    </select>
+    <select id="passwordCheck" resultType="String">
+        select group_password from group_table where group_id = #{group_id}
     </select>
 </mapper>

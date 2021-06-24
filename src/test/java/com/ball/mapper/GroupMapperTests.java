@@ -118,4 +118,9 @@ public class GroupMapperTests {
         System.out.println(mapper.joinAllRead(24L,"user7"));
     }
 
+    @Test
+    public void password(){
+        System.out.println(mapper.passwordCheck(40L));
+    }
+
 }
