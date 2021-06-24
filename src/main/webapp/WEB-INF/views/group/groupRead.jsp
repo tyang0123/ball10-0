@@ -111,18 +111,18 @@
                         criterionNumber = criterionNumber-10;
                         console.log("스크롤 했을때 크리넘버: "+criterionNumber)
 
-                        var temp = $('.modal').height();
+                        var temp = $(document).height();
                         messageService.getList(group_id,criterionNumber,function (result){
                             $('.readGroupMessage').html(result);
                             if(criterionNumber < 0) alert("마지막 메세지입니다.")
 
-                            $('.modal').scrollTop($('.modal').height()-temp);
+                            $(document).scrollTop($(document).height()-temp);
                             isLoading = false;
                         })
                     }
 
-                    $('.modal').scroll(function (){
-                        if($('.modal').scrollTop() <60 && !isLoading){
+                    $(document).scroll(function (){
+                        if($(document).scrollTop() <60 && !isLoading){
                             isLoading = true;
                             setTimeout(loadNewPage,1200);
                         }
@@ -147,9 +147,7 @@
                     }
                     messageService.add(group_id,message,function (result){
                         if(result == "success"){
-                            alert("입력되었습니다.")
                             $('#message-text').val("");
-                            $('.modal').modal("hide");
                         }
                     })
                 })
