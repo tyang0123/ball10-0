@@ -7,8 +7,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,24 +19,6 @@ public class UserAlarmController {
     @Setter(onMethod_=@Autowired)
     private AlarmService alarmService;
 
-    @Setter(onMethod_=@Autowired)
-    private UserService userService;
-
-//    @GetMapping("/user")
-//    public void user(Model model){//userVo vo
-//        String userID = "user1";
-//        model.addAttribute("nickName","유정짱이야");
-//        model.addAttribute("alarmCount",alarmService.alarmCount(userID));
-//        model.addAttribute("firstCriterionNumber",alarmService.getFirstCriterionNumber(userID));
-//        model.addAttribute("userID",userID);
-//        model.addAttribute("userJoinGroupList",userService.userJoinGroupList(userID));
-//    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// 아래 - 알람 메세지 관련 부분
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @ResponseBody
     @PostMapping (value = "/alarmMessage") //userVo vo
     public ResponseEntity<HashMap<String, Object>> userAlarmList(Long criterionNumber, String userID) throws Exception {
         log.info("user controller userAlarmList...........................................................");
@@ -50,7 +30,6 @@ public class UserAlarmController {
         return ResponseEntity.ok(result);
     }
 
-    @ResponseBody
     @PostMapping (value = "/alarmCount") //userVo vo
     public ResponseEntity<HashMap<String, Object>> userAlarmCount(Long alarmID,String userID) throws Exception {
         HashMap<String, Object> result = new HashMap<>();

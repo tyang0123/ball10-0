@@ -44,6 +44,7 @@
           <element id="library" level="project" name="Maven: javax.mail:javax.mail-api:1.6.2" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.0.7.RELEASE" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.2" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="ball10-0/web/Web" />

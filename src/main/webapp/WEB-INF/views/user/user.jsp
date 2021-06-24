@@ -18,11 +18,13 @@
 </div>
 <!-- 유저페이지 타이머 -->
 <div class="row">
-    <div class="col-12 userTimer"><span>00:00:00</span></div>
+    <div class="col-12 userTimer">
+        <span class="timer-hours">00</span><span>:</span><span class="timer-min">00</span><span>:</span><span class="timer-sec">00</span>
+    </div>
 </div>
 <div class="row">
     <div style="text-align: center;">
-        <button style="width: 150px;" type="button" class="button-timer-custom" id="timeToggle">공부시작하기</button>
+        <button style="width: 150px;" type="button" class="button-timer-custom" id="time-toggle">공부시작하기</button>
         <div class="userMarker"><span>${nickName}님의 속한 그룹 😎</span></div>
     </div>
 </div>
@@ -93,7 +95,6 @@
         </div>
     </div>
 </div><!-- end timer -->
->>>>>>>>> Temporary merge branch 2
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -125,12 +126,8 @@
     </div>
 </div>
 <script type="text/javascript">
+    var changeCriterionNumber=${firstCriterionNumber};
     $(document).ready(function (){
-        var userID = document.cookie
-                        .split('; ')
-                        .find(row => row.startsWith('userCookie'))
-                        .split('=')[1];
-
 
         //알람메세지 모달
         $("#Alarm").click(function (){
@@ -174,7 +171,7 @@
     const moreList = (criterionNumber)=>{
         $.ajax({
             type:"post",
-            url:"/user/alarmMessage",
+            url:"/ajax/user/alarmMessage",
             data:{
                 userID:"${userID}",
                 criterionNumber:criterionNumber
