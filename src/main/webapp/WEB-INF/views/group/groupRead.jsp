@@ -170,6 +170,7 @@
 <script type="text/javascript" src="/resources/js/message.js"></script>
 <script>
     $(document).ready(function (){
+        var password =  ${group.group_password}
 
         $(".btn-default").click(function (){
             $(operForm).attr("action","/group/modify").attr("method","get").submit(); //수정으로 돌아기기
@@ -203,18 +204,19 @@
             }
 
             if(${group.group_is_secret==1}){
-                console.log(${group.group_password});
-                var checkPass = prompt('비밀번호를 입력하세요');
 
-                if(checkPass === '1234'){
-                    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
+                const checkPass = prompt('비밀번호를 입력하세요');
+
+                if(checkPass === password){
+                    $(operForm).attr("action","/group/read").attr("method","post").submit();  //비밀번호 입력 후 회원가입
                 }
-                <%--if(${group.group_password}== checkPass){--%>
+                <%--if(checkPass === ${check}){--%>
                 <%--    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입--%>
                 <%--}--%>
                 return false;
 
             }
+            $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
         })
         $('.btn-danger').click(function (){
             $(operForm).attr("action","/group/groupRemove").attr("method","post").submit();  //그룹 파괴

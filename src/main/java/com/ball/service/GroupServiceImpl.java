@@ -71,5 +71,10 @@ public class GroupServiceImpl implements GroupService{
         return mapper.joinAllRead(group_id, user_id);
     }
 
+    @Override
+    public String passwordCheck(Long group_id) {
+        return mapper.passwordCheck(group_id);
+    }
+
 
 }

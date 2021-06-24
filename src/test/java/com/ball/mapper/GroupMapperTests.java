@@ -44,7 +44,6 @@ public class GroupMapperTests {
         GroupVO vo = mapper.groupRead(24L);
         System.out.println("===================");
         System.out.println(vo);
-
     }
 
 
@@ -119,4 +118,10 @@ public class GroupMapperTests {
         System.out.println(mapper.joinAllRead(24L,"user7"));
         System.out.println("전체 갯수는 ? :");
     }
+
+    @Test
+    public void password(){
+        System.out.println(mapper.passwordCheck(40L));
+    }
+
 }

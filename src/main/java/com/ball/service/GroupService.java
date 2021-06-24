@@ -16,6 +16,7 @@ public interface GroupService {
 
     public void joinGroup(GroupJoinVO join);
     public int joinAllRead(Long group_id, String user_id);
+    public String passwordCheck(Long group_id);
 
 
 

@@ -48,19 +48,18 @@
 
                     </tr>
                     </thead>
-                    <c:forEach items="${group}" var="group" end="${group.size()}">
+                    <c:forEach items="${list}" var="list" end="${list.size()}">
                     <tr>
-                        <td>${group.group_id}</td>
-                        <td><a class='move' href='read?group_id=${group.group_id}'>${group.group_name}
-                        </a></td>
-                        <td>${group.user_nickname_group_header}</td>
-                        <td>${group.group_category}</td>
-                        <td>${group.group_join_person_number}/${group.group_person_count}
-                            <c:if test="${group.group_is_secret==1}">
+                        <td>${list.group_id}</td>
+                        <td><a class='move' href='read?group_id=${list.group_id}'>${list.group_name}</a></td>
+                        <td>${list.user_nickname_group_header}</td>
+                        <td>${list.group_category}</td>
+                        <td>${list.group_join_person_number}/${list.group_person_count}
+                            <c:if test="${list.group_is_secret==1}">
                                 <i class="fa fa-lock"  aria-hidden="true"/>
                             </c:if>
                         </td>
-                        <td><fmt:parseDate var="date1" value="${group.group_reg_date}" pattern="yyyy-MM-dd"/>
+                        <td><fmt:parseDate var="date1" value="${list.group_reg_date}" pattern="yyyy-MM-dd"/>
                             <fmt:formatDate value="${date1}" type="DATE" pattern="yyyy-MM-dd"/>
                                 ${date2}
                         </td>
@@ -87,6 +86,20 @@
             console.log("버튼 눌리나")
             $("#listForm").attr("action", "/group/create").submit();
         })
+        $('.move').click(function (){
+            // prompt('비밀번호를 입력하세요');
+            $.ajax({
+                type:"post",
+                url:"/group/list/ajax/list",
+                data:{},
+                dataType:"json",
+                success: function (){
+                    alert('성공');
+                }
+
+            })
+        })
+
     })
 
 
