@@ -32,7 +32,7 @@
             <if test="keyword != null">
                 And (g.group_name like CONCAT('%',#{keyword},'%') or g.group_content like CONCAT('%',#{keyword},'%'))
             </if>
-            <if test="criterionNumber > amount">
+            <if test="criterionNumber > 0">
                 <![CDATA[
                 AND g.group_id < #{criterionNumber}
                 ]]>
