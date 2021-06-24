@@ -9,6 +9,7 @@ var messageService = (function (){
             data : JSON.stringify(message),
             contentType : "application/json; charset=utf-8",
             success : function(result){
+                console.log(result)
                 callback(result)
             },
             error:(log)=>{alert("실패"+log)}
@@ -34,6 +35,8 @@ var messageService = (function (){
                 callback(text)
             },
             error: (log)=>{alert(log)}
+        }).done(function (){
+            return text
         });
     }
 

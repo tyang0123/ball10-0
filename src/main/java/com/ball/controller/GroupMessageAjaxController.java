@@ -25,7 +25,7 @@ public class GroupMessageAjaxController {
 
     //메세지(댓글) 목록 확인
     @GetMapping("/list")
-    public ResponseEntity<HashMap<String,Object>> readMessage(@RequestParam("group_id") Long group_id, Long criterionNumber, Model model){
+    public ResponseEntity<HashMap<String,Object>> readMessage(@RequestParam("group_id") Long group_id, Long criterionNumber){
         System.out.println("메세지 목록 확인: "+criterionNumber);
 
         Criteria cri = new Criteria();
@@ -38,15 +38,20 @@ public class GroupMessageAjaxController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<String> insert(@RequestParam("group_id") Long group_id,@RequestBody GroupMessageVO vo){
+    public ResponseEntity<HashMap<String,Object>> insert(@RequestParam("group_id") Long group_id,@RequestBody GroupMessageVO vo){
         System.out.println("들어오는지 확인");
         log.info("ReplyVO: "+vo);
         vo.setGroup_id(group_id);
 
+        Criteria cri = new Criteria();
+        cri.setCriterionNumber(10L);
+
         int insertCount = messageService.groupMessageInsert(vo);
-        return insertCount == 1
-                ? new ResponseEntity<>("success", HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("list",messageService.groupMessageMoreRead(cri,group_id));
+
+        return ResponseEntity.ok(hashMap);
     }
 
     //메세지(댓글) 삭제
