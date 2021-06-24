@@ -26,6 +26,8 @@
                     <input class="form-control" name="group_category" id="group_category" value="${group.group_category}"
                            readonly="readonly">
                 </div>
+
+
                 <div class="form-group">
                     <label for="group_content">텍스트 영역</label>
                     <textarea class="form-control" rows="3" name="group_content" id="group_content"
@@ -64,6 +66,48 @@
 <%--                    <input type='hidden' name='keyword' value='<c:out value ="${cri.keyword}"/>'>--%>
                 </form>
 
+                <!---------------------------------------------------------------------------------------->
+                <!-- 타이머  표시 -->
+                <div class="container">
+                    <div class="row spinner-row">
+                        <button class="btn btn-warning" type="button" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span>Loading...</span>
+                        </button>
+                    </div>
+                    <div class="row my-user-and-timer-row">
+
+                        <div class="col-md-3 mt-2" hidden>
+                            <div class="row">
+                                <div class="col-6 col-md-12">
+                                    <div class="my-img my-img-yellow"></div>
+                                </div>
+                                <div class="col-6 col-md-12">
+                                    <div class="caption">
+                                        <p>Lorem ipsum...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mt-2" hidden>
+                            <div class="row">
+                                <div class="col-6 col-md-12">
+                                    <div class="my-img my-img-yellow"></div>
+                                </div>
+                                <div class="col-6 col-md-12">
+                                    <div class="caption">
+                                        <p>Lorem ipsum...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!---------------------------------------------------------------------------------------->
+
+
 
                 <button id="modalShowButton">그룹메세지</button>
                 <%--모달시작--%>
@@ -75,11 +119,11 @@
                                 <button id="modal_close" class="btn-close"></button>
                             </div>
                             <div class="modal-body">
-                                <button class='remove_message btn btn-outline-danger btn-sm'>삭제</button>";
-                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>";
-                                    <div class = 'md-3'>";
-                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>";
-                                        <textarea class='form-control' id='message-text'></textarea>";
+                                <div class="readGroupMessage"></div>
+                                <form id = 'sendGroupMessage' action='/group/ajax/new' method='post'>
+                                    <div class = 'md-3'>
+                                        <label for = 'message-text' class='col-form-label'> 입력창 </label>
+                                        <textarea class='form-control' id='message-text'></textarea>
                                     </div>
                                 </form>
                             </div>
@@ -157,11 +201,20 @@
                 alert('인원수가 초과되었습니다.')
                 return false;
             }
+
             if(${group.group_is_secret==1}){
-                alert('비밀번호를 입력하세요')
+                console.log(${group.group_password});
+                var checkPass = prompt('비밀번호를 입력하세요');
+
+                if(checkPass === '1234'){
+                    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
+                }
+                <%--if(${group.group_password}== checkPass){--%>
+                <%--    $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입--%>
+                <%--}--%>
                 return false;
+
             }
-            $(operForm).attr("action","/group/read").attr("method","post").submit();  //회원가입
         })
         $('.btn-danger').click(function (){
             $(operForm).attr("action","/group/groupRemove").attr("method","post").submit();  //그룹 파괴
@@ -190,18 +243,18 @@
                         criterionNumber = criterionNumber-10;
                         console.log("스크롤 했을때 크리넘버: "+criterionNumber)
 
-                        var temp = $(document).height();
+                        var temp = $('.modal').height();
                         messageService.getList(group_id,criterionNumber,function (result){
                             $('.readGroupMessage').html(result);
                             if(criterionNumber < 0) alert("마지막 메세지입니다.")
 
-                            $(document).scrollTop($(document).height()-temp);
+                            $('.modal').scrollTop($('.modal').height()-temp);
                             isLoading = false;
                         })
                     }
 
-                    $(document).scroll(function (){
-                        if($(document).scrollTop() <60 && !isLoading){
+                    $('.modal').scroll(function (){
+                        if($('.modal').scrollTop() <60 && !isLoading){
                             isLoading = true;
                             setTimeout(loadNewPage,1200);
                         }
@@ -226,7 +279,9 @@
                     }
                     messageService.add(group_id,message,function (result){
                         if(result == "success"){
+                            alert("입력되었습니다.")
                             $('#message-text').val("");
+                            $('.modal').modal("hide");
                         }
                     })
                 })

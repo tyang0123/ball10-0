@@ -15,16 +15,21 @@
         </a>
     </div>
 </div>
+
 <!-- 유저페이지 타이머 -->
 <div class="row">
-    <div class="col-12 userTimer"><span>00:00:00</span></div>
+    <div class="col-12 userTimer">
+        <span class="timer-hours">00</span><span>:</span><span class="timer-min">00</span><span>:</span><span class="timer-sec">00</span>
+    </div>
 </div>
 <div class="row">
     <div style="text-align: center;">
-        <button style="width: 150px;" type="button" class="button-timer-custom" id="timeToggle">공부시작하기</button>
+        <button style="width: 150px;" type="button" class="button-timer-custom" id="time-toggle">공부시작하기</button>
         <div class="userMarker"><span>${nickName}님의 속한 그룹</span></div>
     </div>
 </div>
+<!-- end timer -->
+
 <!-- 유저페이지 그룹리스트 -->
 <div class="row">
     <div style="background-color: #efefef; margin-top: 20px; padding-top:20px; padding-bottom: 40px;" class="center-block;">
@@ -97,6 +102,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     var changeCriterionNumber=${firstCriterionNumber};
     $(document).ready(function (){
@@ -111,16 +117,6 @@
            $("#addBtn").click(function (){
                moreList(changeCriterionNumber);
            })
-        });
-
-        //timer버튼 온오프
-        $("#timeToggle").click(function(){
-            if($(this).html()=='공부시작하기') {
-                $(this).html('공부그만하기');
-            }
-            else {
-                $(this).html('공부시작하기');
-            }
         });
      });
     //시간 디스플레이 변환
@@ -221,5 +217,41 @@
         });
     });
 </script>
+
+<!-- 타이머 관련 Script-->
+<script src="/resources/js/timer.js"></script>
+<script>
+    $(document).ready(function () {
+        var timerCookieStr = document.cookie
+                      .split('; ')
+                      .find(row => row.startsWith('timerCookie'))
+                      .split('=')[1];
+
+        // var timerCookieStr = "125-1-10:20:10"
+
+        var timerPlayFlag = false;
+        $("#time-toggle").click(function(e){
+            if(timerPlayFlag){
+                $(this).html('공부시작하기');
+                timerPlayFlag = false;
+                timerStop(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer;
+                });
+            }else{
+                $(this).html('공부그만하기');
+                timerPlayFlag = true;
+                timerStart(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer;
+                });
+            }
+        });//end time-toggle click
+
+        //타이머 셋팅
+        timerNumberInit($(".userTimer"), $("#time-toggle"), timerCookieStr);
+    });
+</script>
+
 
 <%@ include file="../includes/footer.jsp" %>

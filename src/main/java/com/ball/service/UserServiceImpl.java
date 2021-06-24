@@ -2,10 +2,13 @@ package com.ball.service;
 
 import com.ball.mail.service.MailService;
 import com.ball.mapper.UserMapper;
+import com.ball.vo.GroupVO;
 import com.ball.vo.UserVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -27,6 +30,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<GroupVO> userJoinGroupList(String userID) {
+        return userMapper.userJoinGroup(userID);
+    }
+
     public String getUserId(String userEmail) {return userMapper.selectUserIDByEmail(userEmail); }
 
     @Override

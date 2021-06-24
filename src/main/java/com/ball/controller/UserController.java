@@ -84,18 +84,17 @@ public class UserController {
         }
         //add user info to session
         session.setAttribute("userID", userVO.getUser_id());
-        if (user_remember) { //로그인 상태 유지하면 userid를 쿠키에 저장함
-            //보안을 위해 추후에 db에 세션ID와 userid를 DB에 저장하여 DB에서도 일치하는 여부를 따져봐야함
-            //add user cookie
 
-            if (userCookie != null) {
-                userCookie.setMaxAge(0);
-                res.addCookie(userCookie);
-            }
-            userCookie = new Cookie("userCookie", userVO.getUser_id());
-            userCookie.setSecure(true);
-            userCookie.setPath("/");
-            userCookie.setMaxAge(60 * 60 * 24);
+
+        //add user cookie
+        if(userCookie!=null){
+            userCookie.setMaxAge(0);
+            res.addCookie(userCookie);
+        }
+        userCookie = new Cookie("userCookie", userVO.getUser_id());
+//        userCookie.setSecure(true); 다른 엔트포인트에 쿠키전달이 안되서 true를 하면 안됨
+        userCookie.setPath("/");
+        userCookie.setMaxAge(60*60*24);
 
         //session id를 cookie에 저장(브라우저 종료후에도 유지되게)
         if(JSESSIONID!=null){
@@ -161,8 +160,7 @@ public class UserController {
         response.addCookie(timerCookie);
 
         // user nickname DB에서 가져오기
-        model.addAttribute("user_nickname",userService.getUserNickname(userID));
-
+        model.addAttribute("nickName",userService.getUserNickname(userID));
 
         return "user/user";
     }

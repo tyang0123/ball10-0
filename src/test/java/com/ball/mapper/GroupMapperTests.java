@@ -2,6 +2,7 @@ package com.ball.mapper;
 
 
 import com.ball.vo.Criteria;
+import com.ball.vo.GroupJoinVO;
 import com.ball.vo.GroupVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -40,7 +41,7 @@ public class GroupMapperTests {
     }
     @Test
     public void testRead(){
-        GroupVO vo = mapper.groupRead(3L);
+        GroupVO vo = mapper.groupRead(24L);
         System.out.println("===================");
         System.out.println(vo);
 
@@ -92,15 +93,30 @@ public class GroupMapperTests {
     }
 
     @Test
-    public void testCount(){
-        Criteria cri = new Criteria();
-
-        System.out.println("전체 갯수는 ? :");
+    public void testDelete(){
+        mapper.groupDelete(27L);
+        System.out.println("========== 삭제 되었습니다 ==========");
     }
 
     @Test
-    public void testDelete(){
-        mapper.groupDelete(18L);
-        System.out.println("========== 삭제 되었습니다 ==========");
+    public void testJoin(){
+        GroupJoinVO vo = new GroupJoinVO();
+        vo.setGroup_id(3L);
+        vo.setUser_id("user5");
+        mapper.joinGroup(vo);
+        System.out.println("==== 유저 5번이 3번방에 들어갔나 ====");
+    }
+
+    @Test
+    public void testCount() {
+        Criteria cri = new Criteria();
+    }
+
+
+    @Test
+    public void testGroupCheck(){
+
+        System.out.println(mapper.joinAllRead(24L,"user7"));
+        System.out.println("전체 갯수는 ? :");
     }
 }
