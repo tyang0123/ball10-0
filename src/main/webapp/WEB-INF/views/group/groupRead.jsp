@@ -243,18 +243,18 @@
                         criterionNumber = criterionNumber-10;
                         console.log("스크롤 했을때 크리넘버: "+criterionNumber)
 
-                        var temp = $(document).height();
+                        var temp = $('.modal').height();
                         messageService.getList(group_id,criterionNumber,function (result){
                             $('.readGroupMessage').html(result);
                             if(criterionNumber < 0) alert("마지막 메세지입니다.")
 
-                            $(document).scrollTop($(document).height()-temp);
+                            $('.modal').scrollTop($('.modal').height()-temp);
                             isLoading = false;
                         })
                     }
 
-                    $(document).scroll(function (){
-                        if($(document).scrollTop() <60 && !isLoading){
+                    $('.modal').scroll(function (){
+                        if($('.modal').scrollTop() <60 && !isLoading){
                             isLoading = true;
                             setTimeout(loadNewPage,1200);
                         }
@@ -279,7 +279,9 @@
                     }
                     messageService.add(group_id,message,function (result){
                         if(result == "success"){
+                            alert("입력되었습니다.")
                             $('#message-text').val("");
+                            $('.modal').modal("hide");
                         }
                     })
                 })
