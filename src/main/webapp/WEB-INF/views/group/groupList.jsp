@@ -88,13 +88,11 @@
         })
         $('.move').click(function (){
             // prompt('비밀번호를 입력하세요');
-            var groupID = $('td')[0].val();
-            console.log(groupID);
             $.ajax({
-                type:"GET",
+                type:"post",
                 url:"/group/list/ajax/list",
                 data:{},
-                dataType:"text",
+                dataType:"json",
                 success: function (){
                     alert('성공');
                 }
