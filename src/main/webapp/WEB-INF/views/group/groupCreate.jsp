@@ -16,8 +16,10 @@
                             <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
                         </label>
                         <div class="form-group">
-                            <label for="user_id_group_header">방장</label>
-                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${group.user_id_group_header}">
+
+                            <label for="user_id_group_header">방장
+                            <input class="form-control" name="user_id_group_header" id="user_id_group_header" value="${user_id}" readonly="readonly">
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,6 +95,15 @@
             $("#group_password").attr('readonly',false)
         }else{
             $("#group_password").attr('readonly',true)
+        }
+    })
+
+    $(".btn-success").click(function (){
+        if($("#group_is_secret").is(':checked')){
+            if($("#group_password").val() == ""){
+                $("#group_password").attr('required', true)
+
+            }
         }
     })
 </script>

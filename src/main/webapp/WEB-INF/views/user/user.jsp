@@ -5,6 +5,7 @@
 
 <%@ include file="../includes/header.jsp" %>
 
+
 <!-- 유저페이지 알람모달 -->
 <div class="row">
     <div class="col-2"></div>
@@ -25,6 +26,8 @@
         <div class="userMarker"><span>${nickName}님의 속한 그룹 😎</span></div>
     </div>
 </div>
+<!-- end timer -->
+
 <!-- 유저페이지 그룹리스트 -->
 <div class="row">
     <div style="background-color: #efefef; margin-top: 20px; padding-top:20px; padding-bottom: 40px;" class="center-block;">
@@ -68,17 +71,6 @@
 
 
 
-    <div class="col-sm-12">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="Alarm">
-            Launch static backdrop modal
-        </button>
-
-        ${user_nickname} 안녕하세요
-        <span id="alarm-count">${alarmCount}</span>
-
-    </div>
-</div>
 <!-- timer -->
 <div class="row mt-4">
     <div class="col-sm-2"></div>
@@ -101,6 +93,7 @@
         </div>
     </div>
 </div><!-- end timer -->
+>>>>>>>>> Temporary merge branch 2
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -132,7 +125,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    var changeCriterionNumber=${firstCriterionNumber};
     $(document).ready(function (){
         var userID = document.cookie
                         .split('; ')
@@ -224,7 +216,7 @@
             var alarmID = $(this).find("input").val();
             $.ajax({
                 type:"post",
-                url:"/user/alarmCount",
+                url:"/ajax/user/alarmCount",
                 data:{
                     alarmID:alarmID,
                     userID:"${userID}"
@@ -255,32 +247,34 @@
 <script src="/resources/js/timer.js"></script>
 <script>
     $(document).ready(function () {
-        var timerStr = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('timerCookie'))
-            .split('=')[1];
+        var timerCookieStr = document.cookie
+                      .split('; ')
+                      .find(row => row.startsWith('timerCookie'))
+                      .split('=')[1];
 
-        var [timerID, accumulatedTime] = timerStr.split('-');
-        // console.log(accumulatedTime)
-        // console.log(timerID)
-
-        //타이머 셋팅
-        timerNumberInit($(".my-timer"), accumulatedTime);
+        // var timerCookieStr = "125-1-10:20:10"
 
         var timerPlayFlag = false;
-        $("#timer-btn").click(function(e){
+        $("#time-toggle").click(function(e){
             if(timerPlayFlag){
-                $("#timer-btn").html("Start");
+                $(this).html('공부시작하기');
                 timerPlayFlag = false;
-                timerStop(timerID, function(resultTime){
-                    document.cookie = "timerCookie="+timerID+"-"+resultTime+";";
+                timerStop(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer;
                 });
             }else{
-                $("#timer-btn").html("Stop");
+                $(this).html('공부그만하기');
                 timerPlayFlag = true;
-                accumulatedTime = timerStart();
+                timerStart(function(resultCookieTimer){
+                    //타이머정보가 db에 저장되면 타이머의 정보를 쿠키에 저장
+                    document.cookie = "timerCookie="+resultCookieTimer;
+                });
             }
-        })
+        });//end time-toggle click
+
+        //타이머 셋팅
+        timerNumberInit($(".userTimer"), $("#time-toggle"), timerCookieStr);
     });
 </script>
 

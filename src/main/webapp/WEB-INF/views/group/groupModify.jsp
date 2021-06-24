@@ -15,12 +15,12 @@
                         </label>
                     </div>
                     <div class="form-group">
-                        <label for="user_id_group_header">그룹장
-                            <input class="form-control" name="group_id" id="user_id_group_header" value="${group.user_id_group_header}" readonly="readonly">
+                        <label for="user_nickname_group_header">그룹장
+                            <input class="form-control" name="user_nickname_group_header" id="user_nickname_group_header" value="${group.user_nickname_group_header}" readonly="readonly">
                         </label>
                     </div>
                     <div class="form-group">
-                        <label for="group_name">
+                        <label for="group_name">그룹이름
                         <input class="form-control" name="group_name" id="group_name" placeholder="그룹이름" value="${group.group_name}"/>
                         </label>
                     </div>
@@ -108,8 +108,7 @@
         $(".btn-default").click(function (){
             if($("#group_is_secret").is(':checked')){
                 if($("#group_password").val() == ""){
-                    alert("비밀번호를 입력하세요!")
-                    return false;
+                    $("#group_password").attr('required', true)
                 }
             }
         })

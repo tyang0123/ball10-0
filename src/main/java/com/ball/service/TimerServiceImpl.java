@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class TimerServiceImpl implements TimerService{
@@ -20,7 +22,7 @@ public class TimerServiceImpl implements TimerService{
         TimerVO timerVO = new TimerVO();
         timerVO.setUser_id(user_id);
 
-        TimerVO readVO = timerMapper.selectTodayTimer(timerVO);
+        TimerVO readVO = timerMapper.selectTodayTimerByUserID(timerVO);
         if(readVO != null){
             log.info(readVO.toString());
             return readVO;
@@ -30,10 +32,22 @@ public class TimerServiceImpl implements TimerService{
         return timerVO;
     }
 
+    @Transactional
     @Override
-    public int modifyTimerAccumulatedDayTime(TimerVO vo) {
-        return timerMapper.updateAccumulatedTime(vo);
+    public int modifyTimerPlayState(TimerVO vo) {
+        TimerVO resultVO = timerMapper.selectTimerByTimerID(vo.getTimer_id());
+        resultVO.setTimer_is_play(1);
+        log.info(resultVO.toString());
+        return timerMapper.updateAccumulatedTimeAndState(resultVO);
     }
 
+    @Override
+    public int modifyTimerAccumulatedDayTimeAndStopState(TimerVO vo) {
+        return timerMapper.updateAccumulatedTimeAndState(vo);
+    }
 
+    @Override
+    public List<TimerVO> getListTodayUserTimerbyGroupID(Long group_id) {
+        return timerMapper.selectListTodayUserTimerbyGroupID(group_id);
+    }
 }

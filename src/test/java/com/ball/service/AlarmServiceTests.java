@@ -33,7 +33,7 @@ public class AlarmServiceTests {
     @Test
     public void testTotal()
     {
-        System.out.println(service.getFirstCriterionNumber("user1"));
+        System.out.println(service.getFirstCriterionNumber("user100"));
     }
     @Test
     public void testModify(){

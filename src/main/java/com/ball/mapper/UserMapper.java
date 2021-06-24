@@ -21,4 +21,9 @@ public interface UserMapper {
     //유저가 가입한 그룹 조회
     public List<GroupVO> userJoinGroup(String userId);
 
+    //유저 ID 조회
+    public String selectUserIDByEmail(@Param("user_email") String userEmail);
+
+    //이메일 관리자 정보 조회
+    public UserVO selectEmailAdmin();
 }

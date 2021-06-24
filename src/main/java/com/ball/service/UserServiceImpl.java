@@ -1,5 +1,6 @@
 package com.ball.service;
 
+import com.ball.mail.service.MailService;
 import com.ball.mapper.UserMapper;
 import com.ball.vo.GroupVO;
 import com.ball.vo.UserVO;
@@ -32,4 +33,9 @@ public class UserServiceImpl implements UserService{
     public List<GroupVO> userJoinGroupList(String userID) {
         return userMapper.userJoinGroup(userID);
     }
+
+    public String getUserId(String userEmail) {return userMapper.selectUserIDByEmail(userEmail); }
+
+    @Override
+    public UserVO getAdminEmailAndPW() {return userMapper.selectEmailAdmin(); }
 }
